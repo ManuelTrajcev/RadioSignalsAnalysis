@@ -1,0 +1,41 @@
+# Global .gitignore for .NET backend and React frontend
+
+# Node.js (React frontend)
+RadioSignalsFrontEnd/node_modules/
+RadioSignalsFrontEnd/build/
+RadioSignalsFrontEnd/dist/
+RadioSignalsFrontEnd/.env
+RadioSignalsFrontEnd/.next/
+RadioSignalsFrontEnd/.cache/
+RadioSignalsFrontEnd/.turbo/
+RadioSignalsFrontEnd/.eslintcache
+RadioSignalsFrontEnd/coverage/
+RadioSignalsFrontEnd/yarn-error.log
+RadioSignalsFrontEnd/.parcel-cache/
+RadioSignalsFrontEnd/.idea/
+
+# .NET (backend)
+RadioSignalsBackEnd/**/bin/
+RadioSignalsBackEnd/**/obj/
+RadioSignalsBackEnd/*.user
+RadioSignalsBackEnd/*.suo
+RadioSignalsBackEnd/*.vspscc
+RadioSignalsBackEnd/*.vssscc
+RadioSignalsBackEnd/.vs/
+RadioSignalsBackEnd/TestResults/
+RadioSignalsBackEnd/.env
+RadioSignalsBackEnd/.DS_Store
+RadioSignalsBackEnd/.idea/
+
+# OS/IDE files
+*.DS_Store
+*.log
+.vscode/
+.idea/
+Thumbs.db
+
+# Misc
+.env
+*.env.local
+*.env.development.local
+*.env.test.local
