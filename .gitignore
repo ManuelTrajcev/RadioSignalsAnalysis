@@ -27,7 +27,7 @@ RadioSignalsBackEnd/.env
 RadioSignalsBackEnd/.DS_Store
 RadioSignalsBackEnd/.idea/
 
-# Analysis (oython)
+# Analysis (python)
 
 Analysis/Data/
 
