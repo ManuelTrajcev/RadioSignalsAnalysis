@@ -2,25 +2,27 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RadioSignalsWeb.Data;
-using Services.Implementation;
 using Services.Interface;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// --- Database ---
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// --- Controllers / Views ---
 builder.Services.AddControllersWithViews();
 
-// Register your custom user service
+// --- Dependency Injection ---
 builder.Services.AddSingleton<IUserService, UserService>();
 
-// Add JWT authentication
+// --- JWT Authentication ---
+var jwtSettings = builder.Configuration.GetSection("Jwt");
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,19 +36,26 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
     };
 });
 
+// --- CORS ---
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("vite-dev",
         p => p.WithOrigins("http://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+              .AllowAnyHeader()
+              .AllowAnyMethod());
 });
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 
@@ -65,7 +74,7 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication(); // Add this line for JWT
+app.UseAuthentication();  
 app.UseAuthorization();
 
 app.MapControllerRoute(

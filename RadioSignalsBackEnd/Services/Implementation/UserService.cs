@@ -14,7 +14,17 @@ public class UserService : IUserService
         if (_users.ContainsKey(dto.Username))
             return new RegisterResult { Success = false, Message = "Username already exists." };
 
-        var user = new User { Username = dto.Username };
+        if (dto.Password != dto.RepeatPassword)
+            return new RegisterResult { Success = false, Message = "Passwords do not match." };
+
+        var user = new User
+        {
+            Name = dto.Name,
+            Surname = dto.Surname,
+            Username = dto.Username,
+            Email = dto.Email
+        };
+
         string hashedPassword = _hasher.HashPassword(user, dto.Password);
 
         _users[dto.Username] = hashedPassword;

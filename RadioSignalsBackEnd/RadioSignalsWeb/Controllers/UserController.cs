@@ -6,11 +6,12 @@ using System.Text;
 using Domain.Domain_Models;
 using Services.Interface;
 using Domain.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RadioSignalsWeb.Controllers
 {
     [ApiController]
-    [Route("user")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -22,6 +23,8 @@ namespace RadioSignalsWeb.Controllers
             _configuration = configuration;
         }
 
+        
+        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterDto dto)
         {
@@ -32,6 +35,7 @@ namespace RadioSignalsWeb.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto dto)
         {
@@ -48,7 +52,6 @@ namespace RadioSignalsWeb.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                // Add more claims as needed
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -62,6 +65,15 @@ namespace RadioSignalsWeb.Controllers
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        
+        [HttpPost("logout")]
+        [AllowAnonymous] // Or [Authorize] if you want only logged-in users to call it
+        public IActionResult Logout()
+        {
+            // For JWT, logout is handled on the client by deleting the token.
+            // Optionally, you can implement server-side token invalidation/blacklisting here.
+            return Ok(new { message = "Logged out successfully." });
         }
     }
     
