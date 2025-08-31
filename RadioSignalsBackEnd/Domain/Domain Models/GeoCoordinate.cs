@@ -2,7 +2,7 @@
 
 namespace Domain.Domain_Models;
 
-public class GeoCoordinate
+public class GeoCoordinate : BaseEntity
 {
     [Required]
     public int LatitudeDegrees { get; set; }
@@ -17,14 +17,5 @@ public class GeoCoordinate
     public int LongitudeMinutes { get; set; }
     [Required]
     public float LongitudeSeconds { get; set; }
-
-    public GeoCoordinate(int latitudeDegrees, int latitudeMinutes, float latitudeSeconds, int longitudeDegrees, int longitudeMinutes, float longitudeSeconds)
-    {
-        LatitudeDegrees = latitudeDegrees;
-        LatitudeMinutes = latitudeMinutes;
-        LatitudeSeconds = latitudeSeconds;
-        LongitudeDegrees = longitudeDegrees;
-        LongitudeMinutes = longitudeMinutes;
-        LongitudeSeconds = longitudeSeconds;
-    }
+    
 }

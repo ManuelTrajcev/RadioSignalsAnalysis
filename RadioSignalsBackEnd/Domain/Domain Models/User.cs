@@ -1,7 +1,9 @@
-﻿using Domain.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Enums;
 
 namespace Domain.Domain_Models;
 
+[Table("SignalsAppUsers")]
 public class User : BaseEntity
 {
     public string Name { get; set; }
