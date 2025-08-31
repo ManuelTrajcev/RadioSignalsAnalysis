@@ -8,9 +8,4 @@ public class Municipality : BaseEntity
     [MaxLength(255)]
     public string Name { get; set; }
     public ICollection<Settlement> Settlements { get; set; } = new List<Settlement>();
-
-    public Municipality(string name)
-    {
-        Name = name;
-    }
 }

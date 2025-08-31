@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RadioSignalsWeb.Data;
 using Services.Interface;
 using System.Text;
 using System.Text.Json.Serialization;
+using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseNpgsql(
+        connectionString,
+        npgsqlOptions => npgsqlOptions.EnableRetryOnFailure() 
+    ));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // --- Controllers / Views ---
