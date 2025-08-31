@@ -4,7 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Services.Interface;
 using System.Text;
 using System.Text.Json.Serialization;
+using Domain.Domain_Models;
+using Microsoft.AspNetCore.Identity;
 using Repository;
+using Repository.Implementation;
+using Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +26,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 
 // --- Dependency Injection ---
-builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));   
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");

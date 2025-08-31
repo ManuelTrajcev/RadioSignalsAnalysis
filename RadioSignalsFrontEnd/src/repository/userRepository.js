@@ -5,7 +5,6 @@ const userRepository = {
       return await axiosInstance.post("/user/register", data);
     },
     login: async (data) => {
-        console.log(data)
         return await axiosInstance.post("/user/login", data);
     },
 };
