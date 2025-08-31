@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RadioSignalsWeb.Controllers;
@@ -12,17 +13,18 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
+    [AllowAnonymous]
     public IActionResult Index()
     {
         return View();
     }
-
+    [AllowAnonymous]
     public IActionResult Privacy()
     {
         return View();
     }
 
+    [AllowAnonymous]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

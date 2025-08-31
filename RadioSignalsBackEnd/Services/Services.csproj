@@ -10,9 +10,4 @@
       <ProjectReference Include="..\Repository\Repository.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Implementation\" />
-      <Folder Include="Interface\" />
-    </ItemGroup>
-
 </Project>
