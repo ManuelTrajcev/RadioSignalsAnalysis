@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import "./Header.css";
-// import AuthenticationToggle from "../../auth/AuthenticationToggle/AuthenticationToggle.jsx";
+import AuthenticationToggle from "../../auth/AuthenticationToggle/AuthenticationToggle.jsx";
 
 const pages = [
     {"path": "/", "name": "home"},
@@ -38,7 +38,7 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
-                    {/*<AuthenticationToggle/>*/}
+                    <AuthenticationToggle/>
                 </Toolbar>
             </AppBar>
         </Box>
