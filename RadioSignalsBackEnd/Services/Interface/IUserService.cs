@@ -7,6 +7,7 @@ public interface IUserService
 {
     RegisterResult Register(RegisterDto dto);
     User Authenticate(string username, string password);
+    List<User> GetAll();
 }
 
 public class RegisterResult

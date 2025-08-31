@@ -51,28 +51,31 @@ namespace RadioSignalsWeb.Controllers
         {
             var claims = new[]
             {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var key   = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                issuer:  _configuration["Jwt:Issuer"],
+                audience:_configuration["Jwt:Audience"],
+                claims:  claims,
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         
         [HttpPost("logout")]
-        [AllowAnonymous] // Or [Authorize] if you want only logged-in users to call it
+        [AllowAnonymous] 
         public IActionResult Logout()
         {
-            // For JWT, logout is handled on the client by deleting the token.
-            // Optionally, you can implement server-side token invalidation/blacklisting here.
+
             return Ok(new { message = "Logged out successfully." });
         }
     }
