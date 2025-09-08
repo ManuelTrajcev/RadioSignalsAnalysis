@@ -32,5 +32,15 @@ namespace Repository.Implementation
         {
             return await _userManager.CheckPasswordAsync(user, password);
         }
+
+        public async Task<IdentityResult> AddToRoleAsync(User user, string role)
+        {
+            return await _userManager.AddToRoleAsync(user, role);
+        }
+
+        public async Task<IList<string>> GetRolesAsync(User user)
+        {
+            return await _userManager.GetRolesAsync(user);
+        }
     }
 }

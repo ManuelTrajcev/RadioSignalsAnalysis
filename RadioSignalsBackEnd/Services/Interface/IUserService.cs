@@ -7,6 +7,7 @@ public interface IUserService
 {
     Task<RegisterResult> RegisterAsync(RegisterDto dto);
     Task<User?> AuthenticateAsync(string username, string password);
+    Task<IList<string>> GetRolesAsync(User user);
 }
 
 public class RegisterResult

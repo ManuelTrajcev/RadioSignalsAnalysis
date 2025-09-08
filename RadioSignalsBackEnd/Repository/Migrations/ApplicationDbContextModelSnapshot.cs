@@ -242,9 +242,6 @@ namespace Repository.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -295,6 +292,20 @@ namespace Repository.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8318fecd-ac5d-4043-8ba0-040a70d91c1a",
+                            Name = "USER",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "ca546397-23f5-4a4b-868f-35db05611ea6",
+                            Name = "ADMIN",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

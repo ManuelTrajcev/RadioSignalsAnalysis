@@ -1,4 +1,6 @@
 ﻿using Domain.Domain_Models;
+using Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +23,16 @@ public class ApplicationDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        var roles = Enum.GetNames(typeof(Role)).Select(rName =>
+        new IdentityRole
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = rName,
+            NormalizedName = rName.ToUpperInvariant()
+        });
+
+        builder.Entity<IdentityRole>().HasData(roles);
 
     }
 }

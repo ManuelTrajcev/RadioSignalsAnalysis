@@ -28,8 +28,7 @@ public class UserService : IUserService
             UserName = dto.Username,
             Email = dto.Email,
             Name = dto.Name,
-            Surname = dto.Surname,
-            Role = dto.Role
+            Surname = dto.Surname
         };
 
         var result = await _userRepository.CreateAsync(user, dto.Password);
@@ -42,6 +41,11 @@ public class UserService : IUserService
             };
         }
 
+        var roleName = dto.Role.ToString(); // "ADMIN" or "USER"
+        var roleResult = await _userRepository.AddToRoleAsync(user, roleName);
+        if (!roleResult.Succeeded)
+            return new RegisterResult { Success = false, Message = string.Join(", ", roleResult.Errors.Select(e => e.Description)) };
+
         return new RegisterResult { Success = true, Message = "Registration successful." };
     }
 
@@ -53,5 +57,10 @@ public class UserService : IUserService
 
         var isValid = await _userRepository.CheckPasswordAsync(user, password);
         return isValid ? user : null;
+    }
+
+    public async Task<IList<string>> GetRolesAsync(User user)
+    {
+        return await _userRepository.GetRolesAsync(user);
     }
 }

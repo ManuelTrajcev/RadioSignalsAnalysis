@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{38BDA956-29CA-4A6A-A192-0E04899E5254}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{444C55FD-0381-43CE-A59F-7E63AAD48923}"
@@ -30,5 +33,11 @@ Global
 		{5D6AFD2F-08C2-4562-AB02-EA2A93E5BE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D6AFD2F-08C2-4562-AB02-EA2A93E5BE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D6AFD2F-08C2-4562-AB02-EA2A93E5BE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86B85167-6BF6-4435-879A-1436BD4663D7}
 	EndGlobalSection
 EndGlobal

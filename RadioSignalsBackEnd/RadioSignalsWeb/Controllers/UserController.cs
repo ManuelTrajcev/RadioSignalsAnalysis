@@ -43,17 +43,18 @@ namespace RadioSignalsWeb.Controllers
             if (user == null)
                 return Unauthorized("Invalid credentials");
 
-            var token = GenerateJwtToken(user);
+            var roles = await _userService.GetRolesAsync(user);
+            var token = GenerateJwtToken(user, roles);
             return Ok(new { token });
         }
 
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(User user,IList<string> roles)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
+            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
