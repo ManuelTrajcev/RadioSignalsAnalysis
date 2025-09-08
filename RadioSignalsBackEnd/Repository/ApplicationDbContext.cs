@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<User>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -17,13 +17,10 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Measurement> Measurements { get; set; }
     public DbSet<Municipality> Municipalities { get; set; }
     public DbSet<Settlement> Settlements { get; set; }
-    public DbSet<User> User { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<User>()
-            .ToTable("SignalsAppUsers");
     }
 }

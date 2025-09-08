@@ -10,8 +10,13 @@
       <Folder Include="Identity\" />
     </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.8" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.8" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     </ItemGroup>
 

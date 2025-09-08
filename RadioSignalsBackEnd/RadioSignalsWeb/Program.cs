@@ -1,10 +1,18 @@
+using Domain.Domain_Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Repository;
+using Repository.Implementation;
+using Repository.Interface;
 using Services.Interface;
 using System.Text;
 using System.Text.Json.Serialization;
-using Repository;
+using Microsoft.AspNetCore.OpenApi;
+using Scalar.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +29,14 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // --- Controllers / Views ---
 builder.Services.AddControllersWithViews();
 
+// --- Identity ---
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 // --- Dependency Injection ---
-builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -60,6 +74,8 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 app.UseCors("vite-dev");
@@ -67,6 +83,9 @@ app.UseCors("vite-dev");
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    app.MapOpenApi();
+    app.MapScalarApiReference(); // browse at /scalar/v1
 }
 else
 {

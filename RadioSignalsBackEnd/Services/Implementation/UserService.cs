@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Services.Interface;
+﻿using Domain.Domain_Models;
 using Domain.DTO;
-using Domain.Domain_Models;
+using Microsoft.AspNetCore.Identity;
+using Repository.Interface;
+using Services.Interface;
 using System.Collections.Concurrent;
 
 public class UserService : IUserService
 {
-    private readonly PasswordHasher<User> _hasher = new();
-    private static ConcurrentDictionary<string, string> _users = new();
+    private readonly IUserRepository _userRepository;
 
-    public RegisterResult Register(RegisterDto dto)
+    public UserService(IUserRepository userRepository)
     {
-        if (_users.ContainsKey(dto.Username))
+        _userRepository = userRepository;
+    }
+
+    public async Task<RegisterResult> RegisterAsync(RegisterDto dto)
+    {
+        var existing = await _userRepository.FindByNameAsync(dto.Username);
+        if (existing != null)
             return new RegisterResult { Success = false, Message = "Username already exists." };
 
         if (dto.Password != dto.RepeatPassword)
@@ -19,29 +25,33 @@ public class UserService : IUserService
 
         var user = new User
         {
+            UserName = dto.Username,
+            Email = dto.Email,
             Name = dto.Name,
             Surname = dto.Surname,
-            Username = dto.Username,
-            Email = dto.Email
+            Role = dto.Role
         };
 
-        string hashedPassword = _hasher.HashPassword(user, dto.Password);
-
-        _users[dto.Username] = hashedPassword;
+        var result = await _userRepository.CreateAsync(user, dto.Password);
+        if (!result.Succeeded)
+        {
+            return new RegisterResult
+            {
+                Success = false,
+                Message = string.Join(", ", result.Errors.Select(e => e.Description))
+            };
+        }
 
         return new RegisterResult { Success = true, Message = "Registration successful." };
     }
 
-    public User Authenticate(string username, string password)
+    public async Task<User?> AuthenticateAsync(string username, string password)
     {
-        if (!_users.TryGetValue(username, out var hashedPassword))
+        var user = await _userRepository.FindByNameAsync(username);
+        if (user == null)
             return null;
 
-        var user = new User { Username = username };
-        var result = _hasher.VerifyHashedPassword(user, hashedPassword, password);
-        if (result == PasswordVerificationResult.Success)
-            return user;
-
-        return null;
+        var isValid = await _userRepository.CheckPasswordAsync(user, password);
+        return isValid ? user : null;
     }
 }

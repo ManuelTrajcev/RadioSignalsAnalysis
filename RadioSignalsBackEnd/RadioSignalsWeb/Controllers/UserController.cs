@@ -26,9 +26,9 @@ namespace RadioSignalsWeb.Controllers
         
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-            var result = _userService.Register(dto);
+            var result = await _userService.RegisterAsync(dto);
             if (!result.Success)
                 return BadRequest(result.Message);
 
@@ -37,9 +37,9 @@ namespace RadioSignalsWeb.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = _userService.Authenticate(dto.Username, dto.Password);
+            var user = await _userService.AuthenticateAsync(dto.Username, dto.Password);
             if (user == null)
                 return Unauthorized("Invalid credentials");
 
@@ -51,7 +51,8 @@ namespace RadioSignalsWeb.Controllers
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Name, user.UserName!),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
