@@ -7,22 +7,31 @@ const axiosInstance = axios.create({
     },
 });
 
-// axiosInstance.interceptors.request.use(
-//     (config) => {
-//         const jwtToken = localStorage.getItem("token");
-//         if (jwtToken) {
-//             config.headers.Authorization = `Bearer ${jwtToken}`;
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         if (error.response.status === 401 || error.response.status === 403) {
-//             console.log("Invalid token");
-//             localStorage.removeItem("token");
-//             window.location.href = "/login";
-//         }
-//         return Promise.reject(error);
-//     },
-// );
+// Attach Authorization header on every request
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const jwtToken = localStorage.getItem("token");
+    if (jwtToken) {
+      config.headers.Authorization = `Bearer ${jwtToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Handle unauthorized responses globally
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("Invalid or expired token");
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 export default axiosInstance;

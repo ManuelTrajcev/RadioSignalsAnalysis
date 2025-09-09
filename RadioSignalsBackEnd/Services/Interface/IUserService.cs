@@ -5,8 +5,9 @@ namespace Services.Interface;
 
 public interface IUserService
 {
-    RegisterResult Register(RegisterDto dto);
-    User Authenticate(string username, string password);
+    Task<RegisterResult> RegisterAsync(RegisterDto dto);
+    Task<User?> AuthenticateAsync(string username, string password);
+    Task<IList<string>> GetRolesAsync(User user);
 }
 
 public class RegisterResult

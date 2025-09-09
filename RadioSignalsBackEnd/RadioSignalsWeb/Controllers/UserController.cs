@@ -26,9 +26,9 @@ namespace RadioSignalsWeb.Controllers
         
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-            var result = _userService.Register(dto);
+            var result = await _userService.RegisterAsync(dto);
             if (!result.Success)
                 return BadRequest(result.Message);
 
@@ -37,22 +37,24 @@ namespace RadioSignalsWeb.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = _userService.Authenticate(dto.Username, dto.Password);
+            var user = await _userService.AuthenticateAsync(dto.Username, dto.Password);
             if (user == null)
                 return Unauthorized("Invalid credentials");
 
-            var token = GenerateJwtToken(user);
+            var roles = await _userService.GetRolesAsync(user);
+            var token = GenerateJwtToken(user, roles);
             return Ok(new { token });
         }
 
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(User user,IList<string> roles)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Name, user.UserName!),
             };
+            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
