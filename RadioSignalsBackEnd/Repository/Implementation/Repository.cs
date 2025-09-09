@@ -30,7 +30,7 @@ namespace Repository.Implementation
             {
                 throw new ArgumentNullException(nameof(entities));
             }
-            await _context.AddRangeAsync(entities); // CORRECTED LOGIC
+            await _context.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
             return entities;
         }

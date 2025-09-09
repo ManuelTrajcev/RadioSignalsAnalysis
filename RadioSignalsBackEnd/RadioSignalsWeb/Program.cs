@@ -1,17 +1,18 @@
 using Domain.Domain_Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Repository.Implementation;
 using Repository.Interface;
+using Scalar.AspNetCore;
+using Services.Implementation;
 using Services.Interface;
 using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.OpenApi;
-using Scalar.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMasterDataService, MasterDataService>();
+builder.Services.AddScoped<IMeasurementService, MeasurementService>();
+builder.Services.AddScoped<IThresholdService, ThresholdService>();
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -104,6 +104,9 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<double>("LatitudeDecimal")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("LatitudeDegrees")
                         .HasColumnType("integer");
 
@@ -112,6 +115,9 @@ namespace Repository.Migrations
 
                     b.Property<float>("LatitudeSeconds")
                         .HasColumnType("real");
+
+                    b.Property<double>("LongitudeDecimal")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("LongitudeDegrees")
                         .HasColumnType("integer");
@@ -161,12 +167,10 @@ namespace Repository.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("ProgramIdentifier")
-                        .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("character varying(120)");
 
                     b.Property<string>("Remarks")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("SettlementId")
@@ -434,13 +438,13 @@ namespace Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "30fdcdd9-2048-4875-89b5-5acb2efab5a5",
+                            Id = "825212fe-4678-40b6-95a9-97b38328697b",
                             Name = "USER",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f5940efd-8479-4489-8e2f-cfe72be9d4f0",
+                            Id = "3485772f-9f78-4d33-a57d-19e4a65afc1b",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         });

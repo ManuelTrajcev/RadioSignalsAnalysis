@@ -19,12 +19,8 @@ public class GeoCoordinate : BaseEntity
     [Required]
     public float LongitudeSeconds { get; set; }
 
-    [NotMapped]
-    public double LatitudeDecimal =>
-        LatitudeDegrees + (LatitudeMinutes / 60.0) + (LatitudeSeconds / 3600.0);
-
-    [NotMapped]
-    public double LongitudeDecimal =>
-        LongitudeDegrees + (LongitudeMinutes / 60.0) + (LongitudeSeconds / 3600.0);
+    // Persisted decimal values; will be set by MeasurementService on create/update
+    public double LatitudeDecimal { get; set; }
+    public double LongitudeDecimal { get; set; }
 
 }

@@ -103,6 +103,8 @@ namespace Repository.Migrations
                     LongitudeDegrees = table.Column<int>(type: "integer", nullable: false),
                     LongitudeMinutes = table.Column<int>(type: "integer", nullable: false),
                     LongitudeSeconds = table.Column<float>(type: "real", nullable: false),
+                    LatitudeDecimal = table.Column<double>(type: "double precision", nullable: false),
+                    LongitudeDecimal = table.Column<double>(type: "double precision", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
@@ -296,10 +298,10 @@ namespace Repository.Migrations
                     CoordinateId = table.Column<Guid>(type: "uuid", nullable: false),
                     AltitudeMeters = table.Column<int>(type: "integer", nullable: false),
                     ChannelFrequencyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProgramIdentifier = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    ProgramIdentifier = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
                     TransmitterLocation = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     ElectricFieldStrengthId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Remarks = table.Column<string>(type: "text", nullable: false),
+                    Remarks = table.Column<string>(type: "text", nullable: true),
                     Status = table.Column<string>(type: "text", nullable: false),
                     Technology = table.Column<string>(type: "text", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -341,8 +343,8 @@ namespace Repository.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "30fdcdd9-2048-4875-89b5-5acb2efab5a5", null, "USER", "USER" },
-                    { "f5940efd-8479-4489-8e2f-cfe72be9d4f0", null, "ADMIN", "ADMIN" }
+                    { "3485772f-9f78-4d33-a57d-19e4a65afc1b", null, "ADMIN", "ADMIN" },
+                    { "825212fe-4678-40b6-95a9-97b38328697b", null, "USER", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
