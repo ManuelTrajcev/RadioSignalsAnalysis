@@ -17,15 +17,21 @@ const AuthProvider = ({children}) => {
     });
 
     const login = (jwtToken) => {
-        const payload = decode(jwtToken);
-        if (payload) {
-            localStorage.setItem("token", jwtToken);
-            setState({
-                "user": payload,
-                "loading": false,
-            });
-        }
-    };
+    const payload = decode(jwtToken);
+    if (payload) {
+        // Ensure roles are always an array
+        const roles = Array.isArray(payload.role) ? payload.role : [payload.role];
+        const user = {
+            ...payload,
+            roles: roles.filter(Boolean) // Filter out null/undefined roles
+        };
+        localStorage.setItem("token", jwtToken);
+        setState({
+            "user": user,
+            "loading": false,
+        });
+    }
+};
 
     const logout = () => {
         const jwtToken = localStorage.getItem("token");
@@ -43,10 +49,12 @@ const AuthProvider = ({children}) => {
         if (jwtToken) {
             const payload = decode(jwtToken);
             if (payload) {
-                setState({
-                    "user": payload,
-                    "loading": false,
-                });
+                const roles = Array.isArray(payload.role) ? payload.role : [payload.role];
+                const user = {
+                ...payload,
+                roles: roles.filter(Boolean)
+                };
+                setState({ "user": user, "loading": false });
             } else {
                 setState({
                     "user": null,

@@ -5,10 +5,16 @@ namespace Domain.Domain_Models;
 
 public class ChannelFrequency : BaseEntity
 {
+    // TRUE => TV channel (use ChannelNumber).
+    // FALSE => FM frequency (use FrequencyMHz).
     [Required]
-    public float Value { get; set; }
-    [Required]
-    public SignalType SignalType { get; set; }
-    [Required]
-    public FrequencyUnit FrequencyUnit { get; set; }
+    public bool IsTvChannel { get; set; }
+
+    // TV channel number (nullable; required when IsTvChannel = true).
+    public int? ChannelNumber { get; set; }
+
+    // FM frequency in MHz (nullable; required when IsTvChannel = false).
+    public float? FrequencyMHz { get; set; }
+
+    public FrequencyUnit? FrequencyUnit { get; set; }
 }

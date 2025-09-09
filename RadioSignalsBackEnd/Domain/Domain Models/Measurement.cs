@@ -26,7 +26,7 @@ public class Measurement : BaseEntity
     [ForeignKey("ChannelFrequencyId")] public ChannelFrequency? ChannelFrequency { get; set; }
 
     // Програма – идентификатор (опционално)
-    [MaxLength(120)] public string ProgramIdentifier { get; set; }
+    [MaxLength(120)] public string? ProgramIdentifier { get; set; }
 
     // Објект од каде се емитира (стринг)
     [Required, MaxLength(255)] public string TransmitterLocation { get; set; }
@@ -37,7 +37,8 @@ public class Measurement : BaseEntity
     [ForeignKey("ElectricFieldStrengthId")]
     public ElectricFieldStrength? ElectricFieldStrength { get; set; }
 
-    public string Remarks { get; set; }
+    public string? Remarks { get; set; }
 
     public MeasurementStatus Status { get; set; }
+    [Required] public Technology Technology { get; set; }
 }

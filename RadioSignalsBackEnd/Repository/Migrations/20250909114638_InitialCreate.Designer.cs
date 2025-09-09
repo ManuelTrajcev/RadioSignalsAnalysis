@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250908173416_InitialCreate")]
+    [Migration("20250909114638_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -31,18 +31,38 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("FrequencyUnit")
+                    b.Property<int?>("ChannelNumber")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SignalType")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<float>("Value")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<float?>("FrequencyMHz")
                         .HasColumnType("real");
+
+                    b.Property<string>("FrequencyUnit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("MHz");
+
+                    b.Property<bool>("IsTvChannel")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChannelFrequencies");
+                    b.ToTable("ChannelFrequencies", t =>
+                        {
+                            t.HasCheckConstraint("CK_ChannelFrequencies_TV_or_FM", "((\"IsTvChannel\" = TRUE AND \"ChannelNumber\" IS NOT NULL AND \"FrequencyMHz\" IS NULL) OR (\"IsTvChannel\" = FALSE AND \"ChannelNumber\" IS NULL AND \"FrequencyMHz\" IS NOT NULL))");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Domain_Models.ElectricFieldStrength", b =>
@@ -51,8 +71,21 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("MesurementUnit")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MesurementUnit")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
 
                     b.Property<float>("Value")
                         .HasColumnType("real");
@@ -67,6 +100,12 @@ namespace Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<int>("LatitudeDegrees")
                         .HasColumnType("integer");
@@ -85,6 +124,12 @@ namespace Repository.Migrations
 
                     b.Property<float>("LongitudeSeconds")
                         .HasColumnType("real");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -106,6 +151,12 @@ namespace Repository.Migrations
                     b.Property<Guid>("CoordinateId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -124,8 +175,13 @@ namespace Repository.Migrations
                     b.Property<Guid>("SettlementId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Technology")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("TestLocation")
                         .IsRequired()
@@ -136,6 +192,12 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -156,14 +218,78 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Municipalities");
+                });
+
+            modelBuilder.Entity("Domain.Domain_Models.ReferenceThreshold", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("ChannelNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<float?>("FrequencyMHz")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<float>("MaxDbuVPerM")
+                        .HasColumnType("real");
+
+                    b.Property<float>("MinDbuVPerM")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ScopeIdentifier")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Technology")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReferenceThresholds");
                 });
 
             modelBuilder.Entity("Domain.Domain_Models.Settlement", b =>
@@ -171,6 +297,12 @@ namespace Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<int>("Households")
                         .HasColumnType("integer");
@@ -187,6 +319,12 @@ namespace Repository.Migrations
 
                     b.Property<string>("RegistryNumber")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -299,13 +437,13 @@ namespace Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8318fecd-ac5d-4043-8ba0-040a70d91c1a",
+                            Id = "30fdcdd9-2048-4875-89b5-5acb2efab5a5",
                             Name = "USER",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ca546397-23f5-4a4b-868f-35db05611ea6",
+                            Id = "f5940efd-8479-4489-8e2f-cfe72be9d4f0",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         });

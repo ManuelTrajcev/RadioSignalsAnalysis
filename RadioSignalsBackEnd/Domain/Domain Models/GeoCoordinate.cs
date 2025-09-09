@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Domain_Models;
 
@@ -17,5 +18,13 @@ public class GeoCoordinate : BaseEntity
     public int LongitudeMinutes { get; set; }
     [Required]
     public float LongitudeSeconds { get; set; }
-    
+
+    [NotMapped]
+    public double LatitudeDecimal =>
+        LatitudeDegrees + (LatitudeMinutes / 60.0) + (LatitudeSeconds / 3600.0);
+
+    [NotMapped]
+    public double LongitudeDecimal =>
+        LongitudeDegrees + (LongitudeMinutes / 60.0) + (LongitudeSeconds / 3600.0);
+
 }
