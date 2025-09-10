@@ -358,42 +358,44 @@ const MeasurementsBrowserPage = () => {
   
 
   const columns = useMemo(() => {
-    const base = [
-      { field: "date", headerName: "Date", 
-        valueGetter: (v) => {
-        if (!v) return "";
-        if (typeof v === "string") return v.slice(0, 10);
-        try {
-          return new Date(v).toISOString().slice(0, 10);
-        } catch {
-          return "";
-        }
-      }, flex: 1, minWidth: 120 },
-      { field: "municipalityName", headerName: "Municipality", flex: 1.2, minWidth: 160 },
-      { field: "settlementName", headerName: "Settlement", flex: 1.2, minWidth: 160 },
-      { field: "technology", headerName: "Technology", flex: 1, minWidth: 130 },
-      {
-        field: "channelOrFreq",
-        headerName: "Ch/Freq",
-        flex: 1,
-        minWidth: 120,
-        valueGetter: (p) => {
-        const row = p?.row ?? {};
-        const isTv = row.isTvChannel ?? false;
-        if (isTv) return row.channelNumber ? `CH ${row.channelNumber}` : "";
-        return row.frequencyMHz ? `${row.frequencyMHz} MHz` : "";
-      },
-      },
-      { field: "electricFieldDbuvPerM", headerName: "E-field (dBµV/m)", flex: 1, minWidth: 140, type: "number" },
-      { field: "status", headerName: "Status", flex: 1.1, minWidth: 160 },
-      { field: "altitudeMeters", headerName: "Alt (m)", flex: 0.7, minWidth: 100, type: "number" },
-      { field: "testLocation", headerName: "Test Location", flex: 1.4, minWidth: 180 },
-      { field: "transmitterLocation", headerName: "Transmitter", flex: 1.2, minWidth: 160 },
-      { field: "programIdentifier", headerName: "Program", flex: 1, minWidth: 120 },
-      { field: "remarks", headerName: "Remarks", flex: 1.2, minWidth: 160 },
-      { field: "latitudeDecimal", headerName: "Latitude", flex: 1, minWidth: 140, type: "number" },
-      { field: "longitudeDecimal", headerName: "Longitude", flex: 1, minWidth: 140, type: "number" },
-    ];
+  const base = [
+    {
+      field: "date",
+      headerName: "Date",
+      valueGetter: (v) => { if (!v) return ""; if (typeof v === "string") return v.slice(0, 10); try { return new Date(v).toISOString().slice(0, 10); } catch { return ""; } },
+      flex: 1,
+      minWidth: 120,
+    },
+    { field: "municipalityName", headerName: "Municipality", flex: 1.2, minWidth: 160 },
+    { field: "settlementName", headerName: "Settlement", flex: 1.2, minWidth: 160 },
+    { field: "technology", headerName: "Technology", flex: 1, minWidth: 130 },
+    {
+    field: "channelOrFrequency",
+    headerName: "Channel / Frequency",
+    flex: 1.1,
+    minWidth: 160,
+    sortable: false,
+    renderCell: (params) => {
+      const r = params.row || {};
+      if (r.technology === "DIGITAL_TV") {
+        return r.channelNumber != null ? `CH ${r.channelNumber}` : "";
+      }
+      if (r.technology === "FM") {
+        return r.frequencyMHz != null ? `${r.frequencyMHz} MHz` : "";
+      }
+      return "";
+    },
+    },
+    { field: "electricFieldDbuvPerM", headerName: "E-field (dBµV/m)", flex: 1, minWidth: 140, type: "number" },
+    { field: "status", headerName: "Status", flex: 1.1, minWidth: 160 },
+    { field: "altitudeMeters", headerName: "Alt (m)", flex: 0.7, minWidth: 100, type: "number" },
+    { field: "testLocation", headerName: "Test Location", flex: 1.4, minWidth: 180 },
+    { field: "transmitterLocation", headerName: "Transmitter", flex: 1.2, minWidth: 160 },
+    { field: "programIdentifier", headerName: "Program", flex: 1, minWidth: 120 },
+    { field: "remarks", headerName: "Remarks", flex: 1.2, minWidth: 160 },
+    { field: "latitudeDecimal", headerName: "Latitude", flex: 1, minWidth: 140, type: "number" },
+    { field: "longitudeDecimal", headerName: "Longitude", flex: 1, minWidth: 140, type: "number" },
+  ];
 
     if (!isAdmin) return base;
 
