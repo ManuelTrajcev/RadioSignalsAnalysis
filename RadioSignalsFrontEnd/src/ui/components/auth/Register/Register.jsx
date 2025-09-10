@@ -3,7 +3,7 @@ import {
     Box, TextField, Button, Typography, Container, Paper, InputLabel, Select, MenuItem, FormControl
 } from '@mui/material';
 import userRepository from "../../../../repository/userRepository.js";
-import {useNavigate} from "react-router";
+import {useNavigate} from "react-router-dom";
 
 const initialFormData = {
     "name": "",

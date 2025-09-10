@@ -136,6 +136,75 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
             />
           </Grid>
 
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Stack direction="row" spacing={1}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Lat °"
+                name="latitudeDegrees"
+                value={form.latitudeDegrees ?? ""}
+                onChange={handleChange}
+                error={!!errors.latitudeDegrees}
+                helperText={errors.latitudeDegrees}
+              />
+              <TextField
+                fullWidth
+                type="number"
+                label="Lat '"
+                name="latitudeMinutes"
+                value={form.latitudeMinutes ?? ""}
+                onChange={handleChange}
+                error={!!errors.latitudeMinutes}
+                helperText={errors.latitudeMinutes}
+              />
+              <TextField
+                fullWidth
+                type="number"
+                label="Lat Sec"
+                name="latitudeSeconds"
+                value={form.latitudeSeconds ?? ""}
+                onChange={handleChange}
+                error={!!errors.latitudeSeconds}
+                helperText={errors.latitudeSeconds}
+              />
+            </Stack>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Stack direction="row" spacing={1}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Lon °"
+                name="longitudeDegrees"
+                value={form.longitudeDegrees ?? ""}
+                onChange={handleChange}
+                error={!!errors.longitudeDegrees}
+                helperText={errors.longitudeDegrees}
+              />
+              <TextField
+                fullWidth
+                type="number"
+                label="Lon '"
+                name="longitudeMinutes"
+                value={form.longitudeMinutes ?? ""}
+                onChange={handleChange}
+                error={!!errors.longitudeMinutes}
+                helperText={errors.longitudeMinutes}
+              />
+              <TextField
+                fullWidth
+                type="number"
+                label="Lon Sec"
+                name="longitudeSeconds"
+                value={form.longitudeSeconds ?? ""}
+                onChange={handleChange}
+                error={!!errors.longitudeSeconds}
+                helperText={errors.longitudeSeconds}
+              />
+            </Stack>
+          </Grid>
+
           {/* Minimal: allow E-field, altitude, program id, transmitter, remarks */}
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
@@ -270,7 +339,7 @@ const MeasurementsBrowserPage = () => {
           id: m.id, // DataGrid needs id
         }))
       );
-    } catch (e) {
+    } catch {
       setSnack({ open: true, message: "Failed to fetch measurements", severity: "error" });
     } finally {
       setLoading(false);
@@ -291,8 +360,7 @@ const MeasurementsBrowserPage = () => {
   const columns = useMemo(() => {
     const base = [
       { field: "date", headerName: "Date", 
-        valueGetter: (p) => {
-        const v = p?.row?.date ?? p?.value;
+        valueGetter: (v) => {
         if (!v) return "";
         if (typeof v === "string") return v.slice(0, 10);
         try {
@@ -323,22 +391,8 @@ const MeasurementsBrowserPage = () => {
       { field: "transmitterLocation", headerName: "Transmitter", flex: 1.2, minWidth: 160 },
       { field: "programIdentifier", headerName: "Program", flex: 1, minWidth: 120 },
       { field: "remarks", headerName: "Remarks", flex: 1.2, minWidth: 160 },
-      {
-        field: "coords",
-        headerName: "Lat / Lon",
-        flex: 1.4,
-        minWidth: 180,
-        valueGetter: (p) => {
-        const lat = p?.row?.latitudeDecimal ?? p?.value?.latitudeDecimal;
-        const lon = p?.row?.longitudeDecimal ?? p?.value?.longitudeDecimal;
-        if (lat == null || lon == null) return "";
-        // ensure numeric and avoid calling toFixed on undefined
-        const latNum = Number(lat);
-        const lonNum = Number(lon);
-        if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return "";
-        return `${latNum.toFixed(6)}, ${lonNum.toFixed(6)}`;
-      },
-      },
+      { field: "latitudeDecimal", headerName: "Latitude", flex: 1, minWidth: 140, type: "number" },
+      { field: "longitudeDecimal", headerName: "Longitude", flex: 1, minWidth: 140, type: "number" },
     ];
 
     if (!isAdmin) return base;
@@ -364,12 +418,12 @@ const MeasurementsBrowserPage = () => {
                   settlementId: r.settlementId,
                   date: r.date,
                   testLocation: r.testLocation,
-                  latitudeDegrees: 0, // editor will set default placeholders
-                  latitudeMinutes: 0,
-                  latitudeSeconds: 0,
-                  longitudeDegrees: 0,
-                  longitudeMinutes: 0,
-                  longitudeSeconds: 0,
+                  latitudeDegrees: r.latitudeDegrees,
+                  latitudeMinutes: r.latitudeMinutes,
+                  latitudeSeconds: r.latitudeSeconds,
+                  longitudeDegrees: r.longitudeDegrees,
+                  longitudeMinutes: r.longitudeMinutes,
+                  longitudeSeconds: r.longitudeSeconds,
                   altitudeMeters: r.altitudeMeters,
                   channelNumber: r.isTvChannel ? r.channelNumber : null,
                   frequencyMHz: !r.isTvChannel ? r.frequencyMHz : null,
@@ -396,7 +450,7 @@ const MeasurementsBrowserPage = () => {
                   await measurementRepository.deleteMeasurement(params.id);
                   setSnack({ open: true, message: "Deleted.", severity: "success" });
                   applyFetch();
-                } catch (e) {
+                } catch {
                   setSnack({ open: true, message: "Delete failed", severity: "error" });
                 }
               }}
@@ -416,8 +470,6 @@ const MeasurementsBrowserPage = () => {
         settlementId: form.settlementId,
         date: new Date(form.date).toISOString(),
         testLocation: form.testLocation,
-        // NOTE: Since response did not carry DMS, keep zeroes unless you extend API to return them.
-        // To comply with backend's required DMS fields, keep previous placeholders or ask user to re-enter.
         latitudeDegrees: Number(form.latitudeDegrees ?? 0),
         latitudeMinutes: Number(form.latitudeMinutes ?? 0),
         latitudeSeconds: Number(form.latitudeSeconds ?? 0),
@@ -439,7 +491,7 @@ const MeasurementsBrowserPage = () => {
       setEditOpen(false);
       setEditingRow(null);
       applyFetch();
-    } catch (e) {
+    } catch{
       setSnack({ open: true, message: "Update failed", severity: "error" });
     }
   };

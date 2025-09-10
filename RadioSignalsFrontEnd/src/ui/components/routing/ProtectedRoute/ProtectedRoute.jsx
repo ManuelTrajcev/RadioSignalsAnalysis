@@ -1,6 +1,6 @@
 import React from 'react';
 import useAuth from "../../../../hooks/useAuth.js";
-import {Navigate, Outlet} from "react-router";
+import {Navigate, Outlet} from "react-router-dom";
 
 const ProtectedRoute = ({role}) => {
     const {user, loading} = useAuth();

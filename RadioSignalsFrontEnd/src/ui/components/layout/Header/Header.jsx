@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import {AppBar, Box, Button, Toolbar, Typography} from "@mui/material";
 import "./Header.css";
 import AuthenticationToggle from "../../auth/AuthenticationToggle/AuthenticationToggle.jsx";

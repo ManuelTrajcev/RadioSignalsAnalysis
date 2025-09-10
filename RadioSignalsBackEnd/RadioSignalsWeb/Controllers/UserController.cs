@@ -56,7 +56,7 @@ namespace RadioSignalsWeb.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id), 
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+            claims.AddRange(roles.Select(r => new Claim("role", r)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -63,7 +63,7 @@ const clamp = (v, min, max) => {
 };
 
 const DataEntryPage = () => {
-  const { user } = useAuth();
+  const { user: _user } = useAuth();
   const [municipalities, setMunicipalities] = useState([]);
   const [settlements, setSettlements] = useState([]);
   const [submitting, setSubmitting] = useState(false);

@@ -9,7 +9,7 @@ const measurementRepository = {
   fetchMeasurements: async (params = {}) => {
     // params: municipalityId?, settlementId?, dateFrom?, dateTo?, technology?
     const res = await axiosInstance.get("/measurements", { params });
-    //console.log(res.data);
+    console.log(res.data);
     return res.data; // MeasurementResponseDto[]
   },
   updateMeasurement: async (id, payload) => {

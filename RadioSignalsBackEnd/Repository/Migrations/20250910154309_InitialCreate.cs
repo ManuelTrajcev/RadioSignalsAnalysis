@@ -88,6 +88,7 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ElectricFieldStrengths", x => x.Id);
+                    table.CheckConstraint("CK_ElectricFieldStrength_Value_Positive", "\"Value\" >= 0");
                 });
 
             migrationBuilder.CreateTable(
@@ -111,6 +112,7 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GeoCoordinates", x => x.Id);
+                    table.CheckConstraint("CK_GeoCoordinate_MinSec", "(\"LatitudeMinutes\" BETWEEN 0 AND 59) AND (\"LatitudeSeconds\" >= 0 AND \"LatitudeSeconds\" < 60) AND (\"LongitudeMinutes\" BETWEEN 0 AND 59) AND (\"LongitudeSeconds\" >= 0 AND \"LongitudeSeconds\" < 60)");
                 });
 
             migrationBuilder.CreateTable(
@@ -386,7 +388,8 @@ namespace Repository.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Measurements_ElectricFieldStrengthId",
                 table: "Measurements",
-                column: "ElectricFieldStrengthId");
+                column: "ElectricFieldStrengthId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Measurements_SettlementId",

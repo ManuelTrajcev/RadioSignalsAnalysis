@@ -15,6 +15,7 @@ using Services.Implementation;
 using Services.Interface;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 
@@ -66,7 +67,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"])),
-        RoleClaimType = ClaimTypes.Role,
+        RoleClaimType = "role",
         ClockSkew = TimeSpan.FromMinutes(1)
     };
 });
@@ -84,6 +85,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
 builder.Services.AddOpenApi();

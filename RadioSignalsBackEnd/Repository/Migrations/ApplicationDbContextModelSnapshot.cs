@@ -74,9 +74,10 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("MesurementUnit")
+                    b.Property<string>("MeasurementUnit")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("MesurementUnit");
 
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -89,7 +90,10 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ElectricFieldStrengths");
+                    b.ToTable("ElectricFieldStrengths", t =>
+                        {
+                            t.HasCheckConstraint("CK_ElectricFieldStrength_Value_Positive", "\"Value\" >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Domain_Models.GeoCoordinate", b =>
@@ -136,7 +140,10 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeoCoordinates");
+                    b.ToTable("GeoCoordinates", t =>
+                        {
+                            t.HasCheckConstraint("CK_GeoCoordinate_MinSec", "(\"LatitudeMinutes\" BETWEEN 0 AND 59) AND (\"LatitudeSeconds\" >= 0 AND \"LatitudeSeconds\" < 60) AND (\"LongitudeMinutes\" BETWEEN 0 AND 59) AND (\"LongitudeSeconds\" >= 0 AND \"LongitudeSeconds\" < 60)");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Domain_Models.Measurement", b =>
@@ -206,7 +213,8 @@ namespace Repository.Migrations
 
                     b.HasIndex("CoordinateId");
 
-                    b.HasIndex("ElectricFieldStrengthId");
+                    b.HasIndex("ElectricFieldStrengthId")
+                        .IsUnique();
 
                     b.HasIndex("SettlementId");
 
@@ -553,8 +561,8 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Domain_Models.ElectricFieldStrength", "ElectricFieldStrength")
-                        .WithMany()
-                        .HasForeignKey("ElectricFieldStrengthId")
+                        .WithOne()
+                        .HasForeignKey("Domain.Domain_Models.Measurement", "ElectricFieldStrengthId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

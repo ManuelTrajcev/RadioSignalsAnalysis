@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Layout from "./ui/components/layout/Layout/Layout.jsx";
 import HomePage from "./ui/pages/HomePage/HomePage.jsx";
 import Register from "./ui/components/auth/Register/Register.jsx";
