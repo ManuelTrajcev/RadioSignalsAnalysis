@@ -13,6 +13,7 @@ using Repository.Seed;
 using Scalar.AspNetCore;
 using Services.Implementation;
 using Services.Interface;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
@@ -64,7 +65,9 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"])),
+        RoleClaimType = ClaimTypes.Role,
+        ClockSkew = TimeSpan.FromMinutes(1)
     };
 });
 
@@ -97,8 +100,6 @@ using (var scope = app.Services.CreateScope())
          }
 }
 
-app.UseCors("vite-dev");
-
 // Seed municipalities & settlements from JSON on startup (runs once)
 await app.Services.SeedMunicipalitiesAndSettlementsAsync(
     "SeedData\\north_macedonia_municipalities_settlements_seed.json");
@@ -119,7 +120,9 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();  
+app.UseCors("vite-dev");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

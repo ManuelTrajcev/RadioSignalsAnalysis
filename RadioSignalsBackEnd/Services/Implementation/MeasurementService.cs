@@ -38,7 +38,7 @@ public class MeasurementService : IMeasurementService
         var e = await _efs.InsertAsync(new ElectricFieldStrength
         {
             Value = dto.ElectricFieldDbuvPerM,
-            MesurementUnit = ElectricFieldUnit.dBuVPerMeter
+            MeasurementUnit = ElectricFieldUnit.dBuVPerMeter
         });
 
         var entity = new Measurement
@@ -106,7 +106,7 @@ public class MeasurementService : IMeasurementService
             var newE = await _efs.InsertAsync(new ElectricFieldStrength
             {
                 Value = dto.ElectricFieldDbuvPerM,
-                MesurementUnit = ElectricFieldUnit.dBuVPerMeter
+                MeasurementUnit = ElectricFieldUnit.dBuVPerMeter
             });
             e = newE.Id;
         }

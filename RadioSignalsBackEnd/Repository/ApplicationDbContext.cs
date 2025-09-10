@@ -52,6 +52,23 @@ public class ApplicationDbContext : IdentityDbContext<User>
             .Property(cf => cf.FrequencyUnit)
             .HasDefaultValue(FrequencyUnit.MHz);
 
+        builder.Entity<GeoCoordinate>()
+            .ToTable(tb => tb.HasCheckConstraint(
+                "CK_GeoCoordinate_MinSec",
+                "(\"LatitudeMinutes\" BETWEEN 0 AND 59) AND (\"LatitudeSeconds\" >= 0 AND \"LatitudeSeconds\" < 60) AND " +
+                "(\"LongitudeMinutes\" BETWEEN 0 AND 59) AND (\"LongitudeSeconds\" >= 0 AND \"LongitudeSeconds\" < 60)"));
+
+        builder.Entity<ElectricFieldStrength>()
+            .ToTable(tb => tb.HasCheckConstraint(
+                "CK_ElectricFieldStrength_Value_Positive",
+                "\"Value\" >= 0"));
+
+        builder.Entity<Measurement>()
+            .HasOne(m => m.ElectricFieldStrength)
+            .WithOne()
+            .HasForeignKey<Measurement>(m => m.ElectricFieldStrengthId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Ensure ALL enum properties (including nullable enums) are stored as strings
         foreach (var entityType in builder.Model.GetEntityTypes())
         {

@@ -18,8 +18,15 @@ public class MeasurementsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] MeasurementDto dto)
     {
-        var created = await _svc.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, ToResponse(created));
+        try
+        {
+            var created = await _svc.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, ToResponse(created));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet]
@@ -45,8 +52,15 @@ public class MeasurementsController : ControllerBase
     [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> Update(Guid id, [FromBody] MeasurementDto dto)
     {
-        var updated = await _svc.UpdateAsync(id, dto);
-        return updated == null ? NotFound() : Ok(ToResponse(updated));
+        try
+        {
+            var updated = await _svc.UpdateAsync(id, dto);
+            return updated == null ? NotFound() : Ok(ToResponse(updated));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpDelete("{id:guid}")]
@@ -66,6 +80,12 @@ public class MeasurementsController : ControllerBase
             TestLocation = m.TestLocation,
             LatitudeDecimal = m.Coordinate?.LatitudeDecimal ?? 0,
             LongitudeDecimal = m.Coordinate?.LongitudeDecimal ?? 0,
+            LatitudeDegrees = m.Coordinate?.LatitudeDegrees ?? 0,
+            LatitudeMinutes = m.Coordinate?.LatitudeMinutes ?? 0,
+            LatitudeSeconds = m.Coordinate?.LatitudeSeconds ?? 0,
+            LongitudeDegrees = m.Coordinate?.LongitudeDegrees ?? 0,
+            LongitudeMinutes = m.Coordinate?.LongitudeMinutes ?? 0,
+            LongitudeSeconds = m.Coordinate?.LongitudeSeconds ?? 0,
             AltitudeMeters = m.AltitudeMeters,
             IsTvChannel = m.ChannelFrequency?.IsTvChannel ?? false,
             ChannelNumber = m.ChannelFrequency?.ChannelNumber,

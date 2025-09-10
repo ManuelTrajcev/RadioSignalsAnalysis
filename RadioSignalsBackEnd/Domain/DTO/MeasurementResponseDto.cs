@@ -8,6 +8,13 @@ public class MeasurementResponseDto
     public DateTime Date { get; set; }
     public string TestLocation { get; set; }
 
+    public int LatitudeDegrees { get; set; }
+    public int LatitudeMinutes { get; set; }
+    public float LatitudeSeconds { get; set; }
+    public int LongitudeDegrees { get; set; }
+    public int LongitudeMinutes { get; set; }
+    public float LongitudeSeconds { get; set; }
+
     public double LatitudeDecimal { get; set; }
     public double LongitudeDecimal { get; set; }
     public int AltitudeMeters { get; set; }
