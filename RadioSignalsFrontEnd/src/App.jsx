@@ -1,11 +1,15 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Layout from "./ui/components/layout/Layout/Layout.jsx";
 import HomePage from "./ui/pages/HomePage/HomePage.jsx";
 import Register from "./ui/components/auth/Register/Register.jsx";
 import Login from "./ui/components/auth/Login/Login.jsx";
 import ProtectedRoute from "./ui/components/routing/ProtectedRoute/ProtectedRoute.jsx";
 import WorkspacesPage from "./ui/pages/WorkspacesPage/WorkspacesPage.jsx";
+
+// NEW
+import DataEntryPage from "./ui/pages/DataEntryPage/DataEntryPage.jsx";
+import MeasurementsBrowserPage from "./ui/pages/MeasurementsBrowserPage/MeasurementsBrowserPage.jsx";
 
 const App = () => {
     return (
@@ -17,6 +21,8 @@ const App = () => {
                     <Route index element={<HomePage/>}/>
                     <Route element={<ProtectedRoute/>}>
                         <Route path="workspaces" element={<WorkspacesPage/>}/>
+                        <Route path="data-entry" element={<DataEntryPage/>}/>
+                        <Route path="measurements" element={<MeasurementsBrowserPage/>}/>
                     </Route>
                 </Route>
             </Routes>

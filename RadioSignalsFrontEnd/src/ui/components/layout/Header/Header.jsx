@@ -1,29 +1,27 @@
 import React from 'react';
-import {Link} from "react-router";
-import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
+import {Link} from "react-router-dom";
+import {AppBar, Box, Button, Toolbar, Typography} from "@mui/material";
 import "./Header.css";
 import AuthenticationToggle from "../../auth/AuthenticationToggle/AuthenticationToggle.jsx";
-
-const pages = [
-    {"path": "/", "name": "home"},
-    {"path": "/workspaces", "name": "workspaces"},
-];
+import useAuth from "../../../../hooks/useAuth.js";
 
 const Header = () => {
+    const { isLoggedIn } = useAuth();
+
+    const pages = [
+        {"path": "/", "name": "Home"},
+        // Only show app pages when logged in (navigation-safe; routes are still protected)
+        ...(isLoggedIn ? [
+            {"path": "/data-entry", "name": "Data Entry"},
+            {"path": "/measurements", "name": "Measurements"},
+            {"path": "/workspaces", "name": "Workspaces"},
+        ] : []),
+    ];
+
     return (
         <Box>
             <AppBar position="static" color="error">
                 <Toolbar sx={{ color: 'black' }}>
-                    {/*<IconButton*/}
-                    {/*    size="large"*/}
-                    {/*    edge="start"*/}
-                    {/*    color="inherit"*/}
-                    {/*    aria-label="menu"*/}
-                    {/*    sx={{mr: 2}}*/}
-                    {/*>*/}
-                    {/*    <MenuIcon/>*/}
-                    {/*</IconButton>*/}
                     <Typography variant="h6" component="div" sx={{mr: 3}}>
                         Radio signals analysis
                     </Typography>

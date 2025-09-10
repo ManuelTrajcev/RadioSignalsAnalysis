@@ -4,8 +4,6 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Repository.Migrations
 {
     /// <inheritdoc />
@@ -60,13 +58,19 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Value = table.Column<float>(type: "real", nullable: false),
-                    SignalType = table.Column<int>(type: "integer", nullable: false),
-                    FrequencyUnit = table.Column<int>(type: "integer", nullable: false)
+                    IsTvChannel = table.Column<bool>(type: "boolean", nullable: false),
+                    ChannelNumber = table.Column<int>(type: "integer", nullable: true),
+                    FrequencyMHz = table.Column<float>(type: "real", nullable: true),
+                    FrequencyUnit = table.Column<string>(type: "text", nullable: true, defaultValue: "MHz"),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChannelFrequencies", x => x.Id);
+                    table.CheckConstraint("CK_ChannelFrequencies_TV_or_FM", "((\"IsTvChannel\" = TRUE AND \"ChannelNumber\" IS NOT NULL AND \"FrequencyMHz\" IS NULL) OR (\"IsTvChannel\" = FALSE AND \"ChannelNumber\" IS NULL AND \"FrequencyMHz\" IS NOT NULL))");
                 });
 
             migrationBuilder.CreateTable(
@@ -75,11 +79,16 @@ namespace Repository.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Value = table.Column<float>(type: "real", nullable: false),
-                    MesurementUnit = table.Column<int>(type: "integer", nullable: false)
+                    MesurementUnit = table.Column<string>(type: "text", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ElectricFieldStrengths", x => x.Id);
+                    table.CheckConstraint("CK_ElectricFieldStrength_Value_Positive", "\"Value\" >= 0");
                 });
 
             migrationBuilder.CreateTable(
@@ -92,11 +101,18 @@ namespace Repository.Migrations
                     LatitudeSeconds = table.Column<float>(type: "real", nullable: false),
                     LongitudeDegrees = table.Column<int>(type: "integer", nullable: false),
                     LongitudeMinutes = table.Column<int>(type: "integer", nullable: false),
-                    LongitudeSeconds = table.Column<float>(type: "real", nullable: false)
+                    LongitudeSeconds = table.Column<float>(type: "real", nullable: false),
+                    LatitudeDecimal = table.Column<double>(type: "double precision", nullable: false),
+                    LongitudeDecimal = table.Column<double>(type: "double precision", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GeoCoordinates", x => x.Id);
+                    table.CheckConstraint("CK_GeoCoordinate_MinSec", "(\"LatitudeMinutes\" BETWEEN 0 AND 59) AND (\"LatitudeSeconds\" >= 0 AND \"LatitudeSeconds\" < 60) AND (\"LongitudeMinutes\" BETWEEN 0 AND 59) AND (\"LongitudeSeconds\" >= 0 AND \"LongitudeSeconds\" < 60)");
                 });
 
             migrationBuilder.CreateTable(
@@ -104,11 +120,39 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Municipalities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReferenceThresholds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Technology = table.Column<string>(type: "text", nullable: false),
+                    Scope = table.Column<string>(type: "text", nullable: false),
+                    ScopeIdentifier = table.Column<string>(type: "text", nullable: true),
+                    ChannelNumber = table.Column<int>(type: "integer", nullable: true),
+                    FrequencyMHz = table.Column<float>(type: "real", nullable: true),
+                    MinDbuVPerM = table.Column<float>(type: "real", nullable: false),
+                    MaxDbuVPerM = table.Column<float>(type: "real", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReferenceThresholds", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,10 +267,14 @@ namespace Repository.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    RegistryNumber = table.Column<string>(type: "text", nullable: false),
-                    Population = table.Column<int>(type: "integer", nullable: false),
-                    Households = table.Column<int>(type: "integer", nullable: false),
-                    MunicipalityId = table.Column<Guid>(type: "uuid", nullable: false)
+                    RegistryNumber = table.Column<string>(type: "text", nullable: true),
+                    Population = table.Column<int>(type: "integer", nullable: true),
+                    Households = table.Column<int>(type: "integer", nullable: true),
+                    MunicipalityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -250,11 +298,16 @@ namespace Repository.Migrations
                     CoordinateId = table.Column<Guid>(type: "uuid", nullable: false),
                     AltitudeMeters = table.Column<int>(type: "integer", nullable: false),
                     ChannelFrequencyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProgramIdentifier = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    ProgramIdentifier = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
                     TransmitterLocation = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     ElectricFieldStrengthId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Remarks = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
+                    Remarks = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    Technology = table.Column<string>(type: "text", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,15 +336,6 @@ namespace Repository.Migrations
                         principalTable: "Settlements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "8318fecd-ac5d-4043-8ba0-040a70d91c1a", null, "USER", "USER" },
-                    { "ca546397-23f5-4a4b-868f-35db05611ea6", null, "ADMIN", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -344,7 +388,8 @@ namespace Repository.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Measurements_ElectricFieldStrengthId",
                 table: "Measurements",
-                column: "ElectricFieldStrengthId");
+                column: "ElectricFieldStrengthId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Measurements_SettlementId",
@@ -355,12 +400,6 @@ namespace Repository.Migrations
                 name: "IX_Settlements_MunicipalityId",
                 table: "Settlements",
                 column: "MunicipalityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Settlements_RegistryNumber",
-                table: "Settlements",
-                column: "RegistryNumber",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -383,6 +422,9 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "Measurements");
+
+            migrationBuilder.DropTable(
+                name: "ReferenceThresholds");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

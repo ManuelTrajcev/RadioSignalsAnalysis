@@ -6,7 +6,7 @@ using Repository.Interface;
 
 namespace Repository.Implementation
 {
- public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> entites;
@@ -17,87 +17,60 @@ namespace Repository.Implementation
             this.entites = _context.Set<T>();
         }
 
-        public T Insert(T entity)
+        public async Task<T> InsertAsync(T entity)
         {
-            _context.Add(entity);
-            _context.SaveChanges();
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public List<T> InsertMany(List<T> entities)
+        public async Task<List<T>> InsertManyAsync(List<T> entities)
         {
-            if (entities == null)
+            if (entities == null || !entities.Any())
             {
-                throw new ArgumentNullException("entities");
+                throw new ArgumentNullException(nameof(entities));
             }
-            entities.AddRange(entities);
-            _context.SaveChanges();
+            await _context.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
             return entities;
         }
 
-
-        public T Update(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             _context.Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public T Delete(T entity)
+        public async Task<T> DeleteAsync(T entity)
         {
             _context.Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public E? Get<E>(Expression<Func<T, E>> selector,
+        public async Task<E?> GetAsync<E>(Expression<Func<T, E>> selector,
             Expression<Func<T, bool>>? predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
             IQueryable<T> query = entites;
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).Select(selector).FirstOrDefault();
-            }
-
-            return query.Select(selector).FirstOrDefault();
+            if (include != null) query = include(query);
+            if (predicate != null) query = query.Where(predicate);
+            if (orderBy != null) return await orderBy(query).Select(selector).FirstOrDefaultAsync();
+            return await query.Select(selector).FirstOrDefaultAsync();
         }
 
-        public IEnumerable<E> GetAll<E>(Expression<Func<T, E>> selector,
+        public async Task<IEnumerable<E>> GetAllAsync<E>(Expression<Func<T, E>> selector,
             Expression<Func<T, bool>>? predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
             IQueryable<T> query = entites;
-
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).Select(selector).AsEnumerable();
-            }
-
-            return query.Select(selector).AsEnumerable();
+            if (include != null) query = include(query);
+            if (predicate != null) query = query.Where(predicate);
+            if (orderBy != null) return await orderBy(query).Select(selector).ToListAsync();
+            return await query.Select(selector).ToListAsync();
         }
-
-    }    
+    }
 }

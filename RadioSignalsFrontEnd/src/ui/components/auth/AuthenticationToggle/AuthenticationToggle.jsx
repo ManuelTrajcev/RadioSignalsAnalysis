@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from "@mui/material";
 import useAuth from "../../../../hooks/useAuth.js";
-import {useNavigate} from "react-router";
+import {useNavigate} from "react-router-dom";
 
 const AuthenticationToggle = () => {
     const {logout, isLoggedIn} = useAuth();

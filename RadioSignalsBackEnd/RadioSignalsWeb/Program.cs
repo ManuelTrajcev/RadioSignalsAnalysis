@@ -1,20 +1,28 @@
 using Domain.Domain_Models;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Repository.Implementation;
 using Repository.Interface;
-using Services.Interface;
-using System.Text;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.OpenApi;
+using Repository.Seed;
 using Scalar.AspNetCore;
+using Services.Implementation;
+using Services.Interface;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpContextAccessor();
 
 // --- Database ---
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
@@ -37,6 +45,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMasterDataService, MasterDataService>();
+builder.Services.AddScoped<IMeasurementService, MeasurementService>();
+builder.Services.AddScoped<IThresholdService, ThresholdService>();
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -55,7 +66,9 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"])),
+        RoleClaimType = "role",
+        ClockSkew = TimeSpan.FromMinutes(1)
     };
 });
 
@@ -72,13 +85,26 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.UseCors("vite-dev");
+using (var scope = app.Services.CreateScope())
+{
+   var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+      foreach (var name in Enum.GetNames(typeof(Role))) // "USER", "ADMIN"
+         {
+           if (!await roleManager.RoleExistsAsync(name))
+            await roleManager.CreateAsync(new IdentityRole(name));
+         }
+}
+
+// Seed municipalities & settlements from JSON on startup (runs once)
+await app.Services.SeedMunicipalitiesAndSettlementsAsync(
+    "SeedData\\north_macedonia_municipalities_settlements_seed.json");
 
 if (app.Environment.IsDevelopment())
 {
@@ -96,7 +122,9 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();  
+app.UseCors("vite-dev");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
