@@ -32,15 +32,6 @@ public class ApplicationDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(builder);
 
-        // Seed Identity roles from enum Role as before
-        var roles = Enum.GetNames(typeof(Role)).Select(rName =>
-            new IdentityRole
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = rName,
-                NormalizedName = rName.ToUpperInvariant()
-            });
-        builder.Entity<IdentityRole>().HasData(roles);
 
         // Check constraint for ChannelFrequencies:
         // TV => ChannelNumber not null, FrequencyMHz null

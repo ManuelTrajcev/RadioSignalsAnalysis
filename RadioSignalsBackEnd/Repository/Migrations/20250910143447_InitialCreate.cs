@@ -4,8 +4,6 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Repository.Migrations
 {
     /// <inheritdoc />
@@ -267,9 +265,9 @@ namespace Repository.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    RegistryNumber = table.Column<string>(type: "text", nullable: false),
-                    Population = table.Column<int>(type: "integer", nullable: false),
-                    Households = table.Column<int>(type: "integer", nullable: false),
+                    RegistryNumber = table.Column<string>(type: "text", nullable: true),
+                    Population = table.Column<int>(type: "integer", nullable: true),
+                    Households = table.Column<int>(type: "integer", nullable: true),
                     MunicipalityId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -338,15 +336,6 @@ namespace Repository.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "3485772f-9f78-4d33-a57d-19e4a65afc1b", null, "ADMIN", "ADMIN" },
-                    { "825212fe-4678-40b6-95a9-97b38328697b", null, "USER", "USER" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -408,12 +397,6 @@ namespace Repository.Migrations
                 name: "IX_Settlements_MunicipalityId",
                 table: "Settlements",
                 column: "MunicipalityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Settlements_RegistryNumber",
-                table: "Settlements",
-                column: "RegistryNumber",
-                unique: true);
         }
 
         /// <inheritdoc />

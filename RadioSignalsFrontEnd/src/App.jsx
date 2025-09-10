@@ -7,6 +7,10 @@ import Login from "./ui/components/auth/Login/Login.jsx";
 import ProtectedRoute from "./ui/components/routing/ProtectedRoute/ProtectedRoute.jsx";
 import WorkspacesPage from "./ui/pages/WorkspacesPage/WorkspacesPage.jsx";
 
+// NEW
+import DataEntryPage from "./ui/pages/DataEntryPage/DataEntryPage.jsx";
+import MeasurementsBrowserPage from "./ui/pages/MeasurementsBrowserPage/MeasurementsBrowserPage.jsx";
+
 const App = () => {
     return (
         <BrowserRouter>
@@ -17,6 +21,8 @@ const App = () => {
                     <Route index element={<HomePage/>}/>
                     <Route element={<ProtectedRoute/>}>
                         <Route path="workspaces" element={<WorkspacesPage/>}/>
+                        <Route path="data-entry" element={<DataEntryPage/>}/>
+                        <Route path="measurements" element={<MeasurementsBrowserPage/>}/>
                     </Route>
                 </Route>
             </Routes>

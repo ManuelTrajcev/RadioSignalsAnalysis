@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250909122602_InitialCreate")]
+    [Migration("20250910143447_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -308,7 +308,7 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<int>("Households")
+                    b.Property<int?>("Households")
                         .HasColumnType("integer");
 
                     b.Property<Guid>("MunicipalityId")
@@ -318,11 +318,10 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Population")
+                    b.Property<int?>("Population")
                         .HasColumnType("integer");
 
                     b.Property<string>("RegistryNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAtUtc")
@@ -334,9 +333,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MunicipalityId");
-
-                    b.HasIndex("RegistryNumber")
-                        .IsUnique();
 
                     b.ToTable("Settlements");
                 });
@@ -437,20 +433,6 @@ namespace Repository.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "825212fe-4678-40b6-95a9-97b38328697b",
-                            Name = "USER",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "3485772f-9f78-4d33-a57d-19e4a65afc1b",
-                            Name = "ADMIN",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

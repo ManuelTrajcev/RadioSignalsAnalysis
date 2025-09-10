@@ -1,4 +1,5 @@
 using Domain.Domain_Models;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OpenApi;
@@ -8,11 +9,13 @@ using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Repository.Implementation;
 using Repository.Interface;
+using Repository.Seed;
 using Scalar.AspNetCore;
 using Services.Implementation;
 using Services.Interface;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,7 +87,21 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+   var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+      foreach (var name in Enum.GetNames(typeof(Role))) // "USER", "ADMIN"
+         {
+           if (!await roleManager.RoleExistsAsync(name))
+            await roleManager.CreateAsync(new IdentityRole(name));
+         }
+}
+
 app.UseCors("vite-dev");
+
+// Seed municipalities & settlements from JSON on startup (runs once)
+await app.Services.SeedMunicipalitiesAndSettlementsAsync(
+    "SeedData\\north_macedonia_municipalities_settlements_seed.json");
 
 if (app.Environment.IsDevelopment())
 {
