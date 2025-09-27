@@ -186,6 +186,43 @@ const DataEntryPage = () => {
     return Object.keys(e).length === 0;
   };
 
+  // Validation for prediction only (no status/e-field)
+  const validateForPrediction = () => {
+    const e = {};
+
+    [
+      "municipalityId",
+      "settlementId",
+      "date",
+      "latitudeDegrees",
+      "latitudeMinutes",
+      "latitudeSeconds",
+      "longitudeDegrees",
+      "longitudeMinutes",
+      "longitudeSeconds",
+      "altitudeMeters",
+      "transmitterLocation",
+      "technology",
+    ].forEach((k) => { if (!required(form[k])) e[k] = "Required"; });
+
+    if (form.technology === "DIGITAL_TV" && !required(form.channelNumber)) e.channelNumber = "Required for DIGITAL_TV";
+    if (form.technology === "FM" && !required(form.frequencyMHz)) e.frequencyMHz = "Required for FM";
+
+    const numIn = (k, min, max) => {
+      const n = Number(form[k]);
+      if (Number.isNaN(n) || n < min || n > max) e[k] = `Must be between ${min} and ${max}`;
+    };
+    numIn("latitudeDegrees", 0, 90);
+    numIn("latitudeMinutes", 0, 59);
+    numIn("latitudeSeconds", 0, 59.999);
+    numIn("longitudeDegrees", 0, 180);
+    numIn("longitudeMinutes", 0, 59);
+    numIn("longitudeSeconds", 0, 59.999);
+
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
   const buildPayload = () => {
     return {
       settlementId: form.settlementId,
@@ -205,6 +242,25 @@ const DataEntryPage = () => {
       electricFieldDbuvPerM: Number(form.electricFieldDbuvPerM),
       remarks: form.remarks || null,
       status: form.status, // enums serialized as strings by backend
+      technology: form.technology,
+    };
+  };
+
+  const buildPredictionPayload = () => {
+    return {
+      settlementId: form.settlementId,
+      date: new Date(form.date).toISOString(),
+      latitudeDegrees: Number(form.latitudeDegrees),
+      latitudeMinutes: Number(form.latitudeMinutes),
+      latitudeSeconds: Number(form.latitudeSeconds),
+      longitudeDegrees: Number(form.longitudeDegrees),
+      longitudeMinutes: Number(form.longitudeMinutes),
+      longitudeSeconds: Number(form.longitudeSeconds),
+      altitudeMeters: Number(form.altitudeMeters),
+      channelNumber: form.technology === "DIGITAL_TV" ? Number(form.channelNumber) : null,
+      frequencyMHz: form.technology === "FM" ? Number(form.frequencyMHz) : null,
+      programIdentifier: form.programIdentifier || null,
+      transmitterLocation: form.transmitterLocation,
       technology: form.technology,
     };
   };
@@ -531,7 +587,27 @@ const DataEntryPage = () => {
               />
             </Grid>
 
-            <Grid size={{ xs: 12 }} display="flex" justifyContent="end" gap={2}>
+          <Grid size={{ xs: 12 }} display="flex" justifyContent="end" gap={2}>
+              <Button
+                variant="outlined"
+                onClick={async () => {
+                  if (!validateForPrediction()) return;
+                  try {
+                    const res = await measurementRepository.predictField(buildPredictionPayload());
+                    const val = Number(res?.electricFieldDbuvPerM);
+                    if (!Number.isNaN(val)) {
+                      setForm((f) => ({ ...f, electricFieldDbuvPerM: val.toFixed(2) }));
+                      setSnack({ open: true, message: `Predicted field: ${val.toFixed(2)} dBµV/m`, severity: "success" });
+                    } else {
+                      setSnack({ open: true, message: "Prediction failed.", severity: "error" });
+                    }
+                  } catch (err) {
+                    setSnack({ open: true, message: err?.response?.data || "Prediction service error", severity: "error" });
+                  }
+                }}
+              >
+                Predict
+              </Button>
               <Button
                 variant="outlined"
                 onClick={() => {

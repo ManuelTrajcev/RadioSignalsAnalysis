@@ -48,6 +48,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMasterDataService, MasterDataService>();
 builder.Services.AddScoped<IMeasurementService, MeasurementService>();
 builder.Services.AddScoped<IThresholdService, ThresholdService>();
+builder.Services.AddHttpClient<IPredictionService, PythonPredictionService>();
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");

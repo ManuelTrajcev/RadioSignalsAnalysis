@@ -6,6 +6,11 @@ const measurementRepository = {
     const res = await axiosInstance.post("/measurements", payload);
     return res.data;
   },
+  predictField: async (payload) => {
+    // payload is PredictionDto shape (same as MeasurementDto minus E-field, Status, Remarks)
+    const res = await axiosInstance.post("/predict", payload);
+    return res.data; // { electricFieldDbuvPerM, technology, model }
+  },
   fetchMeasurements: async (params = {}) => {
     // params: municipalityId?, settlementId?, dateFrom?, dateTo?, technology?
     const res = await axiosInstance.get("/measurements", { params });
