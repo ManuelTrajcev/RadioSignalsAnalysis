@@ -14,6 +14,7 @@ const Header = () => {
         ...(isLoggedIn ? [
             {"path": "/data-entry", "name": "Data Entry"},
             {"path": "/measurements", "name": "Measurements"},
+            {"path": "/map", "name": "Map"},
             {"path": "/workspaces", "name": "Workspaces"},
         ] : []),
     ];
