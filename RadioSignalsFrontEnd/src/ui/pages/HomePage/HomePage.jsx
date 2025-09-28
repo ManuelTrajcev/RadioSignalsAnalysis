@@ -23,7 +23,7 @@ const HomePage = () => {
                         <CircularProgress />
                     </Box>
                 ) : (
-                    <Typography>{homePage}</Typography>
+                    <Typography></Typography>
                 )}
             </Container>
         </Box>
