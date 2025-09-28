@@ -11,6 +11,9 @@ import WorkspacesPage from "./ui/pages/WorkspacesPage/WorkspacesPage.jsx";
 import DataEntryPage from "./ui/pages/DataEntryPage/DataEntryPage.jsx";
 import MeasurementsBrowserPage from "./ui/pages/MeasurementsBrowserPage/MeasurementsBrowserPage.jsx";
 
+//NEW
+import MapPage from "./ui/pages/MapPage/MapPage";
+
 const App = () => {
     return (
         <BrowserRouter>
@@ -23,6 +26,7 @@ const App = () => {
                         <Route path="workspaces" element={<WorkspacesPage/>}/>
                         <Route path="data-entry" element={<DataEntryPage/>}/>
                         <Route path="measurements" element={<MeasurementsBrowserPage/>}/>
+                        <Route path="map" element={<MapPage />} />
                     </Route>
                 </Route>
             </Routes>
