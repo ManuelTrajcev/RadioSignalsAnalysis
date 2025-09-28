@@ -1,3 +1,5 @@
+using System;
+
 using Domain.Domain_Models;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,6 +50,17 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMasterDataService, MasterDataService>();
 builder.Services.AddScoped<IMeasurementService, MeasurementService>();
 builder.Services.AddScoped<IThresholdService, ThresholdService>();
+builder.Services.AddScoped<IPredictionService, PredictionService>();
+
+builder.Services.AddHttpClient("PredictionService", client =>
+{
+    var baseUrl = builder.Configuration["PredictionService:BaseUrl"];
+    if (!string.IsNullOrWhiteSpace(baseUrl))
+    {
+        client.BaseAddress = new Uri(baseUrl);
+    }
+    client.Timeout = TimeSpan.FromSeconds(15);
+});
 
 // --- JWT Authentication ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
