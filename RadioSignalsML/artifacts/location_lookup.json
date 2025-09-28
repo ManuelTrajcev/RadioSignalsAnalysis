@@ -1,0 +1,2286 @@
+{
+  "400025": {
+    "municipality": "БЕРОВО",
+    "settlement": "Будинарци  ☻"
+  },
+  "400033": {
+    "municipality": "БЕРОВО",
+    "settlement": "Владимирово"
+  },
+  "400041": {
+    "municipality": "БЕРОВО",
+    "settlement": "Двориште  ☻"
+  },
+  "400068": {
+    "municipality": "БЕРОВО",
+    "settlement": "Митрашинци"
+  },
+  "400092": {
+    "municipality": "ПЕХЧЕВО",
+    "settlement": "Пехчево"
+  },
+  "400262": {
+    "municipality": "БИТОЛА",
+    "settlement": "Битола"
+  },
+  "400297": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Брник"
+  },
+  "400343": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Будимирци *"
+  },
+  "400408": {
+    "municipality": "БИТОЛА",
+    "settlement": "Габалавци *"
+  },
+  "400506": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Градешница *"
+  },
+  "400513": {
+    "municipality": "БИТОЛА",
+    "settlement": "Граешница"
+  },
+  "400530": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Груништа *"
+  },
+  "400564": {
+    "municipality": "БИТОЛА",
+    "settlement": "Дихово"
+  },
+  "400696": {
+    "municipality": "БИТОЛА",
+    "settlement": "Драгарино *"
+  },
+  "400700": {
+    "municipality": "БИТОЛА",
+    "settlement": "Драгожани"
+  },
+  "400718": {
+    "municipality": "БИТОЛА",
+    "settlement": "Драгош"
+  },
+  "400785": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Зовиќ 1"
+  },
+  "400904": {
+    "municipality": "БИТОЛА",
+    "settlement": "Кукуречани"
+  },
+  "400955": {
+    "municipality": "БИТОЛА",
+    "settlement": "Лисолај"
+  },
+  "401005": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Маково"
+  },
+  "401099": {
+    "municipality": "БИТОЛА",
+    "settlement": "Нижеполе  ☻"
+  },
+  "401129": {
+    "municipality": "БИТОЛА",
+    "settlement": "Ново Змирново"
+  },
+  "401200": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Орле"
+  },
+  "401315": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Рапеш"
+  },
+  "401358": {
+    "municipality": "МОГИЛА",
+    "settlement": "Свето Тодори *"
+  },
+  "401374": {
+    "municipality": "БИТОЛА",
+    "settlement": "Секирани"
+  },
+  "401455": {
+    "municipality": "БИТОЛА",
+    "settlement": "Српци"
+  },
+  "401463": {
+    "municipality": "НОВАЦИ",
+    "settlement": "Старавина"
+  },
+  "401552": {
+    "municipality": "БИТОЛА",
+    "settlement": "Цапари"
+  },
+  "401596": {
+    "municipality": "БИТОЛА",
+    "settlement": "Црновец"
+  },
+  "401625": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Битово"
+  },
+  "401650": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Брест"
+  },
+  "401668": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Македонски Брод"
+  },
+  "401706": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Горно Ботушје *"
+  },
+  "401722": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Грешница"
+  },
+  "401749": {
+    "municipality": "ПЛАСНИЦА",
+    "settlement": "Дворци"
+  },
+  "401757": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Девич *"
+  },
+  "401765": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Долни Манастирец"
+  },
+  "401773": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Долно Ботушје"
+  },
+  "401781": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Долно Крушје"
+  },
+  "401811": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Заград"
+  },
+  "401862": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Инче"
+  },
+  "401897": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Ковач"
+  },
+  "401919": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Ковче"
+  },
+  "401927": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Косово *"
+  },
+  "401935": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Крапа"
+  },
+  "401960": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Лупште"
+  },
+  "401994": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Ореовец"
+  },
+  "402001": {
+    "municipality": "ПЛАСНИЦА",
+    "settlement": "Пласница"
+  },
+  "402010": {
+    "municipality": "ПЛАСНИЦА",
+    "settlement": "Преглово"
+  },
+  "402036": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Растеш"
+  },
+  "402044": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Русјаци *"
+  },
+  "402052": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Самоков"
+  },
+  "402079": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Сланско *"
+  },
+  "402109": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Суводол *"
+  },
+  "402141": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Тополница"
+  },
+  "402168": {
+    "municipality": "МАКЕДОНСКИ БРОД",
+    "settlement": "Црешнево"
+  },
+  "402214": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Балинци"
+  },
+  "402257": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Башибос"
+  },
+  "402265": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Брајковци"
+  },
+  "402281": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Валандово"
+  },
+  "402311": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Грчиште"
+  },
+  "402320": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Дедели"
+  },
+  "402346": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Јосифово"
+  },
+  "402354": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Казандол"
+  },
+  "402362": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Кочули"
+  },
+  "402389": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Марвинци"
+  },
+  "402397": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Пирава  ☻"
+  },
+  "402427": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Прстен"
+  },
+  "402435": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Раброво"
+  },
+  "402443": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Собри"
+  },
+  "402451": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Татарли"
+  },
+  "402478": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Удово"
+  },
+  "402486": {
+    "municipality": "ВАЛАНДОВО",
+    "settlement": "Чалакли"
+  },
+  "402532": {
+    "municipality": "ВИНИЦА",
+    "settlement": "Градец"
+  },
+  "402672": {
+    "municipality": "БОГДАНЦИ",
+    "settlement": "Богданци  ☻"
+  },
+  "402729": {
+    "municipality": "ГЕВГЕЛИЈА",
+    "settlement": "Гевгелија"
+  },
+  "402745": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Дурутли"
+  },
+  "402770": {
+    "municipality": "ГЕВГЕЛИЈА",
+    "settlement": "☼  Кованец"
+  },
+  "402796": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Куртамзали"
+  },
+  "402826": {
+    "municipality": "ГЕВГЕЛИЈА",
+    "settlement": "Моин"
+  },
+  "402869": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Николиќ"
+  },
+  "402877": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Нов Дојран"
+  },
+  "402885": {
+    "municipality": "ГЕВГЕЛИЈА",
+    "settlement": "Ново Коњско"
+  },
+  "402958": {
+    "municipality": "ГЕВГЕЛИЈА",
+    "settlement": "Смоквица"
+  },
+  "402966": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Сретеново"
+  },
+  "402974": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Стар Дојран"
+  },
+  "403008": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Фурка"
+  },
+  "403024": {
+    "municipality": "ДОЈРАН",
+    "settlement": "Црничани"
+  },
+  "403067": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Аџиевци"
+  },
+  "403113": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Битуше"
+  },
+  "403156": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Велебрдо"
+  },
+  "403229": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Врбен"
+  },
+  "403245": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Вруток"
+  },
+  "403318": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Гостивар"
+  },
+  "403423": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Железна Река *"
+  },
+  "403431": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Жировница"
+  },
+  "403458": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Здуње"
+  },
+  "403474": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Јанче"
+  },
+  "403539": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Корито"
+  },
+  "403555": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Куново"
+  },
+  "403563": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Лазарополе"
+  },
+  "403571": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Лакавица"
+  },
+  "403580": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Леуново"
+  },
+  "403628": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Маврово"
+  },
+  "403733": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Орќуше"
+  },
+  "403741": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Падалиште *"
+  },
+  "403750": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Печково"
+  },
+  "403776": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Присојница"
+  },
+  "403784": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Равен"
+  },
+  "403792": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Речане"
+  },
+  "403822": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "☼  Ростуше"
+  },
+  "403881": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Скудриње"
+  },
+  "403890": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Србиново  ☻"
+  },
+  "403911": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Страјане"
+  },
+  "403920": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Сушица"
+  },
+  "403962": {
+    "municipality": "МАВРОВО И РОСТУШ(А)Е☼",
+    "settlement": "Требиште"
+  },
+  "403997": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Трново *"
+  },
+  "404012": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "Форино"
+  },
+  "404101": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Брештани *"
+  },
+  "404152": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Горенци"
+  },
+  "404179": {
+    "municipality": "ДЕБАР",
+    "settlement": "Горно Косоврасти"
+  },
+  "404195": {
+    "municipality": "ДЕБАР",
+    "settlement": "Дебар"
+  },
+  "404209": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Долгаш"
+  },
+  "404217": {
+    "municipality": "ДЕБАР",
+    "settlement": "Долно Косоврасти"
+  },
+  "404225": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Долно Мелничани"
+  },
+  "404241": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Елевци *"
+  },
+  "404284": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Коџаџик"
+  },
+  "404314": {
+    "municipality": "ДЕБАР",
+    "settlement": "Могорче"
+  },
+  "404322": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Новак"
+  },
+  "404489": {
+    "municipality": "ДЕБАР",
+    "settlement": "Џепиште"
+  },
+  "404543": {
+    "municipality": "ДЕЛЧЕВО",
+    "settlement": "Габрово"
+  },
+  "404675": {
+    "municipality": "МАКЕДОНСКА КАМЕНИЦА",
+    "settlement": "Луковица"
+  },
+  "404683": {
+    "municipality": "МАКЕДОНСКА КАМЕНИЦА",
+    "settlement": "Моштица"
+  },
+  "404691": {
+    "municipality": "ДЕЛЧЕВО",
+    "settlement": "Нов Истевник"
+  },
+  "404721": {
+    "municipality": "ДЕЛЧЕВО",
+    "settlement": "Разловци"
+  },
+  "404730": {
+    "municipality": "МАКЕДОНСКА КАМЕНИЦА",
+    "settlement": "Саса"
+  },
+  "404764": {
+    "municipality": "ДЕЛЧЕВО",
+    "settlement": "Стар Истевник"
+  },
+  "404799": {
+    "municipality": "ДЕЛЧЕВО",
+    "settlement": "Тработивиште"
+  },
+  "404845": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Базерник"
+  },
+  "404873": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Бабино"
+  },
+  "404888": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Брезово"
+  },
+  "404900": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Вирово *"
+  },
+  "404918": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Големо Илино"
+  },
+  "404942": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Доленци"
+  },
+  "404977": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Жван"
+  },
+  "404985": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Железнец"
+  },
+  "405027": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Зашле"
+  },
+  "405051": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Мало Илино"
+  },
+  "405060": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Мренога"
+  },
+  "405167": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Слоештица"
+  },
+  "405183": {
+    "municipality": "ДЕМИР ХИСАР",
+    "settlement": "Сопотница"
+  },
+  "405248": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Бегниште"
+  },
+  "405264": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Бохула"
+  },
+  "405272": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Брушани"
+  },
+  "405329": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Возарци"
+  },
+  "405361": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Горна Бошава"
+  },
+  "405388": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Дабниште"
+  },
+  "405418": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Долна Бошава"
+  },
+  "405507": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Конопиште"
+  },
+  "405523": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Крњево"
+  },
+  "405558": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Мајден"
+  },
+  "405582": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Мрежичко"
+  },
+  "405663": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Раец"
+  },
+  "405671": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Ресава"
+  },
+  "405698": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Рожден"
+  },
+  "405736": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Страгово"
+  },
+  "405779": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Чемерско"
+  },
+  "405795": {
+    "municipality": "КАВАДАРЦИ",
+    "settlement": "Шивец *"
+  },
+  "405868": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Брждани"
+  },
+  "405892": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Видрани"
+  },
+  "405906": {
+    "municipality": "ВРАНЕШТИЦА",
+    "settlement": "Вранештица"
+  },
+  "406023": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Другово"
+  },
+  "406040": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Ехлоец"
+  },
+  "406074": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Иванчишта"
+  },
+  "406082": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Извор"
+  },
+  "406147": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Јудово"
+  },
+  "406163": {
+    "municipality": "КИЧЕВО",
+    "settlement": "Кичево"
+  },
+  "406171": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Кладник"
+  },
+  "406180": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Кленоец"
+  },
+  "406198": {
+    "municipality": "КИЧЕВО",
+    "settlement": "Кнежино"
+  },
+  "406201": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Козица"
+  },
+  "406228": {
+    "municipality": "ЗАЈАС",
+    "settlement": "Колари"
+  },
+  "406252": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Лавчани"
+  },
+  "406295": {
+    "municipality": "ПЛАСНИЦА",
+    "settlement": "Лисичани"
+  },
+  "406309": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Малкоец"
+  },
+  "406392": {
+    "municipality": "КИЧЕВО",
+    "settlement": "Осој"
+  },
+  "406422": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Подвис"
+  },
+  "406457": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Попоец"
+  },
+  "406465": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Пополжани"
+  },
+  "406503": {
+    "municipality": "КИЧЕВО",
+    "settlement": "Раштани"
+  },
+  "406546": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Свињиште"
+  },
+  "406562": {
+    "municipality": "ДРУГОВО",
+    "settlement": "Србјани"
+  },
+  "406589": {
+    "municipality": "ВРАНЕШТИЦА",
+    "settlement": "Староец  ☻"
+  },
+  "406619": {
+    "municipality": "ЗАЈАС",
+    "settlement": "Тајмиште"
+  },
+  "407127": {
+    "municipality": "ЧЕШИНОВО-ОБЛЕШЕВО",
+    "settlement": "Теранци"
+  },
+  "407151": {
+    "municipality": "МАКЕДОНСКА КАМЕНИЦА",
+    "settlement": "Цера"
+  },
+  "407208": {
+    "municipality": "КРАТОВО",
+    "settlement": "Вакуф"
+  },
+  "407267": {
+    "municipality": "КРАТОВО",
+    "settlement": "Живалево"
+  },
+  "407283": {
+    "municipality": "КРАТОВО",
+    "settlement": "Кетеново *"
+  },
+  "407313": {
+    "municipality": "КРАТОВО",
+    "settlement": "Коњух"
+  },
+  "407321": {
+    "municipality": "КРАТОВО",
+    "settlement": "Кратово"
+  },
+  "407330": {
+    "municipality": "КРАТОВО",
+    "settlement": "Крилатица"
+  },
+  "407429": {
+    "municipality": "КРАТОВО",
+    "settlement": "Приковци"
+  },
+  "407437": {
+    "municipality": "КРАТОВО",
+    "settlement": "Секулица"
+  },
+  "407445": {
+    "municipality": "КРАТОВО",
+    "settlement": "Страцин"
+  },
+  "407453": {
+    "municipality": "КРАТОВО",
+    "settlement": "Талашманце"
+  },
+  "407496": {
+    "municipality": "КРАТОВО",
+    "settlement": "Туралево *"
+  },
+  "407518": {
+    "municipality": "КРАТОВО",
+    "settlement": "Шлегово"
+  },
+  "407526": {
+    "municipality": "КРАТОВО",
+    "settlement": "Шопско Рударе"
+  },
+  "407615": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Габар"
+  },
+  "407623": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Герман"
+  },
+  "407658": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Градец"
+  },
+  "407712": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Добровница"
+  },
+  "407747": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Жидилово"
+  },
+  "407748": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Жидилово"
+  },
+  "407749": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Жидилово"
+  },
+  "407750": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Жидилово"
+  },
+  "407798": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Крива Паланка"
+  },
+  "407844": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Луке"
+  },
+  "407879": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Мала Црцорија"
+  },
+  "407895": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Метежево *"
+  },
+  "407917": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Мождивњак"
+  },
+  "407933": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Огут"
+  },
+  "407941": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Одрено"
+  },
+  "407950": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Опила"
+  },
+  "407992": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Петралица"
+  },
+  "408000": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Подржи Коњ"
+  },
+  "408018": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Псача"
+  },
+  "408034": {
+    "municipality": "РАНКОВЦЕ",
+    "settlement": "Ранковце"
+  },
+  "408077": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Т’лминци"
+  },
+  "408093": {
+    "municipality": "КРИВА ПАЛАНКА",
+    "settlement": "Узем"
+  },
+  "408115": {
+    "municipality": "КРУШЕВО",
+    "settlement": "Арилево"
+  },
+  "408174": {
+    "municipality": "КРУШЕВО",
+    "settlement": "Горно Дивјаци"
+  },
+  "408182": {
+    "municipality": "КРУШЕВО",
+    "settlement": "Долно Дивјаци"
+  },
+  "408301": {
+    "municipality": "КРУШЕВО",
+    "settlement": "Пуста Река *"
+  },
+  "408395": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Алгуња"
+  },
+  "408417": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Арбанашко"
+  },
+  "408425": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Бајловце"
+  },
+  "408450": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Бељаковце"
+  },
+  "408468": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Биљановце"
+  },
+  "408492": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Буковљане *"
+  },
+  "408557": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Војник"
+  },
+  "408565": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Враготурце"
+  },
+  "408573": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Врачевце"
+  },
+  "408646": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Дејловце"
+  },
+  "408654": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Длабочица"
+  },
+  "408662": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Добрача"
+  },
+  "408689": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Доброшане"
+  },
+  "408697": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Довезенце"
+  },
+  "408727": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Драгоманце"
+  },
+  "408751": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Жегљане"
+  },
+  "408832": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Канарево"
+  },
+  "408867": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Карловце"
+  },
+  "408883": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Клечевце"
+  },
+  "408891": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Коинце"
+  },
+  "408905": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Кокино"
+  },
+  "408948": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Куманово"
+  },
+  "408964": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Кучкарево"
+  },
+  "409049": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Макреш"
+  },
+  "409057": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Малотино"
+  },
+  "409073": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Младо Нагоричане"
+  },
+  "409090": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Никуљане"
+  },
+  "409235": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Пелинце"
+  },
+  "409243": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Проевце"
+  },
+  "409251": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Пузајка"
+  },
+  "409260": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Пчиња"
+  },
+  "409286": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Рамно"
+  },
+  "409391": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Старо Нагоричане"
+  },
+  "409405": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Степанце *"
+  },
+  "409448": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Стрновац"
+  },
+  "409529": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Цветишница"
+  },
+  "409545": {
+    "municipality": "СТАРО НАГОРИЧАНЕ",
+    "settlement": "Челопек"
+  },
+  "409570": {
+    "municipality": "КУМАНОВО",
+    "settlement": "Шупљи Камен"
+  },
+  "409596": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Бесвица"
+  },
+  "409600": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Бистренци"
+  },
+  "409634": {
+    "municipality": "НЕГОТИНО",
+    "settlement": "Војшанци"
+  },
+  "409669": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Демир Капија"
+  },
+  "409693": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Дрен"
+  },
+  "409766": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Корешница"
+  },
+  "409782": {
+    "municipality": "НЕГОТИНО",
+    "settlement": "Криволак"
+  },
+  "409839": {
+    "municipality": "НЕГОТИНО",
+    "settlement": "Неготино"
+  },
+  "409847": {
+    "municipality": "НЕГОТИНО",
+    "settlement": "Пепелиште"
+  },
+  "409863": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Прждево"
+  },
+  "409928": {
+    "municipality": "ДЕМИР КАПИЈА",
+    "settlement": "Чифлик"
+  },
+  "409952": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Арбиново"
+  },
+  "409979": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Белчишта"
+  },
+  "409987": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Ботун  ☻"
+  },
+  "409995": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Брежани"
+  },
+  "410004": {
+    "municipality": "ОХРИД",
+    "settlement": "Вапила"
+  },
+  "410012": {
+    "municipality": "ОХРИД",
+    "settlement": "Велгошти"
+  },
+  "410047": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Велмеј"
+  },
+  "410063": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Врбјани"
+  },
+  "410071": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Годивје"
+  },
+  "410098": {
+    "municipality": "ОХРИД",
+    "settlement": "Горно Лакочереј"
+  },
+  "410101": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Горно Средоречие"
+  },
+  "410128": {
+    "municipality": "ОХРИД",
+    "settlement": "Долно Лакочереј"
+  },
+  "410136": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Долно Средоречие"
+  },
+  "410144": {
+    "municipality": "ОХРИД",
+    "settlement": "Елшани"
+  },
+  "410152": {
+    "municipality": "ОХРИД",
+    "settlement": "Завој"
+  },
+  "410179": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Злести"
+  },
+  "410187": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Издеглавје"
+  },
+  "410217": {
+    "municipality": "ОХРИД",
+    "settlement": "Косел"
+  },
+  "410225": {
+    "municipality": "ОХРИД",
+    "settlement": "Куратица *"
+  },
+  "410233": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Лактиње"
+  },
+  "410241": {
+    "municipality": "ОХРИД",
+    "settlement": "Лескоец"
+  },
+  "410250": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Лешани"
+  },
+  "410268": {
+    "municipality": "ОХРИД",
+    "settlement": "Ливоишта"
+  },
+  "410292": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Мраморец"
+  },
+  "410293": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Мраморец"
+  },
+  "410294": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Мраморец"
+  },
+  "410295": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Мраморец"
+  },
+  "410306": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Ново Село"
+  },
+  "410314": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Оздолени"
+  },
+  "410349": {
+    "municipality": "ОХРИД",
+    "settlement": "Орман"
+  },
+  "410365": {
+    "municipality": "ОХРИД",
+    "settlement": "Охрид"
+  },
+  "410373": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Песочани"
+  },
+  "410390": {
+    "municipality": "ОХРИД",
+    "settlement": "Плаќе"
+  },
+  "410420": {
+    "municipality": "ОХРИД",
+    "settlement": "Расино"
+  },
+  "410446": {
+    "municipality": "ОХРИД",
+    "settlement": "Свиништа"
+  },
+  "410454": {
+    "municipality": "ОХРИД",
+    "settlement": "Сирула"
+  },
+  "410489": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Слатино"
+  },
+  "410497": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Слатински Чифлик"
+  },
+  "410519": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Сливово"
+  },
+  "410527": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Сошани"
+  },
+  "410551": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Турје"
+  },
+  "410560": {
+    "municipality": "( ДЕБАРЦА ) ☼ ДЕБРЦА",
+    "settlement": "Црвена Вода"
+  },
+  "410616": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Беловодица"
+  },
+  "410632": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Бешиште"
+  },
+  "410691": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Вепрчани"
+  },
+  "410713": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Витолиште"
+  },
+  "410837": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Горно Село"
+  },
+  "410870": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Дабница"
+  },
+  "410918": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Долнени"
+  },
+  "410934": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Дреновци"
+  },
+  "410942": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Дуње"
+  },
+  "410969": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Дупјачани"
+  },
+  "411019": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Забрчани"
+  },
+  "411060": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Кален"
+  },
+  "411175": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Крушевица"
+  },
+  "411221": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Мажучиште"
+  },
+  "411256": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Мало Мраморани"
+  },
+  "411272": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Манастир *"
+  },
+  "411337": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Небрегово"
+  },
+  "411418": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Пештани"
+  },
+  "411426": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Плетвар"
+  },
+  "411442": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Полчиште *"
+  },
+  "411558": {
+    "municipality": "ДОЛНЕНИ",
+    "settlement": "Сенокос"
+  },
+  "411663": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Тополчани"
+  },
+  "411671": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Тројаци"
+  },
+  "411710": {
+    "municipality": "ПРИЛЕП",
+    "settlement": "Чаниште"
+  },
+  "411825": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Гризилевци"
+  },
+  "411841": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Добрево"
+  },
+  "411876": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Древено"
+  },
+  "411914": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Злетово"
+  },
+  "411973": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Лезово"
+  },
+  "411981": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Лесново"
+  },
+  "412007": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Неокази"
+  },
+  "412023": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "☼Петршино"
+  },
+  "412058": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Пробиштип"
+  },
+  "412082": {
+    "municipality": "ПРОБИШТИП",
+    "settlement": "Ратавица"
+  },
+  "412210": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Габревци"
+  },
+  "412228": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Гарван"
+  },
+  "412244": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Горни Липовиќ"
+  },
+  "412279": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Дедино"
+  },
+  "412295": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Долни Липовиќ"
+  },
+  "412333": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Загорци"
+  },
+  "412341": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Злеово"
+  },
+  "412368": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Јаргулица"
+  },
+  "412422": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Конче"
+  },
+  "412465": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Лубница"
+  },
+  "412490": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Ораовица"
+  },
+  "412520": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Подареш"
+  },
+  "412538": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Покрајчево"
+  },
+  "412554": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Радовиш"
+  },
+  "412562": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Ракитец"
+  },
+  "412589": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Раклиш"
+  },
+  "412619": {
+    "municipality": "КОНЧЕ",
+    "settlement": "Скоруша"
+  },
+  "412651": {
+    "municipality": "РАДОВИШ",
+    "settlement": "Тополница"
+  },
+  "412759": {
+    "municipality": "РЕСЕН",
+    "settlement": "Брајчино"
+  },
+  "412791": {
+    "municipality": "РЕСЕН",
+    "settlement": "Горно Крушје"
+  },
+  "412821": {
+    "municipality": "РЕСЕН",
+    "settlement": "Долно Дупени"
+  },
+  "412929": {
+    "municipality": "РЕСЕН",
+    "settlement": "Јанковец"
+  },
+  "412953": {
+    "municipality": "РЕСЕН",
+    "settlement": "Крани"
+  },
+  "412996": {
+    "municipality": "РЕСЕН",
+    "settlement": "Лева Река"
+  },
+  "413011": {
+    "municipality": "РЕСЕН",
+    "settlement": "Љубојно"
+  },
+  "413020": {
+    "municipality": "РЕСЕН",
+    "settlement": "Наколец"
+  },
+  "413127": {
+    "municipality": "РЕСЕН",
+    "settlement": "Ресен"
+  },
+  "413143": {
+    "municipality": "РЕСЕН",
+    "settlement": "Сопотско"
+  },
+  "413542": {
+    "municipality": "СВЕТИ НИКОЛЕ",
+    "settlement": "Орел *"
+  },
+  "413623": {
+    "municipality": "СВЕТИ НИКОЛЕ",
+    "settlement": "Свети Николе"
+  },
+  "413810": {
+    "municipality": "ПЕТРОВЕЦ",
+    "settlement": "Горно Коњари"
+  },
+  "413879": {
+    "municipality": "ПЕТРОВЕЦ",
+    "settlement": "Долно Коњари"
+  },
+  "414077": {
+    "municipality": "ПЕТРОВЕЦ",
+    "settlement": "Средно Коњари"
+  },
+  "414140": {
+    "municipality": "САРАЈ",
+    "settlement": "Буковиќ"
+  },
+  "414158": {
+    "municipality": "САРАЈ",
+    "settlement": "Горно Свиларе"
+  },
+  "414204": {
+    "municipality": "САРАЈ",
+    "settlement": "Долно Свиларе"
+  },
+  "414212": {
+    "municipality": "САРАЈ",
+    "settlement": "Кондово"
+  },
+  "414239": {
+    "municipality": "САРАЈ",
+    "settlement": "Копаница"
+  },
+  "414395": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Барово"
+  },
+  "414409": {
+    "municipality": "СТУДЕНИЧАНИ",
+    "settlement": "Батинци"
+  },
+  "414450": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Горно Соње"
+  },
+  "414522": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Долно Соње"
+  },
+  "414557": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Држилово"
+  },
+  "414581": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Јаболци"
+  },
+  "414638": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Нова Брезница"
+  },
+  "414646": {
+    "municipality": "ЗЕЛЕНИКОВО",
+    "settlement": "Ново Село"
+  },
+  "414662": {
+    "municipality": "СТУДЕНИЧАНИ",
+    "settlement": "Осинчани"
+  },
+  "414727": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Патишка Река"
+  },
+  "414735": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Ракотинци"
+  },
+  "414751": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Света Петка"
+  },
+  "414778": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Сопиште"
+  },
+  "414867": {
+    "municipality": "СТУДЕНИЧАНИ",
+    "settlement": "Цветово"
+  },
+  "414891": {
+    "municipality": "СОПИШТЕ",
+    "settlement": "Чифлик"
+  },
+  "414972": {
+    "municipality": "ЧУЧЕР-САНДЕВО",
+    "settlement": "Кучевиште"
+  },
+  "415073": {
+    "municipality": "СТРУГА",
+    "settlement": "Безово"
+  },
+  "415111": {
+    "municipality": "СТРУГА",
+    "settlement": "Брчево"
+  },
+  "415138": {
+    "municipality": "ВЕВЧАНИ",
+    "settlement": "Вевчани"
+  },
+  "415154": {
+    "municipality": "СТРУГА",
+    "settlement": "Вишни"
+  },
+  "415286": {
+    "municipality": "СТРУГА",
+    "settlement": "Заграчани"
+  },
+  "415294": {
+    "municipality": "СТРУГА",
+    "settlement": "Збажди"
+  },
+  "415308": {
+    "municipality": "СТРУГА",
+    "settlement": "Јабланица"
+  },
+  "415316": {
+    "municipality": "СТРУГА",
+    "settlement": "Калишта"
+  },
+  "415332": {
+    "municipality": "СТРУГА",
+    "settlement": "Лабуништа"
+  },
+  "415383": {
+    "municipality": "СТРУГА",
+    "settlement": "Локов"
+  },
+  "415391": {
+    "municipality": "СТРУГА",
+    "settlement": "Луково"
+  },
+  "415405": {
+    "municipality": "СТРУГА",
+    "settlement": "Мали Влај"
+  },
+  "415413": {
+    "municipality": "СТРУГА",
+    "settlement": "Мислешево"
+  },
+  "415421": {
+    "municipality": "СТРУГА",
+    "settlement": "Мислодежда"
+  },
+  "415456": {
+    "municipality": "СТРУГА",
+    "settlement": "Нерези"
+  },
+  "415472": {
+    "municipality": "СТРУГА",
+    "settlement": "Октиси"
+  },
+  "415499": {
+    "municipality": "СТРУГА",
+    "settlement": "Пискупштина"
+  },
+  "415537": {
+    "municipality": "СТРУГА",
+    "settlement": "Присовјани"
+  },
+  "415553": {
+    "municipality": "СТРУГА",
+    "settlement": "Радожда"
+  },
+  "415588": {
+    "municipality": "СТРУГА",
+    "settlement": "Струга"
+  },
+  "415618": {
+    "municipality": "СТРУГА",
+    "settlement": "Франгово"
+  },
+  "415634": {
+    "municipality": "СТРУГА",
+    "settlement": "Шум"
+  },
+  "415693": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Банско"
+  },
+  "415715": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Белотино"
+  },
+  "415731": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Борисово"
+  },
+  "415774": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Вељуса"
+  },
+  "415812": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Водоча"
+  },
+  "415839": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Габрово"
+  },
+  "415910": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Дражево"
+  },
+  "415936": {
+    "municipality": "ВАСИЛЕВО",
+    "settlement": "Дукатино"
+  },
+  "415987": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Зубово"
+  },
+  "415995": {
+    "municipality": "БОСИЛОВО",
+    "settlement": "Иловица"
+  },
+  "416002": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Колешино"
+  },
+  "416037": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Куклиш"
+  },
+  "416061": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Мокриево"
+  },
+  "416070": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Мокрино"
+  },
+  "416126": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Ново Коњарево"
+  },
+  "416134": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Ново Село"
+  },
+  "416185": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Попчево"
+  },
+  "416207": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Раборци"
+  },
+  "416215": {
+    "municipality": "ВАСИЛЕВО",
+    "settlement": "Радичево"
+  },
+  "416231": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Рич"
+  },
+  "416258": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Самоилово"
+  },
+  "416282": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Свидовица"
+  },
+  "416339": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Смолари"
+  },
+  "416355": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Старо Коњарево"
+  },
+  "416371": {
+    "municipality": "СТРУМИЦА",
+    "settlement": "Струмица"
+  },
+  "416380": {
+    "municipality": "ВАСИЛЕВО",
+    "settlement": "Сушево"
+  },
+  "416398": {
+    "municipality": "НОВО СЕЛО",
+    "settlement": "Сушица"
+  },
+  "416533": {
+    "municipality": "ТЕАРЦЕ",
+    "settlement": "Брезно"
+  },
+  "416550": {
+    "municipality": "ТЕАРЦЕ",
+    "settlement": "Варвара"
+  },
+  "416614": {
+    "municipality": "ТЕАРЦЕ",
+    "settlement": "Глоѓи"
+  },
+  "416649": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Горна Лешница *"
+  },
+  "416673": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Групчин"
+  },
+  "416690": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Добарце"
+  },
+  "416711": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Долна Лешница *"
+  },
+  "416746": {
+    "municipality": "ТЕТОВО",
+    "settlement": "Ѓермо"
+  },
+  "416754": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Желино"
+  },
+  "416762": {
+    "municipality": "БОГОВИЊЕ",
+    "settlement": "Жеровјане"
+  },
+  "416835": {
+    "municipality": "ТЕТОВО",
+    "settlement": "Једоарце"
+  },
+  "416851": {
+    "municipality": "ТЕАРЦЕ",
+    "settlement": "Јелошник"
+  },
+  "416886": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Копачин Дол"
+  },
+  "416908": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Ларце"
+  },
+  "416932": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Луковица"
+  },
+  "417017": {
+    "municipality": "БОГОВИЊЕ",
+    "settlement": "Ново Село"
+  },
+  "417025": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Ново Село"
+  },
+  "417033": {
+    "municipality": "ТЕАРЦЕ",
+    "settlement": "Одри"
+  },
+  "417041": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Озормиште"
+  },
+  "417068": {
+    "municipality": "ТЕТОВО",
+    "settlement": "Отуње"
+  },
+  "417076": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Палатица"
+  },
+  "417203": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Рогле"
+  },
+  "417246": {
+    "municipality": "БОГОВИЊЕ",
+    "settlement": "Селце Кеч"
+  },
+  "417254": {
+    "municipality": "ТЕТОВО",
+    "settlement": "Сетоле"
+  },
+  "417335": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Стримница"
+  },
+  "417360": {
+    "municipality": "ТЕТОВО",
+    "settlement": "Тетово"
+  },
+  "417378": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Требош"
+  },
+  "417416": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Церово"
+  },
+  "417432": {
+    "municipality": "ЖЕЛИНО",
+    "settlement": "Чифлик"
+  },
+  "417491": {
+    "municipality": "ЧАШКА",
+    "settlement": "Бањица *"
+  },
+  "417505": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Башино Село  ☻"
+  },
+  "417521": {
+    "municipality": "ЧАШКА",
+    "settlement": "Бистрица"
+  },
+  "417530": {
+    "municipality": "ЧАШКА",
+    "settlement": "Богомила"
+  },
+  "417548": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Бузалково"
+  },
+  "417556": {
+    "municipality": "ЧАШКА",
+    "settlement": "Бусилци"
+  },
+  "417602": {
+    "municipality": "ЧАШКА",
+    "settlement": "Владиловци"
+  },
+  "417637": {
+    "municipality": "ЧАШКА",
+    "settlement": "Војница"
+  },
+  "417645": {
+    "municipality": "ЧАШКА",
+    "settlement": "Габровник"
+  },
+  "417653": {
+    "municipality": "ЧАШКА",
+    "settlement": "Голозинци"
+  },
+  "417661": {
+    "municipality": "ЧАШКА",
+    "settlement": "Горно Врановци"
+  },
+  "417688": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Горно Караслари"
+  },
+  "417696": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Горно Оризари"
+  },
+  "417718": {
+    "municipality": "ГРАДСКО",
+    "settlement": "Градско"
+  },
+  "417742": {
+    "municipality": "ЧАШКА",
+    "settlement": "Долно Врановци"
+  },
+  "417769": {
+    "municipality": "ЧАШКА",
+    "settlement": "Долно Јаболчиште *"
+  },
+  "417777": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Долно Караслари"
+  },
+  "417807": {
+    "municipality": "ЧАШКА",
+    "settlement": "Дреново"
+  },
+  "417815": {
+    "municipality": "ЧАШКА",
+    "settlement": "Еловец"
+  },
+  "417831": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Иванковци"
+  },
+  "417840": {
+    "municipality": "ЧАШКА",
+    "settlement": "Извор"
+  },
+  "417882": {
+    "municipality": "ГРАДСКО",
+    "settlement": "Кочилари"
+  },
+  "417904": {
+    "municipality": "ЧАШКА",
+    "settlement": "Крајници"
+  },
+  "417955": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Кумарино"
+  },
+  "417971": {
+    "municipality": "ЧАШКА",
+    "settlement": "Лисиче"
+  },
+  "417998": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Мамутчево"
+  },
+  "418005": {
+    "municipality": "ЧАШКА",
+    "settlement": "Мартолци"
+  },
+  "418013": {
+    "municipality": "ЧАШКА",
+    "settlement": "Мелница"
+  },
+  "418072": {
+    "municipality": "ГРАДСКО",
+    "settlement": "Ногаевци"
+  },
+  "418099": {
+    "municipality": "ЧАШКА",
+    "settlement": "Оморани"
+  },
+  "418102": {
+    "municipality": "ЧАШКА",
+    "settlement": "Ораов Дол"
+  },
+  "418137": {
+    "municipality": "ЧАШКА",
+    "settlement": "Ореше *"
+  },
+  "418145": {
+    "municipality": "ЧАШКА",
+    "settlement": "Отиштино"
+  },
+  "418153": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Отовица"
+  },
+  "418161": {
+    "municipality": "ЧАШКА",
+    "settlement": "Папрадиште"
+  },
+  "418226": {
+    "municipality": "ЧАШКА",
+    "settlement": "Раковец"
+  },
+  "418234": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Раштани *"
+  },
+  "418242": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Рлевци *"
+  },
+  "418293": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Сливник"
+  },
+  "418315": {
+    "municipality": "ЧАШКА",
+    "settlement": "Смиловци"
+  },
+  "418323": {
+    "municipality": "ЧАШКА",
+    "settlement": "Согле"
+  },
+  "418331": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Сојаклари"
+  },
+  "418358": {
+    "municipality": "ЧАШКА",
+    "settlement": "Стари Град"
+  },
+  "418374": {
+    "municipality": "ЧАШКА",
+    "settlement": "Теово"
+  },
+  "418382": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Велес"
+  },
+  "418383": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Велес"
+  },
+  "418447": {
+    "municipality": "ВЕЛЕС",
+    "settlement": "Црквино *"
+  },
+  "418463": {
+    "municipality": "ЧАШКА",
+    "settlement": "Чашка"
+  },
+  "418633": {
+    "municipality": "ШТИП",
+    "settlement": "Драгоево"
+  },
+  "418676": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Јунузлија"
+  },
+  "418692": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Калаузлија"
+  },
+  "418706": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Карбинци"
+  },
+  "418790": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Кучица"
+  },
+  "418803": {
+    "municipality": "ШТИП",
+    "settlement": "Лакавица"
+  },
+  "418811": {
+    "municipality": "ШТИП",
+    "settlement": "Лесковица"
+  },
+  "418828": {
+    "municipality": "ШТИП",
+    "settlement": "Љуботен"
+  },
+  "418943": {
+    "municipality": "ШТИП",
+    "settlement": "Пиперово"
+  },
+  "418978": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Прналија"
+  },
+  "418986": {
+    "municipality": "ШТИП",
+    "settlement": "Пухче"
+  },
+  "419028": {
+    "municipality": "ШТИП",
+    "settlement": "Селце"
+  },
+  "419044": {
+    "municipality": "ШТИП",
+    "settlement": "Софилари"
+  },
+  "419087": {
+    "municipality": "ШТИП",
+    "settlement": "Суво Грло"
+  },
+  "419125": {
+    "municipality": "КАРБИНЦИ",
+    "settlement": "Таринци"
+  },
+  "419206": {
+    "municipality": "ШТИП",
+    "settlement": "Црешка"
+  },
+  "419265": {
+    "municipality": "ШТИП",
+    "settlement": "Штип"
+  },
+  "419273": {
+    "municipality": "ЦЕНТАР ЖУПА",
+    "settlement": "Центар Жупа"
+  },
+  "419613": {
+    "municipality": "САРАЈ",
+    "settlement": "Глумово"
+  },
+  "419621": {
+    "municipality": "САРАЈ",
+    "settlement": "Матка"
+  },
+  "419648": {
+    "municipality": "САРАЈ",
+    "settlement": "Шишево"
+  },
+  "419672": {
+    "municipality": "ГОСТИВАР",
+    "settlement": "☼  Мирдита"
+  },
+  "491055": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491056": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491057": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491058": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491059": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491060": {
+    "municipality": "ЦЕНТАР",
+    "settlement": "Скопје-Центар"
+  },
+  "491101": {
+    "municipality": "БУТЕЛ",
+    "settlement": "Скопје-Бутел"
+  },
+  "491110": {
+    "municipality": "САРАЈ",
+    "settlement": "Скопје-Сарај"
+  }
+}
