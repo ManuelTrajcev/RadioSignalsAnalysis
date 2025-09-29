@@ -10,7 +10,7 @@ import {
     useMap,
     LayersControl,
     ScaleControl,
-    Pane, // ✅
+    Pane,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -107,7 +107,7 @@ const downloadCsv = (rows) => {
             "id",
             "date",
             "technology",
-            "electricFieldDbuvPerM", // ✅ ажурирано име
+            "electricFieldDbuvPerM",
             "channelNumber",
             "frequencyMHz",
             "latitude",
@@ -115,7 +115,6 @@ const downloadCsv = (rows) => {
             "testLocation",
             "settlementName",
             "municipalityName",
-            // ✅ нова последна колона (истата метрика)
             "electricFieldStrength_dBuV_per_m",
         ];
 
@@ -128,7 +127,7 @@ const downloadCsv = (rows) => {
                     m.id,
                     m.date,
                     m.technology,
-                    m.electricFieldDbuvPerM, // ✅
+                    m.electricFieldDbuvPerM,
                     m.channelNumber,
                     m.frequencyMHz,
                     lat,
@@ -136,8 +135,7 @@ const downloadCsv = (rows) => {
                     m.testLocation,
                     m.settlementName,
                     m.municipalityName,
-                    // ✅ последна колона со истата вредност
-                    m.electricFieldDbuvPerM, // ✅
+                    m.electricFieldDbuvPerM,
                 ]
                     .map(csvEscape)
                     .join(",");
@@ -333,7 +331,7 @@ const MapPage = () => {
 
     const [minVal, maxVal] = useMemo(() => {
         const vals = (measurements || [])
-            .map((m) => m.electricFieldDbuvPerM) // ✅
+            .map((m) => m.electricFieldDbuvPerM)
             .filter((v) => typeof v === "number" && !Number.isNaN(v));
         if (!vals.length) return [40, 170];
         const p5 = percentile(vals, 5);
@@ -352,7 +350,7 @@ const MapPage = () => {
             .map((m) => {
                 const pos = getLatLng(m);
                 if (!pos) return null;
-                const v = m.electricFieldDbuvPerM; // ✅
+                const v = m.electricFieldDbuvPerM;
                 if (v == null || Number.isNaN(v)) return [pos[0], pos[1], 0.0];
                 const x = Math.max(minVal, Math.min(maxVal, v));
                 const intensity = (x - minVal) / (maxVal - minVal);
@@ -459,7 +457,6 @@ const MapPage = () => {
                 zoomControl={true}
                 preferCanvas={true}
             >
-                {/* ✅ Панирање: heatmap под маркерите + не пресретнува кликови */}
                 <Pane name="heatmap" style={{ zIndex: 400, pointerEvents: "none" }} />
                 <Pane name="markers" style={{ zIndex: 650 }} />
 
@@ -508,7 +505,7 @@ const MapPage = () => {
                                 const pos = getLatLng(m);
                                 if (!pos) return null;
 
-                                const v = m.electricFieldDbuvPerM; // ✅
+                                const v = m.electricFieldDbuvPerM;
                                 const color = getGradientColor(v, minVal, maxVal);
                                 const radius = getRadius(v, minVal, maxVal);
 
