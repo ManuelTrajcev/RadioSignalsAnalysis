@@ -10,6 +10,7 @@ import {
     useMap,
     LayersControl,
     ScaleControl,
+    Pane, // ✅
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -40,9 +41,6 @@ const getLatLng = (m) => {
 
 /* ----------  Датуми и URL helpers  ---------- */
 
-/** Конвертира локален input датум (од <input type="datetime-local">) во ISO UTC со 'Z'.
- *  Ако endOfDay=true → 23:59:59.999Z, инаку → 00:00:00.000Z.
- */
 const toUtcIso = (d, endOfDay = false) => {
     if (!d) return undefined;
     const local = new Date(d);
@@ -62,7 +60,6 @@ const toUtcIso = (d, endOfDay = false) => {
     return utc.toISOString();
 };
 
-/** ISO → формат за <input type="datetime-local"> (YYYY-MM-DDTHH:mm) */
 const isoToInputLocal = (iso) => {
     if (!iso) return "";
     const ms = Date.parse(iso);
@@ -74,7 +71,6 @@ const isoToInputLocal = (iso) => {
     )}:${pad(d.getMinutes())}`;
 };
 
-/** Прочитај филтри од URL (?technology=..&dateFrom=ISO&dateTo=ISO) */
 const readFiltersFromUrl = () => {
     const p = new URLSearchParams(window.location.search);
     return {
@@ -84,7 +80,6 @@ const readFiltersFromUrl = () => {
     };
 };
 
-/** Запиши филтри во URL без reload (за shareable линк) */
 const writeFiltersToUrl = (params) => {
     const p = new URLSearchParams(window.location.search);
     Object.entries(params).forEach(([k, v]) => {
@@ -97,7 +92,6 @@ const writeFiltersToUrl = (params) => {
 
 /* ----------  CSV export helpers  ---------- */
 
-/** Ескеп на CSV поле според RFC4180 */
 const csvEscape = (v) => {
     if (v == null) return "";
     const s = String(v);
@@ -106,59 +100,71 @@ const csvEscape = (v) => {
 
 /** Преземи CSV од тековните measurements */
 const downloadCsv = (rows) => {
-    if (!rows?.length) return;
-    const header = [
-        "id",
-        "date",
-        "technology",
-        "electricFielddbuvPerM",
-        "channelNumber",
-        "frequencyMHz",
-        "latitude",
-        "longitude",
-        "testLocation",
-        "settlementName",
-        "municipalityName",
-    ];
+    try {
+        if (!rows?.length) return;
 
-    const body = rows
-        .map((m) => {
-            const pos = getLatLng(m) || [null, null];
-            return [
-                m.id,
-                m.date,
-                m.technology,
-                m.electricFielddbuvPerM,
-                m.channelNumber,
-                m.frequencyMHz,
-                pos[0],
-                pos[1],
-                m.testLocation,
-                m.settlementName,
-                m.municipalityName,
-            ]
-                .map(csvEscape)
-                .join(",");
-        })
-        .join("\n");
+        const header = [
+            "id",
+            "date",
+            "technology",
+            "electricFieldDbuvPerM", // ✅ ажурирано име
+            "channelNumber",
+            "frequencyMHz",
+            "latitude",
+            "longitude",
+            "testLocation",
+            "settlementName",
+            "municipalityName",
+            // ✅ нова последна колона (истата метрика)
+            "electricFieldStrength_dBuV_per_m",
+        ];
 
-    // BOM (\uFEFF) за Excel да препознае UTF-8 правилно
-    const blob = new Blob(["\uFEFF" + header.join(",") + "\n" + body], {
-        type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "measurements.csv";
-    a.click();
-    URL.revokeObjectURL(url);
+        const body = rows
+            .map((m) => {
+                const pos = getLatLng(m) || [null, null];
+                const lat = typeof pos[0] === "number" ? pos[0] : "";
+                const lng = typeof pos[1] === "number" ? pos[1] : "";
+                return [
+                    m.id,
+                    m.date,
+                    m.technology,
+                    m.electricFieldDbuvPerM, // ✅
+                    m.channelNumber,
+                    m.frequencyMHz,
+                    lat,
+                    lng,
+                    m.testLocation,
+                    m.settlementName,
+                    m.municipalityName,
+                    // ✅ последна колона со истата вредност
+                    m.electricFieldDbuvPerM, // ✅
+                ]
+                    .map(csvEscape)
+                    .join(",");
+            })
+            .join("\n");
+
+        const csv = "\uFEFF" + header.join(",") + "\n" + body; // BOM за Excel
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "measurements.csv";
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 250);
+    } catch (e) {
+        console.error("CSV export failed:", e);
+    }
 };
 
 /* ----------  Бои/радиус (со нормализација на сетот)  ---------- */
 
-function lerp(a, b, t) {
-    return a + (b - a) * t;
-}
+function lerp(a, b, t) { return a + (b - a) * t; }
 function lerpColor(c1, c2, t) {
     const a = parseInt(c1.slice(1), 16);
     const b = parseInt(c2.slice(1), 16);
@@ -167,9 +173,8 @@ function lerpColor(c1, c2, t) {
     const bch = Math.round(lerp(a & 255, b & 255, t));
     return `#${((1 << 24) + (r << 16) + (g << 8) + bch).toString(16).slice(1)}`;
 }
-const stops = ["#2e7d32", "#fbc02d", "#f57c00", "#c62828"]; // green→yellow→orange→red
+const stops = ["#2e7d32", "#fbc02d", "#f57c00", "#c62828"];
 
-/** Едноставен перцентил (со сортирање) за стабилна нормализација */
 const percentile = (arr, p) => {
     if (!arr.length) return undefined;
     const a = [...arr].sort((x, y) => x - y);
@@ -179,8 +184,7 @@ const percentile = (arr, p) => {
 
 function getGradientColor(v, min, max) {
     if (v == null || Number.isNaN(v)) return "#1976d2";
-    const lo = min ?? 40,
-        hi = Math.max(lo + 1, max ?? 170);
+    const lo = min ?? 40, hi = Math.max(lo + 1, max ?? 170);
     const x = Math.max(lo, Math.min(hi, v));
     const t = (x - lo) / (hi - lo);
     if (t <= 1 / 3) return lerpColor(stops[0], stops[1], t * 3);
@@ -189,17 +193,15 @@ function getGradientColor(v, min, max) {
 }
 const getRadius = (v, min, max) => {
     if (v == null) return 6;
-    const lo = min ?? 40,
-        hi = Math.max(lo + 1, max ?? 170);
+    const lo = min ?? 40, hi = Math.max(lo + 1, max ?? 170);
     const x = Math.max(lo, Math.min(hi, v));
-    return 4 + ((x - lo) / (hi - lo)) * 8; // 4..12 px
+    return 4 + ((x - lo) / (hi - lo)) * 8;
 };
 
 /* =========================================================================
    Leaflet помошни компоненти
    ========================================================================= */
 
-/** Автоматски fit на мапата според тековните точки */
 function FitToData({ points }) {
     const map = useMap();
     useEffect(() => {
@@ -214,7 +216,6 @@ function FitToData({ points }) {
     return null;
 }
 
-/** Легенда со динамички min/max (од тековниот сет) */
 function LegendControl({ minVal, maxVal }) {
     const map = useMap();
     useEffect(() => {
@@ -245,7 +246,7 @@ function LegendControl({ minVal, maxVal }) {
     return null;
 }
 
-/** Heatmap со радиус што се прилагодува на zoom */
+/** Heatmap со радиус што се прилагодува на zoom (во засебен pane со pointer-events: none) */
 function HeatmapOverlay({
                             points,
                             baseRadius = 18,
@@ -253,6 +254,7 @@ function HeatmapOverlay({
                             max = 1.0,
                             minOpacity = 0.2,
                             gradient,
+                            pane = "heatmap",
                         }) {
     const map = useMap();
     const [radius, setRadius] = useState(baseRadius);
@@ -261,7 +263,7 @@ function HeatmapOverlay({
         if (!map) return;
         const update = () => {
             const z = map.getZoom();
-            const r = Math.max(10, Math.min(40, Math.round(z * 2))); // едноставно скалирање
+            const r = Math.max(10, Math.min(40, Math.round(z * 2)));
             setRadius(r);
         };
         update();
@@ -282,10 +284,11 @@ function HeatmapOverlay({
                 0.66: "#f57c00",
                 1.0: "#c62828",
             },
+            pane,
         });
         layer.addTo(map);
         return () => layer.remove();
-    }, [map, points, radius, blur, max, minOpacity, gradient]);
+    }, [map, points, radius, blur, max, minOpacity, gradient, pane]);
 
     return null;
 }
@@ -298,12 +301,10 @@ const MapPage = () => {
     const [measurements, setMeasurements] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Филтри во состојба (UI)
     const [technology, setTechnology] = useState("");
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
 
-    /** Централизирано вчитување според params (филтри) */
     async function fetchMeasurements(params = {}) {
         try {
             const res = await axiosInstance.get("/measurements", { params });
@@ -315,10 +316,8 @@ const MapPage = () => {
         }
     }
 
-    /** Инициализација: прочитај филтри од URL, примени ги и направи fetch */
     useEffect(() => {
         const { technology, dateFromIso, dateToIso } = readFiltersFromUrl();
-
         if (technology) setTechnology(technology);
         if (dateFromIso) setDateFrom(isoToInputLocal(dateFromIso));
         if (dateToIso) setDateTo(isoToInputLocal(dateToIso));
@@ -328,35 +327,32 @@ const MapPage = () => {
             ...(dateFromIso && { dateFrom: dateFromIso }),
             ...(dateToIso && { dateTo: dateToIso }),
         };
-
         fetchMeasurements(params);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    /** Динамички min/max (перцентили) за нормализација */
     const [minVal, maxVal] = useMemo(() => {
         const vals = (measurements || [])
-            .map((m) => m.electricFielddbuvPerM)
+            .map((m) => m.electricFieldDbuvPerM) // ✅
             .filter((v) => typeof v === "number" && !Number.isNaN(v));
         if (!vals.length) return [40, 170];
         const p5 = percentile(vals, 5);
         const p95 = percentile(vals, 95);
-        if (p95 - p5 < 1) return [p5 - 1, p95 + 1]; // edge-case: сите исти
+        if (p95 - p5 < 1) return [p5 - 1, p95 + 1];
         return [p5, p95];
     }, [measurements]);
 
-    /** Точки за мапа */
-    const points = useMemo(() => {
-        return (measurements || []).map(getLatLng).filter(Boolean);
-    }, [measurements]);
+    const points = useMemo(
+        () => (measurements || []).map(getLatLng).filter(Boolean),
+        [measurements]
+    );
 
-    /** Heatmap data [lat,lng,intensity] нормализирана 0..1 */
     const heatmapData = useMemo(() => {
         return (measurements || [])
             .map((m) => {
                 const pos = getLatLng(m);
                 if (!pos) return null;
-                const v = m.electricFielddbuvPerM;
+                const v = m.electricFieldDbuvPerM; // ✅
                 if (v == null || Number.isNaN(v)) return [pos[0], pos[1], 0.0];
                 const x = Math.max(minVal, Math.min(maxVal, v));
                 const intensity = (x - minVal) / (maxVal - minVal);
@@ -364,8 +360,6 @@ const MapPage = () => {
             })
             .filter(Boolean);
     }, [measurements, minVal, maxVal]);
-
-    /* -------------------------------- Render -------------------------------- */
 
     return (
         <div
@@ -387,10 +381,7 @@ const MapPage = () => {
                 </p>
             </div>
 
-            {/* ---------------------------------------------------------------------
-         Филтер-бар: технологија + од/до + Apply/Reset + Export CSV
-         URL-синк: на Apply/Reset ги пишуваме вредностите во query string
-         --------------------------------------------------------------------- */}
+            {/* Филтри + Export */}
             <Box sx={{ display: "flex", gap: 1.5, alignItems: "center", p: "8px 18px 10px" }}>
                 <Select
                     value={technology}
@@ -425,7 +416,6 @@ const MapPage = () => {
                     InputLabelProps={{ shrink: true }}
                 />
 
-                {/* APPLY: fetch + запиши во URL (shareable линк) */}
                 <Button
                     variant="contained"
                     size="small"
@@ -436,31 +426,20 @@ const MapPage = () => {
                             ...(dateFrom && { dateFrom: toUtcIso(dateFrom, false) }),
                             ...(dateTo && { dateTo: toUtcIso(dateTo, true) }),
                         };
-
-                        // URL sync ↓
-                        writeFiltersToUrl({
-                            ...(technology && { technology }),
-                            ...(dateFrom && { dateFrom: toUtcIso(dateFrom, false) }),
-                            ...(dateTo && { dateTo: toUtcIso(dateTo, true) }),
-                        });
-
+                        writeFiltersToUrl(params);
                         fetchMeasurements(params);
                     }}
                 >
                     Apply
                 </Button>
 
-                {/* RESET: чистење на состојба + URL + refetch */}
                 <Button
                     size="small"
                     onClick={() => {
                         setTechnology("");
                         setDateFrom("");
                         setDateTo("");
-
-                        // URL sync (исчисти параметри)
                         writeFiltersToUrl({ technology: "", dateFrom: "", dateTo: "" });
-
                         setLoading(true);
                         fetchMeasurements();
                     }}
@@ -468,11 +447,7 @@ const MapPage = () => {
                     Reset
                 </Button>
 
-                {/* EXPORT CSV од тековните резултати */}
-                <Button
-                    size="small"
-                    onClick={() => downloadCsv(measurements)}
-                >
+                <Button size="small" onClick={() => downloadCsv(measurements)}>
                     Export CSV
                 </Button>
             </Box>
@@ -484,7 +459,10 @@ const MapPage = () => {
                 zoomControl={true}
                 preferCanvas={true}
             >
-                {/* Контроли и слоеви */}
+                {/* ✅ Панирање: heatmap под маркерите + не пресретнува кликови */}
+                <Pane name="heatmap" style={{ zIndex: 400, pointerEvents: "none" }} />
+                <Pane name="markers" style={{ zIndex: 650 }} />
+
                 <ScaleControl position="bottomleft" />
                 <LegendControl minVal={minVal} maxVal={maxVal} />
                 <FitToData points={points} />
@@ -511,7 +489,7 @@ const MapPage = () => {
                         />
                     </LayersControl.BaseLayer>
 
-                    {/* HEATMAP слој */}
+                    {/* HEATMAP слој (во pane="heatmap") */}
                     <LayersControl.Overlay checked name="Heatmap">
                         <HeatmapOverlay
                             points={heatmapData}
@@ -519,17 +497,18 @@ const MapPage = () => {
                             blur={20}
                             max={1.0}
                             minOpacity={0.2}
+                            pane="heatmap"
                         />
                     </LayersControl.Overlay>
 
-                    {/* Слој: поединечни маркери */}
+                    {/* Слој: поединечни маркери (во pane="markers") */}
                     <LayersControl.Overlay checked name="Signal points">
                         <div>
                             {measurements.map((m) => {
                                 const pos = getLatLng(m);
                                 if (!pos) return null;
 
-                                const v = m.electricFielddbuvPerM;
+                                const v = m.electricFieldDbuvPerM; // ✅
                                 const color = getGradientColor(v, minVal, maxVal);
                                 const radius = getRadius(v, minVal, maxVal);
 
@@ -538,6 +517,7 @@ const MapPage = () => {
                                         key={m.id ?? `${pos[0]}-${pos[1]}-${m.date ?? ""}`}
                                         center={pos}
                                         radius={radius}
+                                        pane="markers"
                                         pathOptions={{
                                             color,
                                             weight: 1.5,
@@ -545,12 +525,14 @@ const MapPage = () => {
                                             fillOpacity: 0.85,
                                         }}
                                     >
-                                        <Tooltip direction="top" offset={[0, -4]} opacity={0.95}>
+                                        <Tooltip direction="top" offset={[0, -4]} opacity={0.95} sticky>
                                             <div style={{ fontWeight: 600 }}>
                                                 {m.testLocation ?? "Unnamed location"}
                                             </div>
                                             <div style={{ fontSize: 12, opacity: 0.9 }}>
-                                                {v != null ? `${v} dBµV/m` : "—"}
+                                                {v != null
+                                                    ? `E-field strength: ${v} dBµV/m`
+                                                    : "E-field strength: —"}
                                             </div>
                                         </Tooltip>
 
