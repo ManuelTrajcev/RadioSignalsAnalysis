@@ -15,6 +15,7 @@ import {
 import Grid from '@mui/material/Grid';
 import masterDataRepository from "../../../repository/masterDataRepository.js";
 import measurementRepository from "../../../repository/measurementRepository.js";
+import predictionRepository from "../../../repository/predictionRepository.js";
 import useAuth from "../../../hooks/useAuth.js";
 
 const TECHNOLOGIES = ["DIGITAL_TV", "FM"];
@@ -67,6 +68,8 @@ const DataEntryPage = () => {
   const [municipalities, setMunicipalities] = useState([]);
   const [settlements, setSettlements] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [prediction, setPrediction] = useState(null);
+  const [predicting, setPredicting] = useState(false);
   const [snack, setSnack] = useState({ open: false, message: "", severity: "success" });
 
   const [form, setForm] = useState(emptyForm);
@@ -186,6 +189,67 @@ const DataEntryPage = () => {
     return Object.keys(e).length === 0;
   };
 
+  const validatePrediction = () => {
+    const required = [
+      "municipalityId",
+      "settlementId",
+      "date",
+      "technology",
+      "latitudeDegrees",
+      "latitudeMinutes",
+      "latitudeSeconds",
+      "longitudeDegrees",
+      "longitudeMinutes",
+      "longitudeSeconds",
+      "altitudeMeters",
+      "transmitterLocation",
+    ];
+    const localErrors = {};
+    required.forEach((name) => {
+      const value = form[name];
+      if (value === "" || value === null || value === undefined) {
+        localErrors[name] = "Required";
+      }
+    });
+    if (form.technology === "DIGITAL_TV") {
+      if (form.channelNumber === "" || form.channelNumber === null || form.channelNumber === undefined) {
+        localErrors.channelNumber = "Required for DIGITAL_TV";
+      }
+    }
+    if (form.technology === "FM") {
+      if (form.frequencyMHz === "" || form.frequencyMHz === null || form.frequencyMHz === undefined) {
+        localErrors.frequencyMHz = "Required for FM";
+      }
+    }
+    setErrors((prev) => {
+      const next = { ...prev };
+      [...required, "channelNumber", "frequencyMHz"].forEach((name) => {
+        if (!localErrors[name]) {
+          delete next[name];
+        }
+      });
+      return { ...next, ...localErrors };
+    });
+    return Object.keys(localErrors).length === 0;
+  };
+
+  const buildPredictionPayload = () => ({
+    settlementId: form.settlementId,
+    date: new Date(form.date).toISOString(),
+    latitudeDegrees: Number(form.latitudeDegrees),
+    latitudeMinutes: Number(form.latitudeMinutes),
+    latitudeSeconds: Number(form.latitudeSeconds),
+    longitudeDegrees: Number(form.longitudeDegrees),
+    longitudeMinutes: Number(form.longitudeMinutes),
+    longitudeSeconds: Number(form.longitudeSeconds),
+    altitudeMeters: Number(form.altitudeMeters),
+    channelNumber: form.technology === "DIGITAL_TV" ? Number(form.channelNumber) : null,
+    frequencyMHz: form.technology === "FM" ? Number(form.frequencyMHz) : null,
+    programIdentifier: form.programIdentifier || null,
+    transmitterLocation: form.transmitterLocation || null,
+    technology: form.technology,
+  });
+
   const buildPayload = () => {
     return {
       settlementId: form.settlementId,
@@ -209,6 +273,26 @@ const DataEntryPage = () => {
     };
   };
 
+  const handlePredict = async () => {
+    if (!validatePrediction()) return;
+    setPredicting(true);
+    try {
+      const result = await predictionRepository.predictField(buildPredictionPayload());
+      const value = typeof result.fieldDbuvPerM === "number" ? result.fieldDbuvPerM.toFixed(1) : "";
+      setPrediction(result);
+      setForm((f) => ({ ...f, electricFieldDbuvPerM: value }));
+      setSnack({ open: true, message: `Predicted ${value || "?"} dBµV/m (model ${result.modelVersion})`, severity: "info" });
+    } catch (err) {
+      setSnack({
+        open: true,
+        message: err?.response?.data || "Failed to predict field strength",
+        severity: "error",
+      });
+    } finally {
+      setPredicting(false);
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -218,6 +302,7 @@ const DataEntryPage = () => {
       setSnack({ open: true, message: "Measurement saved.", severity: "success" });
       setForm(emptyForm);
       setSettlements([]);
+      setPrediction(null);
     } catch (err) {
       setSnack({
         open: true,
@@ -234,6 +319,11 @@ const DataEntryPage = () => {
       <Typography variant="h4" sx={{ mb: 2 }}>
         Data Entry
       </Typography>
+      {prediction && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Predicted field strength: <strong>{Number.isFinite(+prediction.fieldDbuvPerM) ? (+prediction.fieldDbuvPerM).toFixed(2) : "?"}</strong> dBµV/m (model {prediction.modelVersion})
+        </Alert>
+      )}
       <Paper sx={{ p: 3 }}>
         <Box component="form" onSubmit={onSubmit}>
           <Grid container spacing={2}>
@@ -538,9 +628,13 @@ const DataEntryPage = () => {
                   setForm(emptyForm);
                   setSettlements([]);
                   setErrors({});
+                  setPrediction(null);
                 }}
               >
                 Clear
+              </Button>
+              <Button variant="outlined" onClick={handlePredict} disabled={predicting || submitting}>
+                {predicting ? "Predicting..." : "Predict field"}
               </Button>
               <Button variant="contained" type="submit" disabled={submitting}>
                 {submitting ? "Submitting..." : "Submit"}

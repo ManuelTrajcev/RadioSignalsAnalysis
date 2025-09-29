@@ -1,0 +1,76 @@
+{
+  "tech": "digital",
+  "winner": "RandomForest",
+  "winner_cv": {
+    "cv_rmse_mean": 11.799503787554142,
+    "cv_rmse_std": 0.40787848818664885,
+    "cv_mae_mean": 9.374067678796926,
+    "cv_mae_std": 0.34529899046121676,
+    "cv_r2_mean": 0.42634300925995,
+    "cv_r2_std": 0.031048949332894215,
+    "best_params": {
+      "model__n_estimators": 400,
+      "model__min_samples_split": 5,
+      "model__min_samples_leaf": 1,
+      "model__max_features": 0.5,
+      "model__max_depth": 20,
+      "model__bootstrap": true
+    }
+  },
+  "dt_cv": {
+    "cv_rmse_mean": 13.649649361644043,
+    "cv_rmse_std": 0.3977313555252891,
+    "cv_mae_mean": 11.124325493795476,
+    "cv_mae_std": 0.3140827709095708,
+    "cv_r2_mean": 0.23197916675340996,
+    "cv_r2_std": 0.04427367408357971,
+    "best_params": {
+      "model__min_samples_split": 10,
+      "model__min_samples_leaf": 1,
+      "model__max_features": null,
+      "model__max_depth": 8
+    }
+  },
+  "rf_cv": {
+    "cv_rmse_mean": 11.799503787554142,
+    "cv_rmse_std": 0.40787848818664885,
+    "cv_mae_mean": 9.374067678796926,
+    "cv_mae_std": 0.34529899046121676,
+    "cv_r2_mean": 0.42634300925995,
+    "cv_r2_std": 0.031048949332894215,
+    "best_params": {
+      "model__n_estimators": 400,
+      "model__min_samples_split": 5,
+      "model__min_samples_leaf": 1,
+      "model__max_features": 0.5,
+      "model__max_depth": 20,
+      "model__bootstrap": true
+    }
+  },
+  "holdout": {
+    "rmse": 13.610817358017181,
+    "mae": 10.844157600012784,
+    "r2": 0.24116534714927718,
+    "n_test": 596
+  },
+  "rows": 2973,
+  "groups": 602,
+  "features": {
+    "numeric": [
+      "latitude",
+      "longitude",
+      "elevation_m",
+      "year",
+      "month",
+      "population",
+      "households",
+      "tv_channel"
+    ],
+    "categorical": [
+      "municipality",
+      "settlement",
+      "program_id",
+      "emitter"
+    ]
+  }
+}

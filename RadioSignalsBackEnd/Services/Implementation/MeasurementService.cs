@@ -1,6 +1,7 @@
 ﻿using Domain.Domain_Models;
 using Domain.DTO;
 using Domain.Enums;
+using Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using Services.Interface;
@@ -140,13 +141,10 @@ public class MeasurementService : IMeasurementService
         return true;
     }
 
-    private static double ToDecimal(int deg, int min, float sec)
-        => deg + (min / 60.0) + (sec / 3600.0);
-
     private async Task<GeoCoordinate> FindOrCreateCoordinateAsync(MeasurementDto dto)
     {
-        var latD = ToDecimal(dto.LatitudeDegrees, dto.LatitudeMinutes, dto.LatitudeSeconds);
-        var lonD = ToDecimal(dto.LongitudeDegrees, dto.LongitudeMinutes, dto.LongitudeSeconds);
+        var latD = CoordinateHelper.ToDecimal(dto.LatitudeDegrees, dto.LatitudeMinutes, dto.LatitudeSeconds);
+        var lonD = CoordinateHelper.ToDecimal(dto.LongitudeDegrees, dto.LongitudeMinutes, dto.LongitudeSeconds);
 
         var existing = await _coordinates.GetAsync(
             c => c,
