@@ -41,4 +41,5 @@ public class Measurement : BaseEntity
 
     public MeasurementStatus Status { get; set; }
     [Required] public Technology Technology { get; set; }
+    public int? CurrentPopulation { get; set; }
 }

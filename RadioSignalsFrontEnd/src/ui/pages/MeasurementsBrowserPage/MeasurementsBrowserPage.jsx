@@ -368,6 +368,7 @@ const MeasurementsBrowserPage = () => {
     },
     { field: "municipalityName", headerName: "Municipality", flex: 1.2, minWidth: 160 },
     { field: "settlementName", headerName: "Settlement", flex: 1.2, minWidth: 160 },
+    { field: "population", headerName: "Popultaion", flex: 1.2, minWidth: 160 },
     { field: "technology", headerName: "Technology", flex: 1, minWidth: 130 },
     {
     field: "channelOrFrequency",

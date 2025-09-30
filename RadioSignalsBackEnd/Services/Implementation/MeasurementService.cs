@@ -55,8 +55,10 @@ public class MeasurementService : IMeasurementService
             ElectricFieldStrengthId = e.Id,
             Remarks = dto.Remarks,
             Status = dto.Status,
+            CurrentPopulation = dto.Population,
             Technology = dto.Technology
         };
+
         return await _measurements.InsertAsync(entity);
     }
 
