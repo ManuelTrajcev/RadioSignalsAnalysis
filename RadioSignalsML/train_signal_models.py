@@ -62,9 +62,9 @@ def detect_tech(settlement_raw, chfreq_val, program):
 
     num = _num_from_text(s)  # works for "89,8 MHz"
     if not np.isnan(num):
-        if 1 <= num <= 69 and float(num).is_integer():
+        if 21 <= num <= 65 and float(num).is_integer():
             return "digital"              # TV channels first
-        if 70.0 <= num <= 120.0: return "fm"
+        if 87.0 <= num <= 107.9: return "fm"
         if 65.0 <= num < 70.0:   return "fm"  # edge cases logged near band edge
 
     if "мтв" in p: return "digital"
@@ -77,10 +77,10 @@ def extract_channel_or_freq(chfreq_val):
     if "дигитал" in s:
         return (int(num) if not np.isnan(num) else np.nan, np.nan)
     if not np.isnan(num):
-        if 1 <= num <= 69 and float(num).is_integer():
+        if 21 <= num <= 65 and float(num).is_integer():
             return (int(num), np.nan)      # TV channel
         # treat decimal/typical FM band as frequency
-        if 70.0 <= num <= 120.0 or (65.0 <= num < 70.0):
+        if 87.0 <= num <= 107.9 or (65.0 <= num < 70.0):
             return (np.nan, float(num))
     return (np.nan, np.nan)
 
