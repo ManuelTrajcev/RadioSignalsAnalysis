@@ -12,6 +12,6 @@ public interface IMeasurementService
         Guid? municipalityId, Guid? settlementId,
         DateTime? dateFrom, DateTime? dateTo,
         Technology? technology);
-    Task<Measurement?> UpdateAsync(Guid id, MeasurementDto dto);
+    Task<Measurement?> UpdateAsync(Guid id, MeasurementDto dto, Guid userIdGuid);
     Task<bool> DeleteAsync(Guid id, Guid userId);
 }

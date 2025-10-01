@@ -58,8 +58,20 @@ public class MeasurementsController : ControllerBase
     {
         try
         {
-            var updated = await _svc.UpdateAsync(id, dto);
-            return updated == null ? NotFound() : Ok(ToResponse(updated));
+            var currentUser = HttpContext.User;
+            var userId = currentUser.FindFirst("sub")?.Value;
+
+            if (userId != null)
+            {
+                var userIdGuid = Guid.Parse(userId);
+
+                var updated = await _svc.UpdateAsync(id, dto, userIdGuid);
+                return updated == null ? NotFound() : Ok(ToResponse(updated));
+            }
+            else
+            {
+                return Forbid();
+            }
         }
         catch (ArgumentException ex)
         {
