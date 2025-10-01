@@ -18,7 +18,7 @@ public class MeasurementResponseDto
     public double LatitudeDecimal { get; set; }
     public double LongitudeDecimal { get; set; }
     public int AltitudeMeters { get; set; }
-
+    public int? Population { get; set; }
     public bool IsTvChannel { get; set; }
     public int? ChannelNumber { get; set; }
     public float? FrequencyMHz { get; set; }

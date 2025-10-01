@@ -97,6 +97,7 @@ public class MeasurementsController : ControllerBase
             Status = m.Status,
             Technology = m.Technology,
             SettlementId = m.SettlementId,
+            Population = m.CurrentPopulation,
             SettlementName = m.Settlement?.Name ?? string.Empty,
             MunicipalityId = m.Settlement?.MunicipalityId ?? Guid.Empty,
             MunicipalityName = m.Settlement?.Municipality?.Name ?? string.Empty

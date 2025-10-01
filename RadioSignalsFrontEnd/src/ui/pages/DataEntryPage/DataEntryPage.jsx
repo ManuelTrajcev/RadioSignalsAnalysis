@@ -36,6 +36,7 @@ const STATUSES = [
 
 const emptyForm = {
     settlementId: "",
+    population: "",
     date: "",
     testLocation: "",
     latitudeDegrees: "",
@@ -119,9 +120,19 @@ const DataEntryPage = () => {
             return setForm({...form, [name]: clamp(value, 0, 59.999)});
         if (name === "altitudeMeters") return setForm({...form, [name]: clamp(value, -400, 9000)}); // Dead Sea to Everest+
         if (name === "electricFieldDbuvPerM") return setForm({...form, [name]: clamp(value, 0, 200)});
-        if (name === "channelNumber") return setForm({...form, [name]: clamp(value, 1, 1000)});
         if (name === "frequencyMHz") return setForm({...form, [name]: clamp(value, 50, 1100)});
+        if (name === "population" || name === "channelNumber") {
+            const clampedValue = clamp(value, 0, 99999999);
+            if (clampedValue.toString().includes('.')) {
+                return setForm({...form, [name]: Math.floor(parseFloat(clampedValue))});
+            }
+            if (name === "channelNumber") return setForm({...form, [name]: clamp(value, 1, 1000)});
 
+            return setForm({...form, [name]: clampedValue});
+        }
+
+
+        setForm({...form, [name]: value});
         setForm({...form, [name]: value});
     };
 
@@ -144,6 +155,7 @@ const DataEntryPage = () => {
         [
             "municipalityId",
             "settlementId",
+            "population",
             "date",
             "testLocation",
             "latitudeDegrees",
@@ -180,6 +192,7 @@ const DataEntryPage = () => {
         numIn("longitudeDegrees", 0, 180);
         numIn("longitudeMinutes", 0, 59);
         numIn("longitudeSeconds", 0, 59.999);
+        numIn("population", 0, 99999999);
         numIn("electricFieldDbuvPerM", 0, 200);
 
         if (form.technology === "DIGITAL_TV") numIn("channelNumber", 1, 1000);
@@ -193,6 +206,7 @@ const DataEntryPage = () => {
         const required = [
             "municipalityId",
             "settlementId",
+            "population",
             "date",
             "technology",
             "latitudeDegrees",
@@ -253,6 +267,7 @@ const DataEntryPage = () => {
     const buildPayload = () => {
         return {
             settlementId: form.settlementId,
+            population: form.population,
             date: new Date(form.date).toISOString(),
             testLocation: form.testLocation,
             latitudeDegrees: Number(form.latitudeDegrees),
@@ -334,7 +349,7 @@ const DataEntryPage = () => {
                 <Box component="form" onSubmit={onSubmit}>
                     <Grid container spacing={2}>
                         {/* Municipality / Settlement */}
-                        <Grid size={{xs: 12, md: 6}}>
+                        <Grid size={{xs: 12, md: 4}}>
                             <FormControl fullWidth error={!!errors.municipalityId}>
                                 <InputLabel>Municipality</InputLabel>
                                 <Select
@@ -356,7 +371,8 @@ const DataEntryPage = () => {
                                 </Typography>
                             )}
                         </Grid>
-                        <Grid size={{xs: 12, md: 6}}>
+
+                        <Grid size={{xs: 12, md: 4}}>
                             <FormControl fullWidth error={!!errors.settlementId}>
                                 <InputLabel>Settlement</InputLabel>
                                 <Select
@@ -380,6 +396,18 @@ const DataEntryPage = () => {
                             )}
                         </Grid>
 
+                        <Grid size={{xs: 12, md: 4}}>
+                            <TextField
+                                fullWidth
+                                type="number"
+                                label="Population"
+                                name="population"
+                                value={form.population}
+                                onChange={handleChange}
+                                error={!!errors.population}
+                                helperText={errors.population}
+                            />
+                        </Grid>
                         {/* Date / Technology */}
                         <Grid size={{xs: 12, md: 6}}>
                             <TextField
