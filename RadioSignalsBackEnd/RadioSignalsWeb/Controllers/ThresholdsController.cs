@@ -11,7 +11,13 @@ namespace RadioSignalsWeb.Controllers;
 public class ThresholdsController : ControllerBase
 {
     private readonly IThresholdService _svc;
-    public ThresholdsController(IThresholdService svc) => _svc = svc;
+    private readonly IUserService _userService;
+
+    public ThresholdsController(IThresholdService svc, IUserService userService)
+    {
+        _svc = svc;
+        _userService = userService;
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetAll() => Ok(await _svc.GetAllAsync());
@@ -40,7 +46,15 @@ public class ThresholdsController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var ok = await _svc.DeleteAsync(id);
-        return ok ? NoContent() : NotFound();
+        var currentUser = HttpContext.User;
+        var userId = currentUser.FindFirst("sub")?.Value;
+        if (userId != null)
+        {
+            var userIdGuid = Guid.Parse(userId);
+            var ok = await _svc.DeleteAsync(id, userIdGuid);
+            return ok ? NoContent() : NotFound();
+        }
+
+        return Forbid();
     }
 }

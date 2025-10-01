@@ -1,4 +1,5 @@
-﻿using Domain.Domain_Models;
+﻿using System.Linq.Expressions;
+using Domain.Domain_Models;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +13,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor = null)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
+        IHttpContextAccessor httpContextAccessor = null)
         : base(options)
     {
         _httpContextAccessor = httpContextAccessor;
@@ -68,6 +70,30 @@ public class ApplicationDbContext : IdentityDbContext<User>
             .WithOne()
             .HasForeignKey<Measurement>(m => m.ElectricFieldStrengthId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        var isSoftDelete = typeof(BaseEntity);
+        var parameter = Expression.Parameter(typeof(object), "e");
+
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            if (isSoftDelete.IsAssignableFrom(entityType.ClrType) && entityType.BaseType == null)
+            {
+                var entityParameter = Expression.Parameter(entityType.ClrType, "e");
+
+                var property = Expression.Property(entityParameter, nameof(BaseEntity.DeletedAt));
+
+                var equalsNull = Expression.Equal(property, Expression.Constant(null, typeof(DateTime?)));
+
+                var lambda = Expression.Lambda(equalsNull, entityParameter);
+
+                builder.Entity(entityType.ClrType)
+                    .HasQueryFilter(lambda);
+
+                builder.Entity(entityType.ClrType)
+                    .HasIndex(nameof(BaseEntity.DeletedAt));
+            }
+        }
+
 
         // Ensure ALL enum properties (including nullable enums) are stored as strings
         foreach (var entityType in builder.Model.GetEntityTypes())

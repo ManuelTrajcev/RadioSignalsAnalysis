@@ -9,5 +9,5 @@ public interface IThresholdService
     Task<ReferenceThreshold?> GetByIdAsync(Guid id);
     Task<ReferenceThreshold> CreateAsync(ThresholdDto dto);
     Task<ReferenceThreshold?> UpdateAsync(Guid id, ThresholdDto dto);
-    Task<bool> DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(Guid id, Guid userId);
 }
