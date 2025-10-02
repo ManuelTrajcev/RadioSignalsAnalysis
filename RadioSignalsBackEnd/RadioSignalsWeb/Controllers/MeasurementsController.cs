@@ -1,4 +1,5 @@
-﻿using Domain.DTO;
+﻿using System.Security.Claims;
+using Domain.DTO;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,10 @@ public class MeasurementsController : ControllerBase
 {
     private readonly IMeasurementService _svc;
 
-    public MeasurementsController(IMeasurementService svc) => _svc = svc;
+    public MeasurementsController(IMeasurementService svc)
+    {
+        _svc = svc;
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] MeasurementDto dto)
@@ -67,8 +71,17 @@ public class MeasurementsController : ControllerBase
     [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var ok = await _svc.DeleteAsync(id);
-        return ok ? NoContent() : NotFound();
+        var currentUser = HttpContext.User;
+        var userId = currentUser.FindFirst("sub")?.Value; 
+            
+        if (userId != null)
+        {
+            var userIdGuid = Guid.Parse(userId);
+            var ok = await _svc.DeleteAsync(id, userIdGuid);
+            return ok ? NoContent() : NotFound();
+        }
+
+        return Forbid();
     }
 
     private static MeasurementResponseDto ToResponse(Domain.Domain_Models.Measurement m)

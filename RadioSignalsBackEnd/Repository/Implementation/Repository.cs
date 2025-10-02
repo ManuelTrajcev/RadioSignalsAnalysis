@@ -30,6 +30,7 @@ namespace Repository.Implementation
             {
                 throw new ArgumentNullException(nameof(entities));
             }
+
             await _context.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
             return entities;
@@ -41,11 +42,26 @@ namespace Repository.Implementation
             await _context.SaveChangesAsync();
             return entity;
         }
+        
 
-        public async Task<T> DeleteAsync(T entity)
+        public async Task<T> DeleteAsync(T entity, Guid userId) 
         {
-            _context.Remove(entity);
+            var deletedAtProperty = typeof(T).GetProperty("DeletedAt");
+            var deletedByProperty = typeof(T).GetProperty("DeletedBy");
+
+            if (deletedAtProperty != null && deletedAtProperty.PropertyType == typeof(DateTime?))
+            {
+                deletedAtProperty.SetValue(entity, DateTime.UtcNow);
+            }
+
+            if (deletedByProperty != null && deletedByProperty.PropertyType == typeof(Guid?))
+            {
+                deletedByProperty.SetValue(entity, userId);
+            }
+
+            _context.Update(entity);
             await _context.SaveChangesAsync();
+
             return entity;
         }
 

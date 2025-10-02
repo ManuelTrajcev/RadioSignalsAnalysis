@@ -135,11 +135,11 @@ public class MeasurementService : IMeasurementService
         return await _measurements.UpdateAsync(existing);
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id, Guid userId)
     {
         var m = await GetByIdAsync(id);
         if (m == null) return false;
-        await _measurements.DeleteAsync(m);
+        await _measurements.DeleteAsync(m, userId);
         return true;
     }
 

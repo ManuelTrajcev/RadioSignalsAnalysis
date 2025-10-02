@@ -34,11 +34,11 @@ public class ThresholdService : IThresholdService
         return await _repo.UpdateAsync(mapped);
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id, Guid userId)
     {
         var existing = await GetByIdAsync(id);
         if (existing == null) return false;
-        await _repo.DeleteAsync(existing);
+        await _repo.DeleteAsync(existing, userId);
         return true;
     }
 
