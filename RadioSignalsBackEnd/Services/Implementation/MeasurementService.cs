@@ -92,7 +92,7 @@ public class MeasurementService : IMeasurementService
             orderBy: q => q.OrderByDescending(m => m.Date).ThenBy(m => m.Id));
     }
 
-    public async Task<Measurement?> UpdateAsync(Guid id, MeasurementDto dto)
+    public async Task<Measurement?> UpdateAsync(Guid id, MeasurementDto dto, Guid userIdGuid)
     {
         var existing = await GetByIdAsync(id);
         if (existing == null) return null;
@@ -116,6 +116,9 @@ public class MeasurementService : IMeasurementService
         else
         {
             existing.ElectricFieldStrength.Value = dto.ElectricFieldDbuvPerM;
+            existing.LastEditedBy = userIdGuid;
+            existing.LastEditedAt = DateTime.UtcNow;
+
             await _efs.UpdateAsync(existing.ElectricFieldStrength);
         }
 
