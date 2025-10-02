@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250930195903_soft_delete_2")]
+    partial class soft_delete_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,12 +57,6 @@ namespace Repository.Migrations
                     b.Property<bool>("IsTvChannel")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -92,12 +89,6 @@ namespace Repository.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("MeasurementUnit")
@@ -140,12 +131,6 @@ namespace Repository.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
                         .HasColumnType("uuid");
 
                     b.Property<double>("LatitudeDecimal")
@@ -224,12 +209,6 @@ namespace Repository.Migrations
                     b.Property<Guid>("ElectricFieldStrengthId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("ProgramIdentifier")
                         .HasMaxLength(120)
                         .HasColumnType("character varying(120)");
@@ -298,12 +277,6 @@ namespace Repository.Migrations
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -348,12 +321,6 @@ namespace Repository.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
-                        .HasColumnType("uuid");
 
                     b.Property<float>("MaxDbuVPerM")
                         .HasColumnType("real");
@@ -408,12 +375,6 @@ namespace Repository.Migrations
 
                     b.Property<int?>("Households")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime?>("LastEditedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("LastEditedBy")
-                        .HasColumnType("uuid");
 
                     b.Property<Guid>("MunicipalityId")
                         .HasColumnType("uuid");

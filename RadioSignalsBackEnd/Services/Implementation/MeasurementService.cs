@@ -33,7 +33,10 @@ public class MeasurementService : IMeasurementService
     public async Task<Measurement> CreateAsync(MeasurementDto dto)
     {
         await EnsureSettlementExists(dto.SettlementId);
-
+        
+        if (await ExistsDuplicateAsync(dto.Date, dto.TransmitterLocation))
+            throw new InvalidOperationException("An identical measurement already exists.");
+        
         var coord = await FindOrCreateCoordinateAsync(dto);
         var freq = await FindOrCreateFrequencyAsync(dto);
         var e = await _efs.InsertAsync(new ElectricFieldStrength
@@ -215,5 +218,20 @@ public class MeasurementService : IMeasurementService
     {
         var s = await _settlements.GetAsync(x => x, x => x.Id == settlementId);
         if (s == null) throw new ArgumentException("Settlement not found.", nameof(settlementId));
+    }
+    
+    private async Task<bool> ExistsDuplicateAsync(DateTime date, string transmitterLocation)
+    {
+        var start = date.Date;
+        var end = start.AddDays(1);
+
+        var existing = await _measurements.GetAsync(
+            selector: m => m.Id,
+            predicate: m =>
+                m.TransmitterLocation == transmitterLocation &&
+                m.Date == date
+        );
+
+        return existing != default; 
     }
 }
