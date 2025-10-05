@@ -22,9 +22,9 @@ public class MasterDataService : IMasterDataService
             m => new OptionDto(m.Id, m.Name),
             orderBy: q => q.OrderBy(x => x.Name));
 
-    public async Task<IEnumerable<OptionDto>> GetSettlementsAsync(Guid municipalityId)
+    public async Task<IEnumerable<SettlementDto>> GetSettlementsAsync(Guid municipalityId)
         => await _settlements.GetAllAsync(
-            s => new OptionDto(s.Id, s.Name),
+            s => new SettlementDto(s.Id, s.Name, s.Population),
             s => s.MunicipalityId == municipalityId,
             q => q.OrderBy(x => x.Name));
 }
