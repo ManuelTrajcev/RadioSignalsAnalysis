@@ -15,6 +15,7 @@ const Header = () => {
             {"path": "/data-entry", "name": "Data Entry"},
             {"path": "/measurements", "name": "Measurements"},
             {"path": "/map", "name": "Map"},
+            {"path": "/settlement", "name": "Settlement"}
         ] : []),
     ];
 
