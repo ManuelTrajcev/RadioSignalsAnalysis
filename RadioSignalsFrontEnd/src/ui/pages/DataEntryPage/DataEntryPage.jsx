@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Alert,
     Box,
@@ -36,7 +36,7 @@ const STATUSES = [
 
 const emptyForm = {
     settlementId: "",
-    population: "",
+    population: 0,
     date: "",
     testLocation: "",
     latitudeDegrees: "",
@@ -54,7 +54,7 @@ const emptyForm = {
     remarks: "",
     status: "",
     technology: "",
-    municipalityId: "", // UI-only helper for cascade
+    municipalityId: ""
 };
 
 const clamp = (v, min, max) => {
@@ -108,6 +108,23 @@ const DataEntryPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form.municipalityId]);
 
+    // Effect to auto-fill population when a settlement is selected or the list updates
+    useEffect(() => {
+        const selectedSettlement = settlements.find(s => s.id === form.settlementId);
+
+        if (selectedSettlement) {
+            const populationValue = selectedSettlement.population ?? 0;
+            console.log(selectedSettlement)
+            console.log(selectedSettlement.population)
+            setForm(f => ({
+                ...f,
+                population: populationValue,
+            }));
+        } else if (!form.settlementId) {
+            setForm(f => ({...f, population: 0}));
+        }
+    }, [form.settlementId, settlements]);
+
     const handleChange = (e) => {
         const {name, value} = e.target;
 
@@ -136,6 +153,22 @@ const DataEntryPage = () => {
         setForm({...form, [name]: value});
     };
 
+    useEffect(() => {
+        const selectedSettlement = settlements.find(s => s.id === form.settlementId);
+
+        if (selectedSettlement) {
+            // Set population, ensuring it defaults to 0 if null/undefined
+            const populationValue = selectedSettlement.population ?? 0;
+            setForm(f => ({
+                ...f,
+                population: populationValue,
+            }));
+        } else if (!form.settlementId) {
+            // If the settlement is unselected, reset population to 0
+            setForm(f => ({...f, population: 0}));
+        }
+    }, [form.settlementId, settlements]);
+
     // Conditional reset when switching technology
     useEffect(() => {
         setForm((f) => ({
@@ -155,7 +188,6 @@ const DataEntryPage = () => {
         [
             "municipalityId",
             "settlementId",
-            "population",
             "date",
             "testLocation",
             "latitudeDegrees",
@@ -403,9 +435,9 @@ const DataEntryPage = () => {
                                 label="Population"
                                 name="population"
                                 value={form.population}
+                                helperText={errors.population || (form.settlementId ? "Auto-filled from settlement data" : "")}
                                 onChange={handleChange}
                                 error={!!errors.population}
-                                helperText={errors.population}
                             />
                         </Grid>
                         {/* Date / Technology */}
