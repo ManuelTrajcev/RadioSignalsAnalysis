@@ -37,11 +37,11 @@ const Login = () => {
     return (
         <Container maxWidth="sm">
             <Paper elevation={3} sx={{padding: 4, mt: 8}}>
-                <Typography variant="h5" align="center" gutterBottom>Login</Typography>
+                <Typography variant="h5" align="center" gutterBottom>Најава</Typography>
                 <Box>
                     <TextField
                         fullWidth
-                        label="Username"
+                        label="Корисничко име"
                         name="username"
                         margin="normal"
                         required
@@ -50,7 +50,7 @@ const Login = () => {
                     />
                     <TextField
                         fullWidth
-                        label="Password"
+                        label="Лозинка"
                         name="password"
                         type="password"
                         margin="normal"
@@ -64,7 +64,7 @@ const Login = () => {
                         type="submit"
                         sx={{mt: 2}}
                         onClick={handleSubmit}>
-                        Login
+                        Најави се
                     </Button>
                     <Button
                         fullWidth
@@ -73,7 +73,7 @@ const Login = () => {
                         sx={{mt: 2}}
                         onClick={() => navigate("/register")}
                     >
-                        Register
+                        Регистрирај се
                     </Button>
                 </Box>
             </Paper>

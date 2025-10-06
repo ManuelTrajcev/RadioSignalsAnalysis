@@ -16,7 +16,7 @@ const HomePage = () => {
         <Box sx={{m: 0, p: 0}}>
             <Container maxWidth="xl" sx={{mt: 3, py: 3}}>
                 <Typography variant="h4" gutterBottom>
-                    Radio signals analysis
+                    Анализа на радио сигнали
                 </Typography>
                 {loading ? (
                     <Box className="progress-box">
@@ -25,6 +25,7 @@ const HomePage = () => {
                 ) : (
                     <Typography></Typography>
                 )}
+                <h1>Добредојдовте</h1>
             </Container>
         </Box>
     );

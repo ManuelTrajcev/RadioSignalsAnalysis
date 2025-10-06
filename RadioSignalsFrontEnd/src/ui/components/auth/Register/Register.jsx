@@ -39,10 +39,10 @@ const Register = () => {
     return (
         <Container maxWidth="sm">
             <Paper elevation={3} sx={{padding: 4, mt: 4}}>
-                <Typography variant="h5" align="center" gutterBottom>Register</Typography>
+                <Typography variant="h5" align="center" gutterBottom>Регистрација</Typography>
                 <Box>
                     <TextField
-                        fullWidth label="Name"
+                        fullWidth label="Име"
                         name="name"
                         margin="normal"
                         required
@@ -50,7 +50,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <TextField
-                        fullWidth label="Surname"
+                        fullWidth label="Презиме"
                         name="surname"
                         margin="normal"
                         required
@@ -58,7 +58,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <TextField
-                        fullWidth label="Username"
+                        fullWidth label="Корисничко име"
                         name="username"
                         margin="normal"
                         required
@@ -66,7 +66,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <TextField
-                        fullWidth label="Email"
+                        fullWidth label="Е-пошта"
                         name="email"
                         margin="normal"
                         required
@@ -74,7 +74,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <TextField
-                        fullWidth label="Password"
+                        fullWidth label="Лозинка"
                         name="password"
                         type="password"
                         margin="normal"
@@ -83,7 +83,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <TextField
-                        fullWidth label="Repeat Password"
+                        fullWidth label="Повтори лозинка"
                         name="repeatPassword"
                         type="password"
                         margin="normal"
@@ -92,20 +92,20 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <FormControl fullWidth margin="dense" required>
-                        <InputLabel>Role</InputLabel>
+                        <InputLabel>Улога</InputLabel>
                         <Select
                             name="role"
-                            label="Role"
+                            label="Улога"
                             variant="outlined"
                             value={formData.role}
                             onChange={handleChange}
                         >
-                            <MenuItem key="user" value="0">User</MenuItem>
-                            <MenuItem key="admin" value="1">Administrator</MenuItem>
+                            <MenuItem key="user" value="0">Корисник</MenuItem>
+                            <MenuItem key="admin" value="1">Администратор</MenuItem>
                         </Select>
                     </FormControl>
                     <Button fullWidth variant="contained" type="submit" sx={{mt: 2}} onClick={handleSubmit}>
-                        Register
+                        Регистрирај се
                     </Button>
                 </Box>
             </Paper>

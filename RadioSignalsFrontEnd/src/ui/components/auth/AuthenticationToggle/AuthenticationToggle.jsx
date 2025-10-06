@@ -24,7 +24,7 @@ const AuthenticationToggle = () => {
             onClick={!isLoggedIn ? handleLogin : handleLogout}
             sx={{borderRadius: 0, border: 2}}
         >
-            {!isLoggedIn ? "Login" : "Logout"}
+            {!isLoggedIn ? "Најава" : "Одјава"}
         </Button>
     );
 };

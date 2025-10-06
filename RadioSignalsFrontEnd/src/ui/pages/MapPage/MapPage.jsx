@@ -373,9 +373,9 @@ const MapPage = () => {
             }}
         >
             <div style={{ padding: "16px 18px 0 18px" }}>
-                <h2 style={{ margin: 0 }}>📡 Signal Map</h2>
+                <h2 style={{ margin: 0 }}>📡 Мапа на сигнали</h2>
                 <p style={{ marginTop: 6, opacity: 0.9 }}>
-                    Interactive view of measured field strength with points and heatmap overlay.
+                    Интерактивен приказ на измерената јачина на полето со точки и heatmap.
                 </p>
             </div>
 
@@ -388,15 +388,15 @@ const MapPage = () => {
                     size="small"
                     sx={{ minWidth: 180, background: "#fff" }}
                 >
-                    <MenuItem value="">All technologies</MenuItem>
-                    <MenuItem value="ANALOG_TV">ANALOG_TV</MenuItem>
-                    <MenuItem value="DIGITAL_TV">DIGITAL_TV</MenuItem>
+                    <MenuItem value="">Сите технологии</MenuItem>
+                    <MenuItem value="ANALOG_TV">АНАЛОГНА ТВ</MenuItem>
+                    <MenuItem value="DIGITAL_TV">ДИГИТАЛНА ТВ</MenuItem>
                     <MenuItem value="FM">FM</MenuItem>
                     <MenuItem value="DAB">DAB</MenuItem>
                 </Select>
 
                 <TextField
-                    label="From"
+                    label="Од"
                     type="datetime-local"
                     size="small"
                     value={dateFrom}
@@ -405,7 +405,7 @@ const MapPage = () => {
                     InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    label="To"
+                    label="До"
                     type="datetime-local"
                     size="small"
                     value={dateTo}
@@ -428,7 +428,7 @@ const MapPage = () => {
                         fetchMeasurements(params);
                     }}
                 >
-                    Apply
+                    Примени
                 </Button>
 
                 <Button
@@ -442,11 +442,11 @@ const MapPage = () => {
                         fetchMeasurements();
                     }}
                 >
-                    Reset
+                    Ресетирај
                 </Button>
 
                 <Button size="small" onClick={() => downloadCsv(measurements)}>
-                    Export CSV
+                    Експортирај CSV
                 </Button>
             </Box>
 
@@ -524,34 +524,34 @@ const MapPage = () => {
                                     >
                                         <Tooltip direction="top" offset={[0, -4]} opacity={0.95} sticky>
                                             <div style={{ fontWeight: 600 }}>
-                                                {m.testLocation ?? "Unnamed location"}
+                                                {m.testLocation ?? "Непозната локација"}
                                             </div>
                                             <div style={{ fontSize: 12, opacity: 0.9 }}>
                                                 {v != null
-                                                    ? `E-field strength: ${v} dBµV/m`
-                                                    : "E-field strength: —"}
+                                                    ? `Јачина на електрично поле: ${v} dBµV/m`
+                                                    : "Јачина на електрично поле: —"}
                                             </div>
                                         </Tooltip>
 
                                         <Popup>
                                             <div style={{ minWidth: 240, lineHeight: 1.45 }}>
                                                 <div style={{ fontWeight: 700, marginBottom: 6 }}>
-                                                    {m.testLocation ?? "Unnamed location"}
+                                                    {m.testLocation ?? "Непозната локација"}
                                                 </div>
-                                                <div><b>Tech:</b> {m.technology ?? "—"}</div>
-                                                {v != null && <div><b>E-field:</b> {v} dBµV/m</div>}
+                                                <div><b>Технологија:</b> {m.technology ?? "—"}</div>
+                                                {v != null && <div><b>Електрично поле:</b> {v} dBµV/m</div>}
                                                 <div>
-                                                    <b>Date:</b>{" "}
+                                                    <b>Датум:</b>{" "}
                                                     {m.date ? new Date(m.date).toLocaleString() : "—"}
                                                 </div>
                                                 {m.settlementName && (
-                                                    <div><b>Settlement:</b> {m.settlementName}</div>
+                                                    <div><b>Населено место:</b> {m.settlementName}</div>
                                                 )}
                                                 {typeof m.channelNumber === "number" && (
-                                                    <div><b>Channel:</b> {m.channelNumber}</div>
+                                                    <div><b>Канал:</b> {m.channelNumber}</div>
                                                 )}
                                                 {typeof m.frequencyMHz === "number" && (
-                                                    <div><b>Frequency:</b> {m.frequencyMHz} MHz</div>
+                                                    <div><b>Фреквенција:</b> {m.frequencyMHz} MHz</div>
                                                 )}
                                             </div>
                                         </Popup>
@@ -575,7 +575,7 @@ const MapPage = () => {
                         fontWeight: 600,
                     }}
                 >
-                    Loading measurements…
+                    Се вчитуваат мерењата…
                 </div>
             )}
         </div>

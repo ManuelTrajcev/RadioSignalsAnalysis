@@ -60,14 +60,14 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Edit Measurement</DialogTitle>
+      <DialogTitle>Уреди мерење</DialogTitle>
       <DialogContent>
         <Grid container spacing={2} sx={{ mt: 0.5 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
               type="date"
-              label="Date"
+              label="Датум"
               name="date"
               InputLabelProps={{ shrink: true }}
               value={form.date?.slice(0,10) || ""}
@@ -79,9 +79,9 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
 
           <Grid size={{ xs: 12, md: 6 }}>
             <FormControl fullWidth error={!!errors.technology}>
-              <InputLabel>Technology</InputLabel>
+              <InputLabel>Технологија</InputLabel>
               <Select
-                label="Technology"
+                label="Технологија"
                 name="technology"
                 value={form.technology || ""}
                 onChange={handleChange}
@@ -100,7 +100,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
               <TextField
                 fullWidth
                 type="number"
-                label="Channel Number"
+                label="Број на канал"
                 name="channelNumber"
                 value={form.channelNumber ?? ""}
                 onChange={handleChange}
@@ -114,7 +114,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
               <TextField
                 fullWidth
                 type="number"
-                label="Frequency (MHz)"
+                label="Фреквенција (MHz)"
                 name="frequencyMHz"
                 value={form.frequencyMHz ?? ""}
                 onChange={handleChange}
@@ -127,7 +127,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Test Location"
+              label="Локација на тест"
               name="testLocation"
               value={form.testLocation || ""}
               onChange={handleChange}
@@ -210,7 +210,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
             <TextField
               fullWidth
               type="number"
-              label="Electric Field (dBµV/m)"
+              label="Електрично поле (dBµV/m)"
               name="electricFieldDbuvPerM"
               value={form.electricFieldDbuvPerM ?? ""}
               onChange={handleChange}
@@ -222,7 +222,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
             <TextField
               fullWidth
               type="number"
-              label="Altitude (m)"
+              label="Надморска височина (м)"
               name="altitudeMeters"
               value={form.altitudeMeters ?? ""}
               onChange={handleChange}
@@ -234,7 +234,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
-              label="Program Identifier"
+              label="Идентификатор на програмата"
               name="programIdentifier"
               value={form.programIdentifier || ""}
               onChange={handleChange}
@@ -243,7 +243,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
-              label="Transmitter Location"
+              label="Локација на предавател"
               name="transmitterLocation"
               value={form.transmitterLocation || ""}
               onChange={handleChange}
@@ -255,7 +255,7 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Remarks"
+              label="Забелешки"
               name="remarks"
               value={form.remarks || ""}
               onChange={handleChange}
@@ -266,8 +266,8 @@ const EditDialog = ({ open, onClose, value, onSave }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={handleSave}>Save</Button>
+        <Button onClick={onClose}>Откажи</Button>
+        <Button variant="contained" onClick={handleSave}>Зачувај</Button>
       </DialogActions>
     </Dialog>
   );
@@ -504,7 +504,7 @@ const MeasurementsBrowserPage = () => {
   return (
     <Box>
       <Typography variant="h4" sx={{ mb: 2 }}>
-        Measurements
+        Мерења
       </Typography>
 
       {/* Filters */}
@@ -512,14 +512,14 @@ const MeasurementsBrowserPage = () => {
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 3 }}>
             <FormControl fullWidth>
-              <InputLabel>Municipality</InputLabel>
+              <InputLabel>Општина</InputLabel>
               <Select
-                label="Municipality"
+                label="Општина"
                 name="municipalityId"
                 value={filters.municipalityId}
                 onChange={handleFilterChange}
               >
-                <MenuItem value="">All</MenuItem>
+                <MenuItem value="">Сите</MenuItem>
                 {municipalities.map((m) => (
                   <MenuItem key={m.id} value={m.id}>
                     {m.name}
@@ -530,15 +530,15 @@ const MeasurementsBrowserPage = () => {
           </Grid>
           <Grid size={{ xs: 12, md: 3 }}>
             <FormControl fullWidth>
-              <InputLabel>Settlement</InputLabel>
+              <InputLabel>Населено место</InputLabel>
               <Select
-                label="Settlement"
+                label="Населено место"
                 name="settlementId"
                 value={filters.settlementId}
                 onChange={handleFilterChange}
                 disabled={!filters.municipalityId}
               >
-                <MenuItem value="">All</MenuItem>
+                <MenuItem value="">Сите</MenuItem>
                 {settlements.map((s) => (
                   <MenuItem key={s.id} value={s.id}>
                     {s.name}
@@ -550,14 +550,14 @@ const MeasurementsBrowserPage = () => {
 
           <Grid size={{ xs: 12, md: 2 }}>
             <FormControl fullWidth>
-              <InputLabel>Technology</InputLabel>
+              <InputLabel>Технологија</InputLabel>
               <Select
-                label="Technology"
+                label="Технологија"
                 name="technology"
                 value={filters.technology}
                 onChange={handleFilterChange}
               >
-                <MenuItem value="">All</MenuItem>
+                <MenuItem value="">Сите</MenuItem>
                 {TECHNOLOGIES.map((t) => (
                   <MenuItem key={t} value={t}>
                     {t.replace("_"," ")}
@@ -571,7 +571,7 @@ const MeasurementsBrowserPage = () => {
             <TextField
               fullWidth
               type="date"
-              label="Date From"
+              label="Од датум"
               name="dateFrom"
               InputLabelProps={{ shrink: true }}
               value={filters.dateFrom}
@@ -582,7 +582,7 @@ const MeasurementsBrowserPage = () => {
             <TextField
               fullWidth
               type="date"
-              label="Date To"
+              label="До датум"
               name="dateTo"
               InputLabelProps={{ shrink: true }}
               value={filters.dateTo}
@@ -597,10 +597,10 @@ const MeasurementsBrowserPage = () => {
                 setFilters({ municipalityId: "", settlementId: "", technology: "", dateFrom: "", dateTo: "" });
               }}
             >
-              Clear
+              Исчисти
             </Button>
             <Button variant="contained" onClick={applyFetch}>
-              Apply
+              Примени
             </Button>
           </Grid>
         </Grid>
