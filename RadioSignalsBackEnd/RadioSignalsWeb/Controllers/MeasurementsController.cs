@@ -31,6 +31,10 @@ public class MeasurementsController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet]
@@ -84,8 +88,8 @@ public class MeasurementsController : ControllerBase
     public async Task<IActionResult> Delete(Guid id)
     {
         var currentUser = HttpContext.User;
-        var userId = currentUser.FindFirst("sub")?.Value; 
-            
+        var userId = currentUser.FindFirst("sub")?.Value;
+
         if (userId != null)
         {
             var userIdGuid = Guid.Parse(userId);

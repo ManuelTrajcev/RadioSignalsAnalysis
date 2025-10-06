@@ -119,7 +119,7 @@ using (var scope = app.Services.CreateScope())
 
 // Seed municipalities & settlements from JSON on startup (runs once)
 await app.Services.SeedMunicipalitiesAndSettlementsAsync(
-    "SeedData\\north_macedonia_municipalities_settlements_seed.json");
+    "/Users/manuel/Documents/RadioSignals/RadioSignalsBackEnd/RadioSignalsWeb/SeedData/north_macedonia_municipalities_settlements_seed.json");
 
 if (app.Environment.IsDevelopment())
 {
