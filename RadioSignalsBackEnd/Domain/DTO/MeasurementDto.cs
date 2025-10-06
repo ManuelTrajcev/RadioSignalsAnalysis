@@ -18,7 +18,7 @@ public class MeasurementDto
     [Required] public float LongitudeSeconds { get; set; }
 
     [Required] public int AltitudeMeters { get; set; }
-    [Required] public int Population { get; set; }
+    [Required] public int? Population { get; set; }
 
     // TV or FM (exactly one filled)
     public int? ChannelNumber { get; set; }

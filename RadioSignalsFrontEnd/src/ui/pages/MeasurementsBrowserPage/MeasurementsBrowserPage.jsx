@@ -368,7 +368,7 @@ const MeasurementsBrowserPage = () => {
     },
     { field: "municipalityName", headerName: "Municipality", flex: 1.2, minWidth: 160 },
     { field: "settlementName", headerName: "Settlement", flex: 1.2, minWidth: 160 },
-    { field: "population", headerName: "Popultaion", flex: 1.2, minWidth: 160 },
+    // { field: "population", headerName: "Population", flex: 1.2, minWidth: 160 },
     { field: "technology", headerName: "Technology", flex: 1, minWidth: 130 },
     {
     field: "channelOrFrequency",
@@ -394,6 +394,7 @@ const MeasurementsBrowserPage = () => {
     { field: "transmitterLocation", headerName: "Transmitter", flex: 1.2, minWidth: 160 },
     { field: "programIdentifier", headerName: "Program", flex: 1, minWidth: 120 },
     { field: "remarks", headerName: "Remarks", flex: 1.2, minWidth: 160 },
+    { field: "population", headerName: "Population", flex: 1, minWidth: 140, type: "number" },
     { field: "latitudeDecimal", headerName: "Latitude", flex: 1, minWidth: 140, type: "number" },
     { field: "longitudeDecimal", headerName: "Longitude", flex: 1, minWidth: 140, type: "number" },
   ];
@@ -415,7 +416,7 @@ const MeasurementsBrowserPage = () => {
               color="primary"
               onClick={() => {
                 // Build MeasurementDto input from response row
-                const r = params.row;
+                const r = parxams.row;
                 const dto = {
                   // Must send full MeasurementDto on update
                   settlementId: r.settlementId,
@@ -436,6 +437,7 @@ const MeasurementsBrowserPage = () => {
                   remarks: r.remarks,
                   status: r.status,
                   technology: r.technology,
+                  population: r.population,
                 };
                 // We don't have original DMS from response; keep simple editor fields but allow saving other parts
                 setEditingRow({ ...dto, id: r.id });

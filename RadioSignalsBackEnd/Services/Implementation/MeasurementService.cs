@@ -41,7 +41,23 @@ public class MeasurementService : IMeasurementService
             Value = dto.ElectricFieldDbuvPerM,
             MeasurementUnit = ElectricFieldUnit.dBuVPerMeter
         });
+        
+        var settlement = await EnsureSettlementExists(dto.SettlementId);
 
+        int currentPopulation = 0;
+        
+        if (dto.Population.HasValue && dto.Population > 0 && dto.Population != settlement.Population)
+        {
+            if (settlement.Population != null) currentPopulation = settlement.Population.Value;
+            settlement.Population = dto.Population;
+            await _settlements.UpdateAsync(settlement);
+        }
+
+        if (currentPopulation == 0)
+        {
+            currentPopulation = (int)(settlement.Population != null ? settlement.Population : 0);
+        }
+        
         var entity = new Measurement
         {
             SettlementId = dto.SettlementId,
@@ -55,9 +71,11 @@ public class MeasurementService : IMeasurementService
             ElectricFieldStrengthId = e.Id,
             Remarks = dto.Remarks,
             Status = dto.Status,
-            CurrentPopulation = dto.Population,
+            CurrentPopulation = currentPopulation,
             Technology = dto.Technology
         };
+        
+        
 
         return await _measurements.InsertAsync(entity);
     }
@@ -211,9 +229,10 @@ public class MeasurementService : IMeasurementService
         }
     }
 
-    private async Task EnsureSettlementExists(Guid settlementId)
+    private async Task<Settlement> EnsureSettlementExists(Guid settlementId)
     {
         var s = await _settlements.GetAsync(x => x, x => x.Id == settlementId);
         if (s == null) throw new ArgumentException("Settlement not found.", nameof(settlementId));
+        return s;
     }
 }
