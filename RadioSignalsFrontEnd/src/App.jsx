@@ -13,6 +13,7 @@ import MeasurementsBrowserPage from "./ui/pages/MeasurementsBrowserPage/Measurem
 
 //NEW
 import MapPage from "./ui/pages/MapPage/MapPage";
+import NewSettlementPage from "./ui/pages/NewSettlementPage/NewSettlementPage.jsx";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                     <Route element={<ProtectedRoute/>}>
                         <Route path="workspaces" element={<WorkspacesPage/>}/>
                         <Route path="data-entry" element={<DataEntryPage/>}/>
+                        <Route path="settlement" element={<NewSettlementPage/>}/>
                         <Route path="measurements" element={<MeasurementsBrowserPage/>}/>
                         <Route path="map" element={<MapPage />} />
                     </Route>

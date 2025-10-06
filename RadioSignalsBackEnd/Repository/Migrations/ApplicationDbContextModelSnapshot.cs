@@ -37,6 +37,12 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<float?>("FrequencyMHz")
                         .HasColumnType("real");
 
@@ -48,6 +54,12 @@ namespace Repository.Migrations
                     b.Property<bool>("IsTvChannel")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -55,6 +67,8 @@ namespace Repository.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeletedAt");
 
                     b.ToTable("ChannelFrequencies", t =>
                         {
@@ -74,6 +88,18 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("MeasurementUnit")
                         .IsRequired()
                         .HasColumnType("text")
@@ -89,6 +115,8 @@ namespace Repository.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeletedAt");
 
                     b.ToTable("ElectricFieldStrengths", t =>
                         {
@@ -107,6 +135,18 @@ namespace Repository.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("LatitudeDecimal")
                         .HasColumnType("double precision");
@@ -139,6 +179,8 @@ namespace Repository.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeletedAt");
 
                     b.ToTable("GeoCoordinates", t =>
                         {
@@ -173,7 +215,19 @@ namespace Repository.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("ElectricFieldStrengthId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ProgramIdentifier")
@@ -216,6 +270,8 @@ namespace Repository.Migrations
 
                     b.HasIndex("CoordinateId");
 
+                    b.HasIndex("DeletedAt");
+
                     b.HasIndex("ElectricFieldStrengthId")
                         .IsUnique();
 
@@ -236,6 +292,18 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -248,6 +316,8 @@ namespace Repository.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeletedAt");
 
                     b.ToTable("Municipalities");
                 });
@@ -267,11 +337,23 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<float?>("FrequencyMHz")
                         .HasColumnType("real");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<float>("MaxDbuVPerM")
                         .HasColumnType("real");
@@ -301,6 +383,8 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeletedAt");
+
                     b.ToTable("ReferenceThresholds");
                 });
 
@@ -316,8 +400,20 @@ namespace Repository.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<int?>("Households")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LastEditedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("MunicipalityId")
                         .HasColumnType("uuid");
@@ -339,6 +435,8 @@ namespace Repository.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeletedAt");
 
                     b.HasIndex("MunicipalityId");
 
