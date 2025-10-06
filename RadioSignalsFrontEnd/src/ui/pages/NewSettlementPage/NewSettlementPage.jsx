@@ -104,17 +104,16 @@ const NewSettlementPage = () => {
     return (
         <Box>
             <Typography variant="h4" sx={{mb: 2}}>
-                Add New Settlement
+                Додај ново населено место
             </Typography>
             <Paper sx={{p: 3}}>
                 <Box component="form" onSubmit={onSubmit}>
                     <Grid container spacing={3}>
-                        {/* Municipality Dropdown - CORRECTED PROPS: xs={12} md={6} */}
                         <Grid size={{xs: 12, md: 4}}>
                             <FormControl fullWidth error={!!errors.municipalityId}>
-                                <InputLabel>Municipality</InputLabel>
+                                <InputLabel>Општина</InputLabel>
                                 <Select
-                                    label="Municipality"
+                                    label="Општина"
                                     name="municipalityId"
                                     value={form.municipalityId}
                                     onChange={handleChange}
@@ -128,28 +127,25 @@ const NewSettlementPage = () => {
                             </FormControl>
                             {errors.municipalityId && (
                                 <Typography color="error" variant="caption">
-                                    {errors.municipalityId}
+                                    Општината е задолжителна
                                 </Typography>
                             )}
                         </Grid>
-
-                        {/* New Settlement Text Field - CORRECTED PROPS: xs={12} md={6} */}
                         <Grid size={{xs: 12, md: 4}}>
                             <TextField
                                 fullWidth
-                                label="New Settlement Name"
+                                label="Име на населено место"
                                 name="newSettlementName"
                                 value={form.newSettlementName}
                                 onChange={handleChange}
                                 error={!!errors.newSettlementName}
-                                helperText={errors.newSettlementName}
+                                helperText={errors.newSettlementName && "Името е задолжително"}
                             />
                         </Grid>
-
                         <Grid size={{xs: 12, md: 4}}>
                             <TextField
                                 fullWidth
-                                label="Registry Number"
+                                label="Регистарски број"
                                 name="registryNumber"
                                 value={form.registryNumber}
                                 onChange={handleChange}
@@ -157,11 +153,10 @@ const NewSettlementPage = () => {
                                 helperText={errors.registryNumber}
                             />
                         </Grid>
-
                         <Grid size={{xs: 12, md: 4}}>
                             <TextField
                                 fullWidth
-                                label="Population"
+                                label="Број на жители"
                                 name="population"
                                 value={form.population}
                                 onChange={handleChange}
@@ -169,11 +164,10 @@ const NewSettlementPage = () => {
                                 helperText={errors.population}
                             />
                         </Grid>
-
                         <Grid size={{xs: 12, md: 4}}>
                             <TextField
                                 fullWidth
-                                label="House Holds"
+                                label="Домаќинства"
                                 name="houseHolds"
                                 value={form.houseHolds}
                                 onChange={handleChange}
@@ -181,17 +175,14 @@ const NewSettlementPage = () => {
                                 helperText={errors.houseHolds}
                             />
                         </Grid>
-                        {/* Submission Button */}
                         <Grid item xs={12} display="flex" justifyContent="flex-end">
                             <Button variant="contained" type="submit" disabled={submitting}>
-                                {submitting ? "Saving..." : "Save Settlement"}
+                                {submitting ? "Се зачувува..." : "Зачувај населено место"}
                             </Button>
                         </Grid>
                     </Grid>
                 </Box>
             </Paper>
-
-            {/* Snackbar for feedback */}
             <Snackbar
                 open={snack.open}
                 autoHideDuration={4000}
