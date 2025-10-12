@@ -108,20 +108,17 @@ const DataEntryPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form.municipalityId]);
 
-    // Effect to auto-fill population when a settlement is selected or the list updates
     useEffect(() => {
         const selectedSettlement = settlements.find(s => s.id === form.settlementId);
 
         if (selectedSettlement) {
             const populationValue = selectedSettlement.population ?? 0;
             console.log(selectedSettlement)
-            console.log(selectedSettlement.population)
+            console.log(populationValue)
             setForm(f => ({
                 ...f,
                 population: populationValue,
             }));
-        } else if (!form.settlementId) {
-            setForm(f => ({...f, population: 0}));
         }
     }, [form.settlementId, settlements]);
 
@@ -432,6 +429,7 @@ const DataEntryPage = () => {
                                 fullWidth
                                 type="number"
                                 label="Број на жители"
+                                value={form.population}
                                 name="population"
                                 helperText={errors.population || (form.settlementId ? "Автоматски пополнето од податоците за населеното место" : "")}
                                 onChange={handleChange}
