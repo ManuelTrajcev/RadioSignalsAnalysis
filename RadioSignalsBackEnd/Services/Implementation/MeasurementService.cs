@@ -33,10 +33,10 @@ public class MeasurementService : IMeasurementService
     public async Task<Measurement> CreateAsync(MeasurementDto dto)
     {
         await EnsureSettlementExists(dto.SettlementId);
-        
+
         if (await ExistsDuplicateAsync(dto.Date, dto.TransmitterLocation))
             throw new InvalidOperationException("An identical measurement already exists.");
-        
+
         var coord = await FindOrCreateCoordinateAsync(dto);
         var freq = await FindOrCreateFrequencyAsync(dto);
         var e = await _efs.InsertAsync(new ElectricFieldStrength
@@ -44,11 +44,22 @@ public class MeasurementService : IMeasurementService
             Value = dto.ElectricFieldDbuvPerM,
             MeasurementUnit = ElectricFieldUnit.dBuVPerMeter
         });
-        
+
+        if ((dto.FrequencyMHz != null) && (dto.FrequencyMHz.Value < 87.0 || dto.FrequencyMHz.Value > 107.9))
+        {
+            throw new ArgumentException("The frequency must be between 87.0 and 107.9");
+        }
+
+        if ((dto.ChannelNumber != null) && (dto.ChannelNumber.Value < 21 || dto.ChannelNumber.Value > 65))
+        {
+            throw new ArgumentException("The channel number must be between 21 and 65");
+        }
+
+
         var settlement = await EnsureSettlementExists(dto.SettlementId);
 
         int currentPopulation = 0;
-        
+
         if (dto.Population.HasValue && dto.Population > 0 && dto.Population != settlement.Population)
         {
             if (settlement.Population != null) currentPopulation = settlement.Population.Value;
@@ -60,7 +71,7 @@ public class MeasurementService : IMeasurementService
         {
             currentPopulation = (int)(settlement.Population != null ? settlement.Population : 0);
         }
-        
+
         var entity = new Measurement
         {
             SettlementId = dto.SettlementId,
@@ -77,8 +88,7 @@ public class MeasurementService : IMeasurementService
             CurrentPopulation = currentPopulation,
             Technology = dto.Technology
         };
-        
-        
+
 
         return await _measurements.InsertAsync(entity);
     }
@@ -238,7 +248,7 @@ public class MeasurementService : IMeasurementService
         if (s == null) throw new ArgumentException("Settlement not found.", nameof(settlementId));
         return s;
     }
-    
+
     private async Task<bool> ExistsDuplicateAsync(DateTime date, string transmitterLocation)
     {
         var start = date.Date;
@@ -251,6 +261,6 @@ public class MeasurementService : IMeasurementService
                 m.Date == date
         );
 
-        return existing != default; 
+        return existing != default;
     }
 }
