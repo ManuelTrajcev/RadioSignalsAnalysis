@@ -108,20 +108,17 @@ const DataEntryPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form.municipalityId]);
 
-    // Effect to auto-fill population when a settlement is selected or the list updates
     useEffect(() => {
         const selectedSettlement = settlements.find(s => s.id === form.settlementId);
 
         if (selectedSettlement) {
             const populationValue = selectedSettlement.population ?? 0;
             console.log(selectedSettlement)
-            console.log(selectedSettlement.population)
+            console.log(populationValue)
             setForm(f => ({
                 ...f,
                 population: populationValue,
             }));
-        } else if (!form.settlementId) {
-            setForm(f => ({...f, population: 0}));
         }
     }, [form.settlementId, settlements]);
 
@@ -368,13 +365,12 @@ const DataEntryPage = () => {
     return (
         <Box>
             <Typography variant="h4" sx={{mb: 2}}>
-                Data Entry
+                Внес на податоци
             </Typography>
             {prediction && (
                 <Alert severity="info" sx={{mb: 2}}>
-                    Predicted field
-                    strength: <strong>{Number.isFinite(+prediction.fieldDbuvPerM) ? (+prediction.fieldDbuvPerM).toFixed(2) : "?"}</strong> dBµV/m
-                    (model {prediction.modelVersion})
+                    Предвидена јачина на поле: <strong>{Number.isFinite(+prediction.fieldDbuvPerM) ? (+prediction.fieldDbuvPerM).toFixed(2) : "?"}</strong> dBµV/m
+                    (модел {prediction.modelVersion})
                 </Alert>
             )}
             <Paper sx={{p: 3}}>
@@ -383,9 +379,9 @@ const DataEntryPage = () => {
                         {/* Municipality / Settlement */}
                         <Grid size={{xs: 12, md: 4}}>
                             <FormControl fullWidth error={!!errors.municipalityId}>
-                                <InputLabel>Municipality</InputLabel>
+                                <InputLabel>Општина</InputLabel>
                                 <Select
-                                    label="Municipality"
+                                    label="Општина"
                                     name="municipalityId"
                                     value={form.municipalityId}
                                     onChange={handleChange}
@@ -406,9 +402,9 @@ const DataEntryPage = () => {
 
                         <Grid size={{xs: 12, md: 4}}>
                             <FormControl fullWidth error={!!errors.settlementId}>
-                                <InputLabel>Settlement</InputLabel>
+                                <InputLabel>Населено место</InputLabel>
                                 <Select
-                                    label="Settlement"
+                                    label="Населено место"
                                     name="settlementId"
                                     value={form.settlementId}
                                     onChange={handleChange}
@@ -432,10 +428,10 @@ const DataEntryPage = () => {
                             <TextField
                                 fullWidth
                                 type="number"
-                                label="Population"
-                                name="population"
+                                label="Број на жители"
                                 value={form.population}
-                                helperText={errors.population || (form.settlementId ? "Auto-filled from settlement data" : "")}
+                                name="population"
+                                helperText={errors.population || (form.settlementId ? "Автоматски пополнето од податоците за населеното место" : "")}
                                 onChange={handleChange}
                                 error={!!errors.population}
                             />
@@ -445,7 +441,7 @@ const DataEntryPage = () => {
                             <TextField
                                 fullWidth
                                 type="date"
-                                label="Date"
+                                label="Датум"
                                 name="date"
                                 InputLabelProps={{shrink: true}}
                                 value={form.date}
@@ -456,9 +452,9 @@ const DataEntryPage = () => {
                         </Grid>
                         <Grid size={{xs: 12, md: 6}}>
                             <FormControl fullWidth error={!!errors.technology}>
-                                <InputLabel>Technology</InputLabel>
+                                <InputLabel>Технологија</InputLabel>
                                 <Select
-                                    label="Technology"
+                                    label="Технологија"
                                     name="technology"
                                     value={form.technology}
                                     onChange={handleChange}
@@ -483,12 +479,11 @@ const DataEntryPage = () => {
                                 <TextField
                                     fullWidth
                                     type="number"
-                                    label="Channel Number"
+                                    label="Број на канал"
                                     name="channelNumber"
-                                    value={form.channelNumber}
+                                    helperText={errors.channelNumber || "Задолжително за дигитална ТВ"}
                                     onChange={handleChange}
                                     error={!!errors.channelNumber}
-                                    helperText={errors.channelNumber || "Required for Digital TV"}
                                 />
                             </Grid>
                         )}
@@ -497,12 +492,11 @@ const DataEntryPage = () => {
                                 <TextField
                                     fullWidth
                                     type="number"
-                                    label="Frequency (MHz)"
+                                    label="Фреквенција (MHz)"
                                     name="frequencyMHz"
-                                    value={form.frequencyMHz}
+                                    helperText={errors.frequencyMHz || "Задолжително за FM"}
                                     onChange={handleChange}
                                     error={!!errors.frequencyMHz}
-                                    helperText={errors.frequencyMHz || "Required for FM"}
                                     inputProps={{
                                         step: "0.1",
                                     }}
@@ -514,7 +508,7 @@ const DataEntryPage = () => {
                         <Grid size={{xs: 12}}>
                             <TextField
                                 fullWidth
-                                label="Test Location (description)"
+                                label="Локација на тест (опис)"
                                 name="testLocation"
                                 value={form.testLocation}
                                 onChange={handleChange}
@@ -526,7 +520,7 @@ const DataEntryPage = () => {
                         {/* Coordinates DMS */}
                         <Grid size={{xs: 12}}>
                             <Typography variant="subtitle1" sx={{mb: 1}}>
-                                Coordinates (DMS)
+                                Координати (DMS)
                             </Typography>
                             <Grid container spacing={2}>
                                 <Grid size={{xs: 4, md: 2}}>
@@ -610,7 +604,7 @@ const DataEntryPage = () => {
                             <TextField
                                 fullWidth
                                 type="number"
-                                label="Altitude (m)"
+                                label="Надморска височина (м)"
                                 name="altitudeMeters"
                                 value={form.altitudeMeters}
                                 onChange={handleChange}
@@ -622,7 +616,7 @@ const DataEntryPage = () => {
                             <TextField
                                 fullWidth
                                 type="number"
-                                label="Electric Field (dBµV/m)"
+                                label="Електрично поле (dBµV/m)"
                                 name="electricFieldDbuvPerM"
                                 value={form.electricFieldDbuvPerM}
                                 onChange={handleChange}
@@ -635,7 +629,7 @@ const DataEntryPage = () => {
                         <Grid size={{xs: 12, md: 6}}>
                             <TextField
                                 fullWidth
-                                label="Program Identifier (optional)"
+                                label="Идентификатор на програмата (опционално)"
                                 name="programIdentifier"
                                 value={form.programIdentifier}
                                 onChange={handleChange}
@@ -644,7 +638,7 @@ const DataEntryPage = () => {
                         <Grid size={{xs: 12, md: 6}}>
                             <TextField
                                 fullWidth
-                                label="Transmitter Location"
+                                label="Локација на предавател"
                                 name="transmitterLocation"
                                 value={form.transmitterLocation}
                                 onChange={handleChange}
@@ -656,9 +650,9 @@ const DataEntryPage = () => {
                         {/* Status */}
                         <Grid size={{xs: 12, md: 6}}>
                             <FormControl fullWidth error={!!errors.status}>
-                                <InputLabel>Status</InputLabel>
+                                <InputLabel>Статус</InputLabel>
                                 <Select
-                                    label="Status"
+                                    label="Статус"
                                     name="status"
                                     value={form.status}
                                     onChange={handleChange}
@@ -681,7 +675,7 @@ const DataEntryPage = () => {
                         <Grid size={{xs: 12}}>
                             <TextField
                                 fullWidth
-                                label="Remarks"
+                                label="Забелешки"
                                 name="remarks"
                                 value={form.remarks}
                                 onChange={handleChange}
@@ -700,13 +694,13 @@ const DataEntryPage = () => {
                                     setPrediction(null);
                                 }}
                             >
-                                Clear
+                                Исчисти
                             </Button>
                             <Button variant="outlined" onClick={handlePredict} disabled={predicting || submitting}>
-                                {predicting ? "Predicting..." : "Predict field"}
+                                {predicting ? "Се предвидува..." : "Предвиди поле"}
                             </Button>
                             <Button variant="contained" type="submit" disabled={submitting}>
-                                {submitting ? "Submitting..." : "Submit"}
+                                {submitting ? "Се испраќа..." : "Испрати"}
                             </Button>
                         </Grid>
                     </Grid>
