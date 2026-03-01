@@ -15,6 +15,15 @@ services:
       timeout: 5s
       retries: 5
 
+  ml:
+    build:
+      context: ./RadioSignalsML
+      dockerfile: Dockerfile
+    container_name: radiosignals-ml
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
   backend:
     build:
       context: ./RadioSignalsBackEnd
@@ -25,9 +34,25 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=radiosignals;Username=postgres;Password=postgres
+      - PredictionService__BaseUrl=http://ml:8000
     depends_on:
       postgres:
         condition: service_healthy
+      ml:
+        condition: service_started
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./RadioSignalsFrontEnd
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:5229/api
+    container_name: radiosignals-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     restart: unless-stopped
 
 volumes:
