@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Training-only files (not needed at inference time)
+signal_data.xlsx
+train_signal_models.py
+generate_location_lookup.py
+predict_example.py
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / OS artefacts
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db
+
+# Docs
+docs/
+README.md
