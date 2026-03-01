@@ -1,7 +1,8 @@
 numpy
 pandas
-scikit-learn
+scikit-learn==1.7.2
 joblib
-openpyxlfastapi
+openpyxl
+fastapi
 uvicorn[standard]
 pydantic

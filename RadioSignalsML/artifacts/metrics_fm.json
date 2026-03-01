@@ -1,58 +1,60 @@
 {
   "tech": "fm",
-  "winner": "DecisionTree",
+  "winner": "RandomForest",
   "winner_cv": {
-    "cv_rmse_mean": 8.987137169662235,
-    "cv_rmse_std": 2.8333780878550594,
-    "cv_mae_mean": 7.090833333333334,
-    "cv_mae_std": 2.669027831983255,
-    "cv_r2_mean": -1.2882468599774592,
-    "cv_r2_std": 2.079937889956878,
-    "best_params": {
-      "model__min_samples_split": 15,
-      "model__min_samples_leaf": 1,
-      "model__max_features": "log2",
-      "model__max_depth": 21
-    }
-  },
-  "dt_cv": {
-    "cv_rmse_mean": 8.987137169662235,
-    "cv_rmse_std": 2.8333780878550594,
-    "cv_mae_mean": 7.090833333333334,
-    "cv_mae_std": 2.669027831983255,
-    "cv_r2_mean": -1.2882468599774592,
-    "cv_r2_std": 2.079937889956878,
-    "best_params": {
-      "model__min_samples_split": 15,
-      "model__min_samples_leaf": 1,
-      "model__max_features": "log2",
-      "model__max_depth": 21
-    }
-  },
-  "rf_cv": {
-    "cv_rmse_mean": 9.131292637094434,
-    "cv_rmse_std": 3.043439374291928,
-    "cv_mae_mean": 7.897219058686401,
-    "cv_mae_std": 2.8421586427688967,
-    "cv_r2_mean": -1.120132138208702,
-    "cv_r2_std": 1.693261623703859,
+    "cv_rmse_mean": 7.5938862360510795,
+    "cv_rmse_std": 0.9924715337433321,
+    "cv_mae_mean": 5.8997214967005975,
+    "cv_mae_std": 0.6929955857472836,
+    "cv_r2_mean": 0.7720549992993078,
+    "cv_r2_std": 0.060667416800713116,
     "best_params": {
       "model__n_estimators": 200,
       "model__min_samples_split": 5,
-      "model__min_samples_leaf": 4,
-      "model__max_features": 0.5,
+      "model__min_samples_leaf": 1,
+      "model__max_features": "log2",
+      "model__max_depth": null,
+      "model__bootstrap": true
+    }
+  },
+  "dt_cv": {
+    "cv_rmse_mean": 8.285540318882486,
+    "cv_rmse_std": 1.3682677969194037,
+    "cv_mae_mean": 6.473789974645237,
+    "cv_mae_std": 1.0699809403058185,
+    "cv_r2_mean": 0.724842115208835,
+    "cv_r2_std": 0.09640718543343635,
+    "best_params": {
+      "model__min_samples_split": 2,
+      "model__min_samples_leaf": 8,
+      "model__max_features": 0.6,
+      "model__max_depth": 24
+    }
+  },
+  "rf_cv": {
+    "cv_rmse_mean": 7.5938862360510795,
+    "cv_rmse_std": 0.9924715337433321,
+    "cv_mae_mean": 5.8997214967005975,
+    "cv_mae_std": 0.6929955857472836,
+    "cv_r2_mean": 0.7720549992993078,
+    "cv_r2_std": 0.060667416800713116,
+    "best_params": {
+      "model__n_estimators": 200,
+      "model__min_samples_split": 5,
+      "model__min_samples_leaf": 1,
+      "model__max_features": "log2",
       "model__max_depth": null,
       "model__bootstrap": true
     }
   },
   "holdout": {
-    "rmse": 9.683722381742808,
-    "mae": 6.526388888888888,
-    "r2": -0.3782482444680326,
-    "n_test": 6
+    "rmse": 8.765394448952666,
+    "mae": 6.541496076441779,
+    "r2": 0.6740527224505004,
+    "n_test": 61
   },
-  "rows": 27,
-  "groups": 9,
+  "rows": 288,
+  "groups": 68,
   "features": {
     "numeric": [
       "latitude",

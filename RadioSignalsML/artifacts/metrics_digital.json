@@ -2,12 +2,12 @@
   "tech": "digital",
   "winner": "RandomForest",
   "winner_cv": {
-    "cv_rmse_mean": 11.799503787554142,
-    "cv_rmse_std": 0.40787848818664885,
-    "cv_mae_mean": 9.374067678796926,
-    "cv_mae_std": 0.34529899046121676,
-    "cv_r2_mean": 0.42634300925995,
-    "cv_r2_std": 0.031048949332894215,
+    "cv_rmse_mean": 10.855966636575541,
+    "cv_rmse_std": 0.6363717538039178,
+    "cv_mae_mean": 8.635174527662176,
+    "cv_mae_std": 0.4703445681196594,
+    "cv_r2_mean": 0.4758038785937212,
+    "cv_r2_std": 0.06193552815817339,
     "best_params": {
       "model__n_estimators": 400,
       "model__min_samples_split": 5,
@@ -18,26 +18,26 @@
     }
   },
   "dt_cv": {
-    "cv_rmse_mean": 13.649649361644043,
-    "cv_rmse_std": 0.3977313555252891,
-    "cv_mae_mean": 11.124325493795476,
-    "cv_mae_std": 0.3140827709095708,
-    "cv_r2_mean": 0.23197916675340996,
-    "cv_r2_std": 0.04427367408357971,
+    "cv_rmse_mean": 12.58912643150759,
+    "cv_rmse_std": 1.1132151976516973,
+    "cv_mae_mean": 9.599522573570217,
+    "cv_mae_std": 0.7410389178341075,
+    "cv_r2_mean": 0.2897343739475274,
+    "cv_r2_std": 0.13492012754107263,
     "best_params": {
-      "model__min_samples_split": 10,
-      "model__min_samples_leaf": 1,
-      "model__max_features": null,
-      "model__max_depth": 8
+      "model__min_samples_split": 15,
+      "model__min_samples_leaf": 2,
+      "model__max_features": 0.8,
+      "model__max_depth": 16
     }
   },
   "rf_cv": {
-    "cv_rmse_mean": 11.799503787554142,
-    "cv_rmse_std": 0.40787848818664885,
-    "cv_mae_mean": 9.374067678796926,
-    "cv_mae_std": 0.34529899046121676,
-    "cv_r2_mean": 0.42634300925995,
-    "cv_r2_std": 0.031048949332894215,
+    "cv_rmse_mean": 10.855966636575541,
+    "cv_rmse_std": 0.6363717538039178,
+    "cv_mae_mean": 8.635174527662176,
+    "cv_mae_std": 0.4703445681196594,
+    "cv_r2_mean": 0.4758038785937212,
+    "cv_r2_std": 0.06193552815817339,
     "best_params": {
       "model__n_estimators": 400,
       "model__min_samples_split": 5,
@@ -48,13 +48,13 @@
     }
   },
   "holdout": {
-    "rmse": 13.610817358017181,
-    "mae": 10.844157600012784,
-    "r2": 0.24116534714927718,
-    "n_test": 596
+    "rmse": 10.959526377124584,
+    "mae": 8.553692491600495,
+    "r2": 0.33713143012769287,
+    "n_test": 453
   },
-  "rows": 2973,
-  "groups": 602,
+  "rows": 2343,
+  "groups": 468,
   "features": {
     "numeric": [
       "latitude",
