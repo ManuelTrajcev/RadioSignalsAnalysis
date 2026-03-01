@@ -1,4 +1,4 @@
-This project runs on .NET 9 and uses Entity Framework Core for database migrations. Make sure you have the .NET 9 SDK installed along with the dotnet-ef tool.
+This project runs on .NET 10 and uses Entity Framework Core for database migrations. Make sure you have the .NET 10 SDK installed along with the dotnet-ef tool.
 
 First go to the backend folder with
 cd RadioSignalsAnalysis/RadioSignalsBackEnd

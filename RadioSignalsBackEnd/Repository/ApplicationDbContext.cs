@@ -34,6 +34,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(builder);
 
+        // Identity 10 passkey support — not used, mark as keyless
+        builder.Entity<IdentityPasskeyData>().HasNoKey();
+
 
         // Check constraint for ChannelFrequencies:
         // TV => ChannelNumber not null, FrequencyMHz null
