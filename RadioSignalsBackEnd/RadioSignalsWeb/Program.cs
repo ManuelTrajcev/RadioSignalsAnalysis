@@ -118,8 +118,10 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Seed municipalities & settlements from JSON on startup (runs once)
-await app.Services.SeedMunicipalitiesAndSettlementsAsync(
-    "/Users/manuel/Documents/RadioSignals/RadioSignalsBackEnd/RadioSignalsWeb/SeedData/north_macedonia_municipalities_settlements_seed.json");
+var seedPath = Path.Combine(AppContext.BaseDirectory, "SeedData", "north_macedonia_municipalities_settlements_seed.json");
+if (!File.Exists(seedPath))
+    seedPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "SeedData", "north_macedonia_municipalities_settlements_seed.json");
+await app.Services.SeedMunicipalitiesAndSettlementsAsync(Path.GetFullPath(seedPath));
 
 if (app.Environment.IsDevelopment())
 {

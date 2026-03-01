@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Placeholder .resx file.
+    Works around .NET SDK 10.0.103 bug where the **/*.resx EmbeddedResource
+    glob is passed as a literal filename to GenerateResource on Linux,
+    causing MSB3552 when no .resx files exist.
+  -->
+</root>
+
