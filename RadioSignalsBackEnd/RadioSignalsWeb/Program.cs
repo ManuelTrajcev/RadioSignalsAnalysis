@@ -109,12 +109,15 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-   var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-      foreach (var name in Enum.GetNames(typeof(Role))) // "USER", "ADMIN"
-         {
-           if (!await roleManager.RoleExistsAsync(name))
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    foreach (var name in Enum.GetNames(typeof(Role))) // "USER", "ADMIN"
+    {
+        if (!await roleManager.RoleExistsAsync(name))
             await roleManager.CreateAsync(new IdentityRole(name));
-         }
+    }
 }
 
 // Seed municipalities & settlements from JSON on startup (runs once)
