@@ -39,6 +39,7 @@ Analysis/Data/
 Thumbs.db
 
 # Misc
+cicd.md
 .env
 *.env.local
 *.env.development.local

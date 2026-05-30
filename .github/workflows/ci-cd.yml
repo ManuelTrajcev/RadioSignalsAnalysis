@@ -1,0 +1,49 @@
+name: CI/CD
+
+# Runs the backend unit-test suite on every push/PR that touches the .NET backend.
+# Structured as a single workflow with discrete jobs: future docker build/push jobs
+# (see cicd.md) should declare `needs: test` so images are only published when tests pass.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'RadioSignalsBackEnd/**'
+      - '.github/workflows/ci-cd.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'RadioSignalsBackEnd/**'
+      - '.github/workflows/ci-cd.yml'
+
+jobs:
+  test:
+    name: Backend unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: RadioSignalsBackEnd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore RadioSignals.sln
+
+      - name: Build
+        run: dotnet build RadioSignals.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test RadioSignals.sln --configuration Release --no-build --verbosity normal
+
+  # build-and-push:
+  #   name: Build & push images
+  #   needs: test                 # <-- gates image publishing on a green test run
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - ...                     # docker build/push matrix (see cicd.md, Step 1)
