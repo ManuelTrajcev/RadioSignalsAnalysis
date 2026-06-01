@@ -9,8 +9,9 @@ COPY Repository/Repository.csproj      Repository/
 COPY Services/Services.csproj          Services/
 COPY RadioSignalsWeb/RadioSignalsWeb.csproj RadioSignalsWeb/
 
-# Restore
-RUN dotnet restore RadioSignals.sln
+# Restore (just the web app + its project graph — the .sln also includes the test
+# project, which is not part of the runtime image)
+RUN dotnet restore RadioSignalsWeb/RadioSignalsWeb.csproj
 
 # Copy everything else
 COPY . .
