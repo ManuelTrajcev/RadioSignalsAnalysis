@@ -1,20 +1,31 @@
 name: CI/CD
 
-# Runs the backend unit-test suite on every push/PR that touches the .NET backend.
-# Structured as a single workflow with discrete jobs: future docker build/push jobs
-# (see cicd.md) should declare `needs: test` so images are only published when tests pass.
+# Runs the backend unit-test suite, then (on push to main / manual dispatch) builds and
+# pushes a Docker image for each service to Docker Hub. Image publishing is gated on a green
+# test run via `needs: test`, and is skipped entirely on pull requests.
 
 on:
   push:
     branches: [main]
     paths:
       - 'RadioSignalsBackEnd/**'
+      - 'RadioSignalsML/**'
+      - 'RadioSignalsFrontEnd/**'
+      - 'Postgres/**'
       - '.github/workflows/ci-cd.yml'
   pull_request:
     branches: [main]
     paths:
       - 'RadioSignalsBackEnd/**'
+      - 'RadioSignalsML/**'
+      - 'RadioSignalsFrontEnd/**'
+      - 'Postgres/**'
       - '.github/workflows/ci-cd.yml'
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_REPO: manueltrajcev/radio-signals
 
 jobs:
   test:
@@ -41,9 +52,51 @@ jobs:
       - name: Test
         run: dotnet test RadioSignals.sln --configuration Release --no-build --verbosity normal
 
-  # build-and-push:
-  #   name: Build & push images
-  #   needs: test                 # <-- gates image publishing on a green test run
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - ...                     # docker build/push matrix (see cicd.md, Step 1)
+  build-and-push:
+    name: Build & push images
+    needs: test                       # gates image publishing on a green test run
+    if: github.event_name != 'pull_request'   # never publish from PRs (incl. fork PRs)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: backend,  context: "./RadioSignalsBackEnd",  dockerfile: "RadioSignalsBackEnd/Dockerfile",  tagprefix: "api",      buildargs: "" }
+          - { name: ml,       context: "./RadioSignalsML",       dockerfile: "RadioSignalsML/Dockerfile",       tagprefix: "ml",       buildargs: "" }
+          - { name: frontend, context: "./RadioSignalsFrontEnd", dockerfile: "RadioSignalsFrontEnd/Dockerfile", tagprefix: "frontend", buildargs: "VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}" }
+          - { name: db,       context: "Postgres",               dockerfile: "Postgres/Dockerfile",             tagprefix: "db",       buildargs: "" }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker metadata (tags + labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_REPO }}
+          tags: |
+            type=raw,value=${{ matrix.tagprefix }}-latest
+            type=sha,prefix=${{ matrix.tagprefix }}-,format=short
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: ${{ matrix.buildargs }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
