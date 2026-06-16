@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(docker compose up --build 2>&1)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(gh run *)"
     ]
   }
 }

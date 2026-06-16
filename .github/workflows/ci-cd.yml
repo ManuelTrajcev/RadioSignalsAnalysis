@@ -121,6 +121,7 @@ jobs:
     needs: build-and-push
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 20          # hard cap so a failed rollout can't burn the default 6h budget
     permissions:
       contents: read
     env:
@@ -181,6 +182,7 @@ jobs:
 
       - name: Tear down cluster
         if: always()
+        timeout-minutes: 3       # k3d delete occasionally hangs on Docker cleanup; bound it
         run: k3d cluster delete "$CLUSTER" || true
 
   deploy:
