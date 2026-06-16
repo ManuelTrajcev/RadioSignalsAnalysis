@@ -3,7 +3,11 @@
     "allow": [
       "Bash(docker compose up --build 2>&1)",
       "Bash(python3 *)",
-      "Bash(gh run *)"
+      "Bash(gh run *)",
+      "Bash(command -v kubectl)",
+      "Bash(kubectl config *)",
+      "Bash(brew --version)",
+      "Bash(brew install *)"
     ]
   }
 }
