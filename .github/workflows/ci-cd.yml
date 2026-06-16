@@ -1,8 +1,16 @@
 name: CI/CD
 
-# Runs the backend unit-test suite, then (on push to main / manual dispatch) builds and
-# pushes a Docker image for each service to Docker Hub. Image publishing is gated on a green
-# test run via `needs: test`, and is skipped entirely on pull requests.
+# Pipeline stages:
+#   1. test          — backend unit-test suite (always; PRs included).
+#   2. build-and-push — on push to main / manual dispatch, builds & pushes one image per service
+#                       to Docker Hub. Gated on green tests via `needs: test`, skipped on PRs.
+#   3. k8s-smoke-test — stands up a throwaway k3d cluster in the runner, applies k8s/, and
+#                       verifies every workload becomes Ready and the Ingress routes to the
+#                       frontend. Catches broken manifests before they reach a real cluster.
+#   4. deploy         — applies the k8s/ manifests and rolls the cluster onto the freshly built
+#                       git-SHA images. Runs only when a KUBE_CONFIG secret is configured
+#                       (a local k3d cluster is not reachable from GitHub runners, so this
+#                       no-ops gracefully when the secret is absent).
 
 on:
   push:
@@ -12,6 +20,7 @@ on:
       - 'RadioSignalsML/**'
       - 'RadioSignalsFrontEnd/**'
       - 'Postgres/**'
+      - 'k8s/**'
       - '.github/workflows/ci-cd.yml'
   pull_request:
     branches: [main]
@@ -20,6 +29,7 @@ on:
       - 'RadioSignalsML/**'
       - 'RadioSignalsFrontEnd/**'
       - 'Postgres/**'
+      - 'k8s/**'
       - '.github/workflows/ci-cd.yml'
   workflow_dispatch:
 
@@ -62,11 +72,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # `latesttag` is the moving tag the k8s manifests reference; `tagprefix` also drives the
+        # immutable `<prefix>-<sha>` tag the deploy job pins to. The frontend is built twice: a
+        # generic image and a k8s-specific one whose API base URL is the relative `/api` path the
+        # Ingress serves (replacing the previous manual local build + `k3d image import`).
         include:
-          - { name: backend,  context: "./RadioSignalsBackEnd",  dockerfile: "RadioSignalsBackEnd/Dockerfile",  tagprefix: "api",      buildargs: "" }
-          - { name: ml,       context: "./RadioSignalsML",       dockerfile: "RadioSignalsML/Dockerfile",       tagprefix: "ml",       buildargs: "" }
-          - { name: frontend, context: "./RadioSignalsFrontEnd", dockerfile: "RadioSignalsFrontEnd/Dockerfile", tagprefix: "frontend", buildargs: "VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}" }
-          - { name: db,       context: "Postgres",               dockerfile: "Postgres/Dockerfile",             tagprefix: "db",       buildargs: "" }
+          - { name: backend,      context: "./RadioSignalsBackEnd",  dockerfile: "RadioSignalsBackEnd/Dockerfile",  tagprefix: "api",          latesttag: "api-latest",      buildargs: "" }
+          - { name: ml,           context: "./RadioSignalsML",       dockerfile: "RadioSignalsML/Dockerfile",       tagprefix: "ml",           latesttag: "ml-latest",       buildargs: "" }
+          - { name: frontend,     context: "./RadioSignalsFrontEnd", dockerfile: "RadioSignalsFrontEnd/Dockerfile", tagprefix: "frontend",     latesttag: "frontend-latest", buildargs: "VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}" }
+          - { name: frontend-k8s, context: "./RadioSignalsFrontEnd", dockerfile: "RadioSignalsFrontEnd/Dockerfile", tagprefix: "frontend-k8s", latesttag: "frontend-k8s",    buildargs: "VITE_API_BASE_URL=/api" }
+          - { name: db,           context: "Postgres",               dockerfile: "Postgres/Dockerfile",             tagprefix: "db",           latesttag: "db-latest",       buildargs: "" }
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -86,7 +101,7 @@ jobs:
         with:
           images: ${{ env.IMAGE_REPO }}
           tags: |
-            type=raw,value=${{ matrix.tagprefix }}-latest
+            type=raw,value=${{ matrix.latesttag }}
             type=sha,prefix=${{ matrix.tagprefix }}-,format=short
 
       - name: Build and push ${{ matrix.name }}
@@ -100,3 +115,124 @@ jobs:
           build-args: ${{ matrix.buildargs }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  k8s-smoke-test:
+    name: Smoke-test on ephemeral k3d
+    needs: build-and-push
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      CLUSTER: radio-signals-ci
+      NAMESPACE: radio-signals
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install k3d
+        run: curl -sfL https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+      - name: Create ephemeral cluster
+        # k3s bundles Traefik (matches ingress.yaml's ingressClassName: traefik); map the
+        # loadbalancer's :80 to a host port so we can curl the Ingress from the runner.
+        run: k3d cluster create "$CLUSTER" --port "8081:80@loadbalancer" --wait --timeout 150s
+
+      - name: Apply manifests & pin to this build's images
+        run: |
+          set -euo pipefail
+          SHA="${GITHUB_SHA::7}"
+          kubectl apply -k k8s/
+          kubectl -n "$NAMESPACE" set image deploy/backend       backend=$IMAGE_REPO:api-$SHA
+          kubectl -n "$NAMESPACE" set image deploy/ml            ml=$IMAGE_REPO:ml-$SHA
+          kubectl -n "$NAMESPACE" set image deploy/frontend      frontend=$IMAGE_REPO:frontend-k8s-$SHA
+          kubectl -n "$NAMESPACE" set image statefulset/postgres postgres=$IMAGE_REPO:db-$SHA
+
+      - name: Wait for rollouts
+        run: |
+          set -euo pipefail
+          # Order mirrors the dependency chain: DB first, then ml, then backend (runs EF
+          # migrations on start, so it gets the longest budget), then frontend.
+          kubectl -n "$NAMESPACE" rollout status statefulset/postgres --timeout=180s
+          kubectl -n "$NAMESPACE" rollout status deploy/ml             --timeout=180s
+          kubectl -n "$NAMESPACE" rollout status deploy/backend        --timeout=300s
+          kubectl -n "$NAMESPACE" rollout status deploy/frontend       --timeout=120s
+
+      - name: Smoke-test Ingress -> frontend
+        run: |
+          set -euo pipefail
+          # Give Traefik a moment to publish the Ingress route, then assert a 200 from the SPA.
+          for i in $(seq 1 12); do
+            if curl -fsS -H "Host: radiosignals.local" http://localhost:8081/ -o /dev/null; then
+              break
+            fi
+            echo "waiting for ingress route ($i/12)"; sleep 5
+          done
+          curl -fsS -H "Host: radiosignals.local" http://localhost:8081/ -o /dev/null -w "frontend via ingress: HTTP %{http_code}\n"
+
+      - name: Diagnostics on failure
+        if: failure()
+        run: |
+          kubectl get all -n "$NAMESPACE" || true
+          kubectl get events -n "$NAMESPACE" --sort-by=.lastTimestamp || true
+          kubectl describe pods -n "$NAMESPACE" || true
+          kubectl logs -n "$NAMESPACE" -l app=backend --tail=100 || true
+          kubectl logs -n "$NAMESPACE" -l app=ml --tail=100 || true
+
+      - name: Tear down cluster
+        if: always()
+        run: k3d cluster delete "$CLUSTER" || true
+
+  deploy:
+    name: Deploy to Kubernetes
+    needs: k8s-smoke-test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      NAMESPACE: radio-signals
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect kubeconfig
+        id: kube
+        # No CD target is configured for a local-only cluster; skip cleanly instead of failing.
+        run: |
+          if [ -n "$KUBE_CONFIG" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::KUBE_CONFIG secret not set — skipping cluster deploy."
+          fi
+
+      - name: Configure kubeconfig
+        if: steps.kube.outputs.present == 'true'
+        run: |
+          mkdir -p "$HOME/.kube"
+          echo "$KUBE_CONFIG" | base64 -d > "$HOME/.kube/config"
+          chmod 600 "$HOME/.kube/config"
+
+      - name: Apply manifests & roll out git-SHA images
+        if: steps.kube.outputs.present == 'true'
+        run: |
+          set -euo pipefail
+          SHA="${GITHUB_SHA::7}"
+
+          # Apply the desired state (Namespace, ConfigMaps/Secrets, Services, Ingress, workloads).
+          kubectl apply -k k8s/
+
+          # Pin each workload to the immutable image built in this run so the rollout actually
+          # pulls the new code (moving tags alone wouldn't force a re-pull).
+          kubectl -n "$NAMESPACE" set image deploy/backend       backend=$IMAGE_REPO:api-$SHA
+          kubectl -n "$NAMESPACE" set image deploy/ml            ml=$IMAGE_REPO:ml-$SHA
+          kubectl -n "$NAMESPACE" set image deploy/frontend      frontend=$IMAGE_REPO:frontend-k8s-$SHA
+          kubectl -n "$NAMESPACE" set image statefulset/postgres postgres=$IMAGE_REPO:db-$SHA
+
+          # Wait for each rollout to converge.
+          kubectl -n "$NAMESPACE" rollout status deploy/backend  --timeout=180s
+          kubectl -n "$NAMESPACE" rollout status deploy/ml       --timeout=120s
+          kubectl -n "$NAMESPACE" rollout status deploy/frontend --timeout=120s
+          kubectl -n "$NAMESPACE" rollout status statefulset/postgres --timeout=180s
