@@ -196,6 +196,7 @@ jobs:
     env:
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
       NAMESPACE: radio-signals
+      INGRESS_HOST: ${{ vars.INGRESS_HOST }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -246,6 +247,16 @@ jobs:
 
           # Apply the desired state (Namespace, ConfigMaps/Secrets, Services, Ingress, workloads).
           kubectl apply -k k8s/ --request-timeout=60s
+
+          # Optionally override the Ingress hostname from a GitHub variable (e.g. Vultr DNS).
+          if [ -n "${INGRESS_HOST:-}" ]; then
+            kubectl -n "$NAMESPACE" patch ingress radiosignals-ingress \
+              --type='merge' \
+              -p "{\"spec\":{\"rules\":[{\"host\":\"$INGRESS_HOST\",\"http\":{\"paths\":[{\"path\":\"/api\",\"pathType\":\"Prefix\",\"backend\":{\"service\":{\"name\":\"backend\",\"port\":{\"number\":8080}}}},{\"path\":\"/\",\"pathType\":\"Prefix\",\"backend\":{\"service\":{\"name\":\"frontend\",\"port\":{\"number\":80}}}}]}}]}}"
+            echo "Ingress host set to: $INGRESS_HOST"
+          else
+            echo "INGRESS_HOST not set; keeping manifest host as-is."
+          fi
 
           # Pin each workload to the immutable image built in this run so the rollout actually
           # pulls the new code (moving tags alone wouldn't force a re-pull).
