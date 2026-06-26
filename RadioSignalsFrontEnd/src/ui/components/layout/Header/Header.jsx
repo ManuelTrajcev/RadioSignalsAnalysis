@@ -20,7 +20,7 @@ const Header = () => {
 
     return (
         <Box>
-            <AppBar position="static" color="error">
+            <AppBar position="static" color="primary">
                 <Toolbar sx={{ color: 'black' }}>
                     <Typography variant="h6" component="div" sx={{mr: 3}}>
                         Анализа на радио сигнали
