@@ -5,8 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    kubectl apply -k k8s/
-    kubectl -n radio-signals get ingress radiosignals-ingress -o yaml    - http:
+    - http:
         paths:
           # /api is matched before / (Traefik orders by path length: longer prefix wins).
           - path: /api
