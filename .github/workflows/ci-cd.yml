@@ -203,13 +203,12 @@ jobs:
 
       - name: Detect kubeconfig
         id: kube
-        # No CD target is configured for a local-only cluster; skip cleanly instead of failing.
         run: |
           if [ -n "$KUBE_CONFIG" ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
-            echo "present=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::KUBE_CONFIG secret not set — skipping cluster deploy."
+            echo "::error::KUBE_CONFIG secret is missing. Automatic CD requires a reachable cluster kubeconfig."
+            exit 1
           fi
 
       - name: Configure kubeconfig
@@ -229,14 +228,13 @@ jobs:
       - name: Check cluster reachability
         id: reach
         if: steps.kube.outputs.present == 'true'
-        # Fail fast (15s) instead of hanging on apply when the API endpoint isn't reachable —
-        # e.g. a local k3d/minikube kubeconfig pointing at 0.0.0.0/127.0.0.1.
+        # Fail fast (15s) instead of hanging on apply when the API endpoint isn't reachable.
         run: |
           if kubectl cluster-info --request-timeout=15s >/dev/null 2>&1; then
             echo "reachable=true" >> "$GITHUB_OUTPUT"
           else
-            echo "reachable=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Cluster API not reachable from this runner — skipping deploy. (A local k3d/minikube endpoint like https://0.0.0.0 only works from your own machine.)"
+            echo "::error::Cluster API is not reachable from this GitHub runner. Check firewall/6443 and kubeconfig server endpoint."
+            exit 1
           fi
 
       - name: Apply manifests & roll out git-SHA images
@@ -264,6 +262,12 @@ jobs:
           kubectl -n "$NAMESPACE" set image deploy/ml            ml=$IMAGE_REPO:ml-$SHA
           kubectl -n "$NAMESPACE" set image deploy/frontend      frontend=$IMAGE_REPO:frontend-k8s-$SHA
           kubectl -n "$NAMESPACE" set image statefulset/postgres postgres=$IMAGE_REPO:db-$SHA
+
+          # Fail if any workload is not pinned to this run's immutable SHA tags.
+          test "$(kubectl -n "$NAMESPACE" get deploy/backend  -o jsonpath='{.spec.template.spec.containers[0].image}')" = "$IMAGE_REPO:api-$SHA"
+          test "$(kubectl -n "$NAMESPACE" get deploy/ml       -o jsonpath='{.spec.template.spec.containers[0].image}')" = "$IMAGE_REPO:ml-$SHA"
+          test "$(kubectl -n "$NAMESPACE" get deploy/frontend -o jsonpath='{.spec.template.spec.containers[0].image}')" = "$IMAGE_REPO:frontend-k8s-$SHA"
+          test "$(kubectl -n "$NAMESPACE" get statefulset/postgres -o jsonpath='{.spec.template.spec.containers[0].image}')" = "$IMAGE_REPO:db-$SHA"
 
           # Wait for each rollout to converge (DB first; backend gets the longest budget — EF migrations).
           kubectl -n "$NAMESPACE" rollout status statefulset/postgres --timeout=180s
